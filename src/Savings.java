@@ -11,8 +11,9 @@ public class Savings extends Account {
      *
      * @param profileHolder
      * @param balance
+     * @param isLoyal
      */
-    public Savings(Profile profileHolder, double balance) {
+    public Savings(Profile profileHolder, double balance, boolean isLoyal) {
         super(profileHolder, balance);
     }
 
