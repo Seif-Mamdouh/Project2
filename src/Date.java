@@ -12,9 +12,7 @@ public class Date implements Comparable<Date> {
     public static final int CENTENNIAL = 100;
     public static final int QUATERCENTENNIAL = 400;
     public static final int MONTHS_IN_YEAR = 12;
-
     public static final int DAYS_IN_FEBUARY_IN_LEAP_YEAR = 29;
-
     public static final int FEBUARY_MONTH_NUMBER = 2;
 
 

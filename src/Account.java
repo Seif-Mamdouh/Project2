@@ -1,7 +1,10 @@
+/**
+ * Public Abstract class for all Account Types
+ * @author Seifeldeen Mohamed
+ */
 public abstract class Account implements Comparable <Account> {
     protected Profile profileHolder;
     protected double balance;
-
 
     /**
      * Contrustor with default values
@@ -14,25 +17,23 @@ public abstract class Account implements Comparable <Account> {
     }
 
     /**
-     *
+     * Abstract Method for Monthly Interests
+     * @return
      */
-    public Profile getProfile(){
-        return this.profileHolder;
-    }
-
-    public double getBalance(){
-        return this.balance;
-    }
-
-
     public abstract double monthlyInterest();
+
+    /**
+     * Abstract Method for Monthly fees
+     * @return
+     */
     public abstract double monthlyFee();
 
+    /**
+     * Abstract Method to compare Accounts
+     * @param OtherAccount the object to be compared.
+     * @return
+     */
     @Override
-    public int compareTo(Account OtherAccount){
-        //implement logic here
-        return 0;
-    }
-
+    public abstract int compareTo(Account OtherAccount);
 
 }

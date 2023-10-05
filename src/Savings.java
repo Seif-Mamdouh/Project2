@@ -32,4 +32,9 @@ public class Savings extends Account {
         //implement logic
         return 0.0;
     }
+
+    @Override
+    public int compareTo(Account OtherAccount) {
+        return 0;
+    }
 }
