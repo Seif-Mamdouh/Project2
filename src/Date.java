@@ -75,7 +75,6 @@ public class Date implements Comparable<Date> {
             throw new IllegalArgumentException(
                     "Invalid date format: " + dateStr);
         }
-        ;
 
         int month, day, year;
 

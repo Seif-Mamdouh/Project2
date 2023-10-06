@@ -31,10 +31,13 @@ public abstract class Account implements Comparable <Account> {
     /**
      * Abstract Method to compare Accounts
      *
-     * @param OtherAccount the object to be compared.
+     * @param otherAccount the object to be compared.
      * @return
      */
     @Override
-    public abstract int compareTo(Account OtherAccount);
+    public int compareTo(Account otherAccount) {
+        // Compare Account based on the balance
+        return Double.compare(this.balance, otherAccount.balance);
+    }
 
 }

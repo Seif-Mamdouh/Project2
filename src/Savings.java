@@ -54,15 +54,7 @@ public class Savings extends Account {
         return MONTHLY_FEE;
     }
 
-    @Override
-    public int compareTo(Account OtherAccount) {
-        if (OtherAccount instanceof Savings otherSavingsAccount) {
-            // Compare Account based on the balance
-            return Double.compare(this.balance, otherSavingsAccount.balance);
-        }
 
-        return 0;
-    }
 
     public static void main (String[] args){
 
