@@ -1,30 +1,87 @@
 public class MoneyMarket extends Savings {
-    private int withdrawal;
+    private int withdrawals;
 
     // Constants for interest rate and fee
-    private static final double DEFAULT_INTEREST_RATE = 0.03; // 3% interest rate
-    private static final double LOYALTY_INTEREST_RATE = 0.04; // 4% interest rate for loyal customers
-    private static final double MONTHLY_FEE = 12.00;
-    private static final int MAX_WITHDRAWALS = 6; // Maximum allowed withdrawals per month
+    private static final double ANNUAL_INTEREST_RATE = 0.0475;
+    private static final double MAX_AMOUNT_OF_WITHDRAWLS = 3;
+    private static final double WITHDRAWL_FEE = 10;
 
-    public MoneyMarket(Profile holder, double balance, boolean isLoyal, int withdrawal) {
+
+    /**
+     * default constructor for MoneyMarket class
+     * @param holder
+     * @param balance
+     * @param isLoyal
+     */
+    public MoneyMarket(Profile holder, double balance, boolean isLoyal) {
         super(holder, balance, isLoyal);
-        this.withdrawal = withdrawal;
+        this.withdrawals = 0;
     }
 
-    public int getWithdrawal() {
-        return withdrawal;
-    }
 
+    /**
+     * Method that overrides the method in the savings class
+     * Calculate monthly interest based on the annual interest rate
+     * @return
+     */
     @Override
     public double monthlyInterest() {
-        //logic
-        return 0.0;
+        return balance * ANNUAL_INTEREST_RATE / 12;
     }
 
+    /**
+     * Method to check if the balance is $2000 or more for monthly fees
+     * @return
+     */
     @Override
     public double monthlyFee() {
-        // logic
-        return 0.0;
+        if (balance >= 2000.0) {
+            return NO_FEE;
+        }
+        return MONTHLY_FEE;
+    }
+
+    /**
+     * Method to check and update the loyalStatus based on the balance
+     */
+    public void updateLoyalStatus() {
+        if (balance >= 2000.0) {
+            isLoyal = true;
+        } else {
+            isLoyal = false;
+        }
+    }
+
+    /**
+     * method to make a withDrawl
+     * @param amount
+     */
+    public void makeWithdrawal(double amount) {
+        if (amount > 0) {
+            withdrawals++;
+            if (withdrawals > MAX_AMOUNT_OF_WITHDRAWLS) {
+                balance -= WITHDRAWL_FEE;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        // Create a Money Market account with a balance of $3000
+        MoneyMarket mmAccount = new MoneyMarket(new Profile("Seif", "Mamdouh", "10/12/2002"), 200.0, false);
+
+        // Perform withdrawals
+        mmAccount.makeWithdrawal(100); // 1st withdrawal
+        mmAccount.makeWithdrawal(50); // 2nd withdrawal
+
+        // Check and update loyal status based on balance
+        mmAccount.updateLoyalStatus();
+
+        // Calculate and display monthly interest and fees
+        double monthlyInterest = mmAccount.monthlyInterest();
+        double monthlyFee = mmAccount.monthlyFee();
+
+        System.out.println("Monthly Interest: $" + monthlyInterest);
+        System.out.println("Monthly Fee: $" + monthlyFee);
+
     }
 }

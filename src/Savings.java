@@ -7,9 +7,9 @@ public class Savings extends Account {
     // Constants for interest rate and fee
     private static final double DEFAULT_INTEREST_RATE = 0.02; // 2% interest rate
     private static final double LOYALTY_INTEREST_RATE = 0.0425; // 4.25% interest rate for loyal customers
-    private static final double MONTHLY_FEE = 25.00;
     private static final double MINIMUM_BALANCE_FOR_NO_FEE = 500.00;
-    private static final double NO_FEE = 0.0;
+    protected static final double MONTHLY_FEE = 25.00;
+    protected static final double NO_FEE = 0.0;
 
     /**
      * Contrustor with default values
@@ -32,7 +32,7 @@ public class Savings extends Account {
     }
 
     /**
-     * method to caluclate the monthly interest
+     * method to calculate the monthly interest
      * @return
      */
     @Override
