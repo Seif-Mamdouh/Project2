@@ -27,7 +27,7 @@ public class MoneyMarket extends Savings {
      */
     @Override
     public double monthlyInterest() {
-        return balance * ANNUAL_INTEREST_RATE / 12;
+        return balance * ANNUAL_INTEREST_RATE / Account.MONTHS_IN_YEAR;
     }
 
     /**

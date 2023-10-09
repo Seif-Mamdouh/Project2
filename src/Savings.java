@@ -11,8 +11,6 @@ public class Savings extends Account {
     protected static final double MONTHLY_FEE = 25.00;
     protected static final double NO_FEE = 0.0;
 
-    private static final double MONTHS_IN_YEAR = 12.0;
-
     /**
      * Contrustor with default values
      *
@@ -41,7 +39,7 @@ public class Savings extends Account {
     public double monthlyInterest() {
         // if the customer is loyal, then they get the loyal interest rate otherwise give them the default
         double interestRate = isLoyal ? LOYALTY_INTEREST_RATE : DEFAULT_INTEREST_RATE;
-        return balance * interestRate / MONTHS_IN_YEAR;
+        return balance * interestRate / Account.MONTHS_IN_YEAR;
     }
 
     /**
