@@ -5,6 +5,7 @@ public class MoneyMarket extends Savings {
     private static final double ANNUAL_INTEREST_RATE = 0.0475;
     private static final double MAX_AMOUNT_OF_WITHDRAWLS = 3;
     private static final double WITHDRAWL_FEE = 10;
+    private static final double MIN_AMOUNT = 2000.0;
 
 
     /**
@@ -35,7 +36,7 @@ public class MoneyMarket extends Savings {
      */
     @Override
     public double monthlyFee() {
-        if (balance >= 2000.0) {
+        if (balance >= MIN_AMOUNT) {
             return NO_FEE;
         }
         return MONTHLY_FEE;
@@ -45,11 +46,7 @@ public class MoneyMarket extends Savings {
      * Method to check and update the loyalStatus based on the balance
      */
     public void updateLoyalStatus() {
-        if (balance >= 2000.0) {
-            isLoyal = true;
-        } else {
-            isLoyal = false;
-        }
+        isLoyal = balance >= MIN_AMOUNT;
     }
 
     /**
