@@ -33,7 +33,6 @@ public abstract class Account implements Comparable <Account> {
      */
     public abstract double monthlyFee();
 
-    public abstract void makeDeposit(double amount);
 
     /**
      * Abstract Method to compare Accounts
@@ -45,6 +44,16 @@ public abstract class Account implements Comparable <Account> {
     public int compareTo(Account otherAccount) {
         // Compare Account based on the balance
         return Double.compare(this.balance, otherAccount.balance);
+    }
+
+    /**
+     * Abstract Method to make a deposit for all account types
+     * @param amount
+     */
+    public void makeDeposit(double amount) {
+        if (amount > 0) {
+            balance += amount; // Add the deposit amount to the balance
+        }
     }
 
     /**

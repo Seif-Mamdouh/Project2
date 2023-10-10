@@ -54,12 +54,6 @@ public class Savings extends Account {
         return MONTHLY_FEE;
     }
 
-    @Override
-    public void makeDeposit(double amount) {
-        if (amount > 0) {
-            balance += amount; // Add the deposit amount to the balance
-        }
-    }
 
 
 }

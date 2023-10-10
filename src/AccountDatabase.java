@@ -8,12 +8,12 @@ public class AccountDatabase {
 
     public int getNumAccounts(){
         return numAcct;
-    };
+    }
 
     /**
      * Default Constructor for AccountDatabase
      */
-    public AccountDatabase (){
+    public AccountDatabase(){
         this.accounts = new Account[INITIAL_CAPACITY];
         this.numAcct = DEFAULT_CONSTRUCTOR_VAL;
     }
@@ -102,7 +102,14 @@ public class AccountDatabase {
             System.out.print("Account doesn't exisit");
         }
 
+
         int accountToSearch = find(account);
+
+        if (accountToSearch == -1) {
+            System.out.println("Account doesn't exist");
+            return; // Exit the method if the account is not found
+        }
+
         Account accountInTheDatabase = accounts[accountToSearch];
 
         // Call a deposit method on the account object with the specified depositAmount
@@ -135,11 +142,35 @@ public class AccountDatabase {
     }
 
 
+    /**
+     * Method to sort by Account Type and Profile;
+     */
+    public void printSorted(){
 
-    public void printSorted(){} //sort by account type and profile
-    public void printFeesAndInterests(){} //calculate interests/fees
+    } //sort by account type and profile
 
-    public void printUpdatedBalances(){} //apply the interests/fees
+    /**
+     * Method to calculate interests and fees
+     */
+    public void printFeesAndInterests(){
+        for (int i = 0; i < numAcct; i++) {
+            Account account = accounts[i];
+            double monthlyInterest = account.monthlyInterest();
+            double monthlyFee = account.monthlyFee();
+
+            System.out.println("Account: " + account.toString());
+            System.out.println("Monthly Interest: $" + monthlyInterest);
+            System.out.println("Monthly Fee: $" + monthlyFee);
+        }
+
+    } //calculate interests/fees
+
+    /**
+     * Method to Apply interest/fees
+     */
+    public void printUpdatedBalances(){
+
+    } //apply the interests/fees
 
 
     public static void main(String[] args) {
@@ -152,36 +183,35 @@ public class AccountDatabase {
         // Create some sample accounts
         Account account1 = new Savings(new Profile("Seif", "Mamdouh", date1), 1000.0, true);
         Account account2 = new MoneyMarket(new Profile("Mikey", "Muzafarov", date2), 2000.0, false);
+        Account account3 = new Checking(new Profile("Mikey", "Muzafarov", date2), 2000.0);
+
 
         // Test the open method to add accounts
         accountDatabase.open(account1);
         accountDatabase.open(account2);
-
-        //Test to remove account;
-        accountDatabase.close(account1);
-
-        //Check if the account is removed
-        System.out.println("Is Account1 Present in the Array? " + accountDatabase.contains(account1));
-
+        accountDatabase.open(account3);
 
         //Check the number of accounts in the DB
         System.out.println("The number of amount of Accounts in the Database is: " + accountDatabase.getNumAccounts());
 
-        //Check if accounts were added
-        System.out.println("Added Account 1: "  + accountDatabase.contains(account1));
-        System.out.println("Added Account 2 : " + accountDatabase.contains(account2));
+//        //Check if accounts were added
+//        System.out.println("Added Account 1: "  + accountDatabase.contains(account1));
+//        System.out.println("Added Account 2 : " + accountDatabase.contains(account2));
+//        System.out.println("Added Account 3 : " + accountDatabase.contains(account3));
+//
+//        // Test deposit
+//        double depositAmount = 500.0;
+//        accountDatabase.deposit(account1, depositAmount);
+//        System.out.println("Savings account balance after deposit: " + account1.balance);
+//
+//        // Test withdrawal
+//        double withdrawalAmount = 1000.0;
+//        boolean withdrawalSuccess = accountDatabase.withdraw(account2, withdrawalAmount);
+//        System.out.println("Withdrawal from Money Market account: " + withdrawalSuccess);
+//        System.out.println("Money Market account balance after withdrawal: " + account2.balance);
 
-        // Test deposit
-        double depositAmount = 500.0;
-        accountDatabase.deposit(account1, depositAmount);
-        System.out.println("Savings account balance after deposit: " + account1.balance);
 
-        // Test withdrawal
-        double withdrawalAmount = 1000.0;
-        boolean withdrawalSuccess = accountDatabase.withdraw(account2, withdrawalAmount);
-        System.out.println("Withdrawal from Money Market account: " + withdrawalSuccess);
-        System.out.println("Money Market account balance after withdrawal: " + account2.balance);
-
+        accountDatabase.printFeesAndInterests();
     }
 
 }
