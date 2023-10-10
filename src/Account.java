@@ -6,6 +6,8 @@ public abstract class Account implements Comparable <Account> {
     protected Profile profileHolder;
     protected double balance;
 
+
+
     /**
      * Contrustor with default values
      * @param profileHolder
@@ -15,6 +17,7 @@ public abstract class Account implements Comparable <Account> {
         this.profileHolder = profileHolder;
         this.balance = balance;
     }
+
 
     /**
      * Abstract Method for Monthly Interests
@@ -28,6 +31,8 @@ public abstract class Account implements Comparable <Account> {
      */
     public abstract double monthlyFee();
 
+    public abstract void makeDeposit(double amount);
+
     /**
      * Abstract Method to compare Accounts
      *
@@ -38,6 +43,16 @@ public abstract class Account implements Comparable <Account> {
     public int compareTo(Account otherAccount) {
         // Compare Account based on the balance
         return Double.compare(this.balance, otherAccount.balance);
+    }
+
+    /**
+     * Method to make a withdrawal from the account.
+     * @param amount The amount to withdraw.
+     */
+    public void makeWithdrawal(double amount) {
+        if (amount > 0 && balance >= amount) {
+            balance -= amount;
+        }
     }
 
 }

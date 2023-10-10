@@ -93,37 +93,69 @@ public class AccountDatabase {
         return true;
     }
 
+    /**
+     * Method to deposit money into a account
+     * @param account
+     */
+    public void deposit(Account account, double depositAmount){
+        if (!contains(account)) {
+            System.out.print("Account doesn't exisit");
+        }
+
+        int accountToSearch = find(account);
+        Account accountInTheDatabase = accounts[accountToSearch];
+
+        // Call a deposit method on the account object with the specified depositAmount
+        accountInTheDatabase.makeDeposit(depositAmount);
+
+    }
+
+    /**
+     * Method to make a withdrawl
+     * @param account
+     * @return false if insufficient fund
+     */
+    public boolean withdraw(Account account, double withdrawalAmount) {
+        // Check if the account exists
+        if (!contains(account)) {
+            return false;
+        }
+
+        int accountToSearch = find(account);
+        Account accountInTheDatabase = accounts[accountToSearch];
+
+        // Check if there's enough balance for withdrawal
+        if (accountInTheDatabase.balance >= withdrawalAmount) {
+            // Specify the withdrawal amount here (dynamic)
+            accountInTheDatabase.makeWithdrawal(withdrawalAmount);
+            return true; // Withdrawal was successful
+        }
+
+        return false; // Withdrawal not allowed or insufficient balance
+    }
 
 
 
+    public void printSorted(){} //sort by account type and profile
+    public void printFeesAndInterests(){} //calculate interests/fees
 
-//    public boolean withdraw(Account account){
-//        return false;
-//    } //false if insufficient fund
-//
-//    public void deposit(Account account){}
-//
-//    public void printSorted(){} //sort by account type and profile
-//    public void printFeesAndInterests(){} //calculate interests/fees
-//
-//    public void printUpdatedBalances(){} //apply the interests/fees
+    public void printUpdatedBalances(){} //apply the interests/fees
 
 
     public static void main(String[] args) {
         // Create an AccountDatabase instance
         AccountDatabase accountDatabase = new AccountDatabase();
 
+        Date date1 = new Date(10, 12, 2002);
+        Date date2 = new Date(1, 1, 2002);
+
         // Create some sample accounts
-        Account account1 = new Savings(new Profile("Seif", "Mamdouh", "10/12/2002"), 1000.0, true);
-        Account account2 = new MoneyMarket(new Profile("Mikey", "Muzafarov", "1/1/2002"), 2000.0, false);
+        Account account1 = new Savings(new Profile("Seif", "Mamdouh", date1), 1000.0, true);
+        Account account2 = new MoneyMarket(new Profile("Mikey", "Muzafarov", date2), 2000.0, false);
 
         // Test the open method to add accounts
         accountDatabase.open(account1);
         accountDatabase.open(account2);
-
-        // Check if accounts were added
-        System.out.println("Added Account 1: "  + accountDatabase.contains(account1));
-        System.out.println("Added Account 2 : " + accountDatabase.contains(account2));
 
         //Test to remove account;
         accountDatabase.close(account1);
@@ -135,8 +167,23 @@ public class AccountDatabase {
         //Check the number of accounts in the DB
         System.out.println("The number of amount of Accounts in the Database is: " + accountDatabase.getNumAccounts());
 
+        //Check if accounts were added
+        System.out.println("Added Account 1: "  + accountDatabase.contains(account1));
+        System.out.println("Added Account 2 : " + accountDatabase.contains(account2));
+
+        // Test deposit
+        double depositAmount = 500.0;
+        accountDatabase.deposit(account1, depositAmount);
+        System.out.println("Savings account balance after deposit: " + account1.balance);
+
+        // Test withdrawal
+        double withdrawalAmount = 1000.0;
+        boolean withdrawalSuccess = accountDatabase.withdraw(account2, withdrawalAmount);
+        System.out.println("Withdrawal from Money Market account: " + withdrawalSuccess);
+        System.out.println("Money Market account balance after withdrawal: " + account2.balance);
 
     }
 
 }
+
 

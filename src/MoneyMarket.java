@@ -5,7 +5,7 @@ public class MoneyMarket extends Savings {
     private static final double ANNUAL_INTEREST_RATE = 0.0475;
     private static final double MAX_AMOUNT_OF_WITHDRAWLS = 3;
     private static final double WITHDRAWL_FEE = 10;
-    private static final double MIN_AMOUNT = 2000.0;
+    protected static final double MIN_AMOUNT = 2000.0;
 
 
     /**
@@ -18,6 +18,12 @@ public class MoneyMarket extends Savings {
         super(holder, balance, isLoyal);
         this.withdrawals = 0;
     }
+
+
+    public double getBalance(){
+        return this.balance;
+    }
+
 
 
     /**
@@ -49,26 +55,33 @@ public class MoneyMarket extends Savings {
         isLoyal = balance >= MIN_AMOUNT;
     }
 
+
     /**
      * method to make a withDrawl
      * @param amount
      */
+    @Override
     public void makeWithdrawal(double amount) {
-        if (amount > 0) {
+        if (amount > 0 && balance >= amount) {
+            balance -= amount;
             withdrawals++;
-            if (withdrawals > MAX_AMOUNT_OF_WITHDRAWLS) {
+        }
+        if (withdrawals > MAX_AMOUNT_OF_WITHDRAWLS) {
                 balance -= WITHDRAWL_FEE;
             }
         }
-    }
 
     public static void main(String[] args) {
+
+        Date dat3 = new Date(12, 12,2002);
         // Create a Money Market account with a balance of $3000
-        MoneyMarket mmAccount = new MoneyMarket(new Profile("Seif", "Mamdouh", "10/12/2002"), 200.0, false);
+        MoneyMarket mmAccount = new MoneyMarket(new Profile("Seif", "Mamdouh", dat3), 200.0, false);
 
         // Perform withdrawals
         mmAccount.makeWithdrawal(100); // 1st withdrawal
         mmAccount.makeWithdrawal(50); // 2nd withdrawal
+
+
 
         // Check and update loyal status based on balance
         mmAccount.updateLoyalStatus();
