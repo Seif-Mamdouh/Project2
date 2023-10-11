@@ -6,9 +6,7 @@ public abstract class Account implements Comparable <Account> {
     protected Profile profileHolder;
     protected double balance;
     protected static final int MONTHS_IN_YEAR = 12;
-
-
-
+    
 
     /**
      * Contrustor with default values
@@ -32,6 +30,11 @@ public abstract class Account implements Comparable <Account> {
      * @return
      */
     public abstract double monthlyFee();
+
+    // get Account Type
+    public abstract String getAccountType();
+    // Abstract method to get the profile of the account
+    public abstract Profile getProfileType();
 
 
     /**
@@ -65,5 +68,6 @@ public abstract class Account implements Comparable <Account> {
             balance -= amount;
         }
     }
+
 
 }

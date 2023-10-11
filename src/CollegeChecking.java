@@ -27,4 +27,15 @@ public class CollegeChecking extends Checking{
     public double monthlyFee() {
         return 0;
     }
+
+
+    @Override
+    public String getAccountType() {
+        return "CollegeChecking";
+    }
+    @Override
+    public Profile getProfileType() {
+        return this.profileHolder;
+    }
+
 }

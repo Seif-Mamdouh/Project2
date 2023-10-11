@@ -55,5 +55,15 @@ public class Savings extends Account {
     }
 
 
+    @Override
+    public String getAccountType() {
+        return "Savings";
+    }
+
+    @Override
+    public Profile getProfileType() {
+        return this.profileHolder;
+    }
+
 
 }

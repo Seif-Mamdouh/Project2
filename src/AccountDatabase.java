@@ -5,6 +5,7 @@ public class AccountDatabase {
     private final static int INITIAL_CAPACITY = 4;
     private final static int DEFAULT_CONSTRUCTOR_VAL = 0;
     private final static int NOT_FOUND = -1;
+    private static final int EQUAL_IN_COMPARABLE = 0;
 
     public int getNumAccounts(){
         return numAcct;
@@ -143,11 +144,88 @@ public class AccountDatabase {
 
 
     /**
-     * Method to sort by Account Type and Profile;
+     * Method to print everything in the current Array
      */
-    public void printSorted(){
+    public void displayAllAccounts() {
+        for (int i = 0; i < numAcct; i++) {
+            Account account = accounts[i];
+            Profile profile = account.getProfileType();
 
-    } //sort by account type and profile
+            String firstName = profile.getFirstName();
+            String lastName = profile.getLastName();
+            Date dateOfBirth = profile.getDateOfBirth();
+
+            String formattedInfo = firstName + " " + lastName + " " + dateOfBirth;
+            System.out.println(formattedInfo);
+        }
+    }
+
+    @FunctionalInterface
+    private interface CustomComparator<T> {
+        /**
+         * Compares 2 things of type T
+         *
+         * @param a first thing to compare
+         * @param b second thing to compare
+         * @return negative number if a is less than b, positive number if a
+         * is greater than b, and 0 if they are equal
+         */
+        int compare(T a, T b);
+    }
+
+    /**
+     * Implementation of bubble sort. Could not do O(nlogn) sort because it
+     * had to be in place and don't have access to random library.
+     *
+     * @param toSort     array to be sorted
+     * @param numToSort  number of things to sort will only sort index 0
+     *                   through numToSort - 1. Any index after will be ignored
+     * @param comparator typically a lambda that will be used to compare two
+     *                   things in the array. Is expected to return a
+     *                   negative number if the first parameter is smaller
+     *                   than the second
+     * @param <T>        type of the array to be sorted
+     */
+    private static <T> void bubbleSort(T[] toSort, int numToSort, CustomComparator<T> comparator)
+    {
+        for (int i = 0; i < numToSort; i++) {
+            for (int j = i; j < numToSort; j++) {
+                if (comparator.compare(toSort[j], toSort[i]) <
+                        EQUAL_IN_COMPARABLE) {
+                    T temp = toSort[i];
+                    toSort[i] = toSort[j];
+                    toSort[j] = temp;
+                }
+            }
+        }
+    }
+
+    /**
+     * Method to print and sort by Account Type and Profile;
+     */
+    public void printSorted() {
+        // Define a custom comparator for sorting Account objects
+        CustomComparator<Account> accountComparator = (a, b) -> {
+            // Compare account types
+            int accountTypeComparison = a.getAccountType().compareTo(b.getAccountType());
+
+            if (accountTypeComparison != 0) {
+                return accountTypeComparison;
+            }
+
+            // If account types are the same, compare profiles
+            return a.getProfileType().compareTo(b.getProfileType());
+        };
+
+        // Use bubbleSort to sort the accounts array
+        bubbleSort(accounts, numAcct, accountComparator);
+
+        // Print the sorted accounts
+        for (int i = 0; i < numAcct; i++) {
+            System.out.println(accounts[i].toString());
+        }
+    }
+
 
     /**
      * Method to calculate interests and fees
@@ -163,14 +241,14 @@ public class AccountDatabase {
             System.out.println("Monthly Fee: $" + monthlyFee);
         }
 
-    } //calculate interests/fees
+    }
 
     /**
      * Method to Apply interest/fees
      */
     public void printUpdatedBalances(){
 
-    } //apply the interests/fees
+    }
 
 
     public static void main(String[] args) {
@@ -184,12 +262,15 @@ public class AccountDatabase {
         Account account1 = new Savings(new Profile("Seif", "Mamdouh", date1), 1000.0, true);
         Account account2 = new MoneyMarket(new Profile("Mikey", "Muzafarov", date2), 2000.0, false);
         Account account3 = new Checking(new Profile("Mikey", "Muzafarov", date2), 2000.0);
+        Account account4 = new CollegeChecking(new Profile("Mikey", "Muzafarov", date2), 100.0);
+
 
 
         // Test the open method to add accounts
         accountDatabase.open(account1);
         accountDatabase.open(account2);
         accountDatabase.open(account3);
+        accountDatabase.open(account4);
 
         //Check the number of accounts in the DB
         System.out.println("The number of amount of Accounts in the Database is: " + accountDatabase.getNumAccounts());
@@ -211,7 +292,10 @@ public class AccountDatabase {
 //        System.out.println("Money Market account balance after withdrawal: " + account2.balance);
 
 
-        accountDatabase.printFeesAndInterests();
+//        accountDatabase.printFeesAndInterests();
+
+//        accountDatabase.printSorted();
+        accountDatabase.displayAllAccounts();
     }
 
 }

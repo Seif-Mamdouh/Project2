@@ -47,4 +47,14 @@ public class Checking extends Account {
         return Checking.MONTHLY_FEE;
     }
 
+
+    @Override
+    public String getAccountType() {
+        return "Checking";
+    }
+    @Override
+    public Profile getProfileType() {
+        return this.profileHolder;
+    }
+
 }

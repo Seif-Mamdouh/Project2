@@ -71,6 +71,16 @@ public class MoneyMarket extends Savings {
             }
         }
 
+
+    @Override
+    public String getAccountType() {
+        return "MoneyMarket";
+    }
+    @Override
+    public Profile getProfileType() {
+        return this.profileHolder;
+    }
+
     public static void main(String[] args) {
 
         Date dat3 = new Date(12, 12,2002);
