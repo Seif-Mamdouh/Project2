@@ -21,7 +21,7 @@ public class MoneyMarket extends Savings {
 
 
     public double getBalance(){
-        return this.balance;
+        return balance;
     }
 
 

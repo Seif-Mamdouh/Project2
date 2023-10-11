@@ -36,6 +36,12 @@ public abstract class Account implements Comparable <Account> {
     // Abstract method to get the profile of the account
     public abstract Profile getProfileType();
 
+    public abstract double getBalance();
+
+    public void setBalance(double newBalance) {
+        this.balance = newBalance;
+    }
+
 
     /**
      * Abstract Method to compare Accounts
@@ -68,6 +74,7 @@ public abstract class Account implements Comparable <Account> {
             balance -= amount;
         }
     }
+
 
 
 }

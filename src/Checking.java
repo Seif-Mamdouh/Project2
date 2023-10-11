@@ -57,4 +57,9 @@ public class Checking extends Account {
         return this.profileHolder;
     }
 
+    public double getBalance(){
+        return this.balance;
+    }
+
+
 }

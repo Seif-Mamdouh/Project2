@@ -38,4 +38,9 @@ public class CollegeChecking extends Checking{
         return this.profileHolder;
     }
 
+    public double getBalance(){
+        return this.balance;
+    }
+
+
 }

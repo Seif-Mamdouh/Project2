@@ -155,7 +155,7 @@ public class AccountDatabase {
             String lastName = profile.getLastName();
             Date dateOfBirth = profile.getDateOfBirth();
 
-            String formattedInfo = firstName + " " + lastName + " " + dateOfBirth;
+            String formattedInfo = firstName + " " + lastName + " " + dateOfBirth + " " + account.getAccountType();
             System.out.println(formattedInfo);
         }
     }
@@ -247,22 +247,35 @@ public class AccountDatabase {
      * Method to Apply interest/fees
      */
     public void printUpdatedBalances(){
+        for (int i = 0; i < numAcct; i++) {
+            Account account = accounts[i];
 
+            double monthlyInterest = account.monthlyInterest();
+            double monthlyFee = account.monthlyFee();
+
+            double updatedBalance = account.getBalance() + monthlyInterest - monthlyFee;
+            account.setBalance(updatedBalance);
+
+            // Print updated balance and other account details
+            System.out.println("Account: " + account.getAccountType());
+            System.out.println("Updated Balance: $" + account.getBalance());
+        }
     }
 
 
     public static void main(String[] args) {
-        // Create an AccountDatabase instance
         AccountDatabase accountDatabase = new AccountDatabase();
 
         Date date1 = new Date(10, 12, 2002);
         Date date2 = new Date(1, 1, 2002);
+        Date date3 = new Date(10, 10, 2002);
+        Date date4 = new Date(2, 2, 2002);
 
         // Create some sample accounts
         Account account1 = new Savings(new Profile("Seif", "Mamdouh", date1), 1000.0, true);
         Account account2 = new MoneyMarket(new Profile("Mikey", "Muzafarov", date2), 2000.0, false);
-        Account account3 = new Checking(new Profile("Mikey", "Muzafarov", date2), 2000.0);
-        Account account4 = new CollegeChecking(new Profile("Mikey", "Muzafarov", date2), 100.0);
+        Account account3 = new Checking(new Profile("Mikey", "Muzafarov", date3), 2000.0);
+        Account account4 = new CollegeChecking(new Profile("Mikey", "Muzafarov", date4), 100.0);
 
 
 
@@ -272,30 +285,32 @@ public class AccountDatabase {
         accountDatabase.open(account3);
         accountDatabase.open(account4);
 
-        //Check the number of accounts in the DB
+//        //Check the number of accounts in the DB
         System.out.println("The number of amount of Accounts in the Database is: " + accountDatabase.getNumAccounts());
 
-//        //Check if accounts were added
-//        System.out.println("Added Account 1: "  + accountDatabase.contains(account1));
-//        System.out.println("Added Account 2 : " + accountDatabase.contains(account2));
-//        System.out.println("Added Account 3 : " + accountDatabase.contains(account3));
-//
-//        // Test deposit
-//        double depositAmount = 500.0;
-//        accountDatabase.deposit(account1, depositAmount);
-//        System.out.println("Savings account balance after deposit: " + account1.balance);
-//
-//        // Test withdrawal
-//        double withdrawalAmount = 1000.0;
-//        boolean withdrawalSuccess = accountDatabase.withdraw(account2, withdrawalAmount);
-//        System.out.println("Withdrawal from Money Market account: " + withdrawalSuccess);
-//        System.out.println("Money Market account balance after withdrawal: " + account2.balance);
+            //Check if accounts were added
+        System.out.println("Added Account 1: "  + accountDatabase.contains(account1));
+
+        System.out.println("Added Account 2 : " + accountDatabase.contains(account2));
+        System.out.println("Added Account 3 : " + accountDatabase.contains(account3));
+
+        // Test deposit
+        double depositAmount = 500.0;
+        accountDatabase.deposit(account1, depositAmount);
+        System.out.println("Savings account balance after deposit: " + account1.balance);
+
+        // Test withdrawal
+        double withdrawalAmount = 1000.0;
+        boolean withdrawalSuccess = accountDatabase.withdraw(account2, withdrawalAmount);
+        System.out.println("Withdrawal from Money Market account: " + withdrawalSuccess);
+        System.out.println("Money Market account balance after withdrawal: " + account2.balance);
 
 
-//        accountDatabase.printFeesAndInterests();
+        accountDatabase.printFeesAndInterests();
 
-//        accountDatabase.printSorted();
+        accountDatabase.printSorted();
         accountDatabase.displayAllAccounts();
+        accountDatabase.printUpdatedBalances();
     }
 
 }

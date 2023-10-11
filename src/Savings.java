@@ -65,5 +65,9 @@ public class Savings extends Account {
         return this.profileHolder;
     }
 
+    public double getBalance(){
+        return this.balance;
+    }
+
 
 }
