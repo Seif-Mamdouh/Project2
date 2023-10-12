@@ -150,39 +150,19 @@ public class AccountDatabase {
         }
     }
 
-    @FunctionalInterface
-    private interface CustomComparator<T> {
-        /**
-         * Compares 2 things of type T
-         *
-         * @param a first thing to compare
-         * @param b second thing to compare
-         * @return negative number if a is less than b, positive number if a
-         * is greater than b, and 0 if they are equal
-         */
-        int compare(T a, T b);
-    }
-
     /**
-     * Implementation of bubble sort. Could not do O(nlogn) sort because it
-     * had to be in place and don't have access to random library.
+     * Sorts an array of Account objects using the bubble sort algorithm.
      *
-     * @param toSort     array to be sorted
-     * @param numToSort  number of things to sort will only sort index 0
-     *                   through numToSort - 1. Any index after will be ignored
-     * @param comparator typically a lambda that will be used to compare two
-     *                   things in the array. Is expected to return a
-     *                   negative number if the first parameter is smaller
-     *                   than the second
-     * @param <T>        type of the array to be sorted
+     * @param toSort     The array to be sorted.
+     * @param numToSort  The number of elements to sort; only elements in the range
+     *                   [0, numToSort - 1] will be sorted, while any elements after
+     *                   numToSort will remain unchanged.
      */
-    private static <T> void bubbleSort(T[] toSort, int numToSort, CustomComparator<T> comparator)
-    {
+    private static void bubbleSort(Account[] toSort, int numToSort) {
         for (int i = 0; i < numToSort; i++) {
             for (int j = i; j < numToSort; j++) {
-                if (comparator.compare(toSort[j], toSort[i]) <
-                        EQUAL_IN_COMPARABLE) {
-                    T temp = toSort[i];
+                if (toSort[j].compareTo(toSort[i]) < 0) {
+                    Account temp = toSort[i];
                     toSort[i] = toSort[j];
                     toSort[j] = temp;
                 }
@@ -190,25 +170,13 @@ public class AccountDatabase {
         }
     }
 
+
     /**
      * Method to print and sort by Account Type and Profile;
      */
     public void printSorted() {
-        // Define a custom comparator for sorting Account objects
-        CustomComparator<Account> accountComparator = (a, b) -> {
-            // Compare account types
-            int accountTypeComparison = a.getAccountType().compareTo(b.getAccountType());
-
-            if (accountTypeComparison != 0) {
-                return accountTypeComparison;
-            }
-
-            // If account types are the same, compare profiles
-            return a.getProfileType().compareTo(b.getProfileType());
-        };
-
         // Use bubbleSort to sort the accounts array
-        bubbleSort(accounts, numAcct, accountComparator);
+        bubbleSort(accounts, numAcct);
 
         // Print the sorted accounts
         for (int i = 0; i < numAcct; i++) {
@@ -275,7 +243,7 @@ public class AccountDatabase {
         accountDatabase.open(account3);
         accountDatabase.open(account4);
 
-//        //Check the number of accounts in the DB
+        //Check the number of accounts in the DB
         System.out.println("The number of amount of Accounts in the Database is: " + accountDatabase.getNumAccounts());
 
             //Check if accounts were added

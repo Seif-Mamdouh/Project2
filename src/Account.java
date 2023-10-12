@@ -62,8 +62,8 @@ public abstract class Account implements Comparable <Account> {
      */
     @Override
     public int compareTo(Account otherAccount) {
-        // Compare Account based on the balance
-        return Double.compare(this.balance, otherAccount.balance);
+        // Compare Account based on the account type
+        return this.getAccountType().compareTo(otherAccount.getAccountType());
     }
 
     /**
