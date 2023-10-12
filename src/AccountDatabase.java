@@ -99,17 +99,7 @@ public class AccountDatabase {
      * @param account
      */
     public void deposit(Account account, double depositAmount){
-        if (!contains(account)) {
-            System.out.print("Account doesn't exisit");
-        }
-
-
         int accountToSearch = find(account);
-
-        if (accountToSearch == -1) {
-            System.out.println("Account doesn't exist");
-            return; // Exit the method if the account is not found
-        }
 
         Account accountInTheDatabase = accounts[accountToSearch];
 

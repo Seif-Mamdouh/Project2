@@ -52,14 +52,5 @@ public class Checking extends Account {
     public String getAccountType() {
         return "Checking";
     }
-    @Override
-    public Profile getProfileType() {
-        return this.profileHolder;
-    }
-
-    public double getBalance(){
-        return this.balance;
-    }
-
 
 }

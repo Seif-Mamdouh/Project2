@@ -54,20 +54,9 @@ public class Savings extends Account {
         return MONTHLY_FEE;
     }
 
-
     @Override
     public String getAccountType() {
         return "Savings";
     }
-
-    @Override
-    public Profile getProfileType() {
-        return this.profileHolder;
-    }
-
-    public double getBalance(){
-        return this.balance;
-    }
-
 
 }

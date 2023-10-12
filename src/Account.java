@@ -31,12 +31,23 @@ public abstract class Account implements Comparable <Account> {
      */
     public abstract double monthlyFee();
 
-    // get Account Type
+    /**
+     * Abstract Method to getAccountType
+     */
     public abstract String getAccountType();
-    // Abstract method to get the profile of the account
-    public abstract Profile getProfileType();
 
-    public abstract double getBalance();
+
+    /**
+     * Method to get the Profile Holder
+     * @return profileHolder
+     */
+    public Profile getProfileType(){
+        return profileHolder;
+    }
+
+    public double getBalance(){
+        return balance;
+    }
 
     public void setBalance(double newBalance) {
         this.balance = newBalance;

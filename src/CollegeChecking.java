@@ -33,14 +33,5 @@ public class CollegeChecking extends Checking{
     public String getAccountType() {
         return "CollegeChecking";
     }
-    @Override
-    public Profile getProfileType() {
-        return this.profileHolder;
-    }
-
-    public double getBalance(){
-        return this.balance;
-    }
-
 
 }

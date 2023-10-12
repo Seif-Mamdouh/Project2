@@ -19,13 +19,6 @@ public class MoneyMarket extends Savings {
         this.withdrawals = 0;
     }
 
-
-    public double getBalance(){
-        return balance;
-    }
-
-
-
     /**
      * Method that overrides the method in the savings class
      * Calculate monthly interest based on the annual interest rate
@@ -62,10 +55,8 @@ public class MoneyMarket extends Savings {
      */
     @Override
     public void makeWithdrawal(double amount) {
-        if (amount > 0 && balance >= amount) {
-            balance -= amount;
-            withdrawals++;
-        }
+        super.makeWithdrawal(amount);
+        withdrawals++;
         if (withdrawals > MAX_AMOUNT_OF_WITHDRAWLS) {
                 balance -= WITHDRAWL_FEE;
             }
@@ -75,10 +66,6 @@ public class MoneyMarket extends Savings {
     @Override
     public String getAccountType() {
         return "MoneyMarket";
-    }
-    @Override
-    public Profile getProfileType() {
-        return this.profileHolder;
     }
 
     public static void main(String[] args) {
