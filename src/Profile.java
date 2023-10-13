@@ -53,5 +53,19 @@ public class Profile implements Comparable<Profile> {
         return comparingLastName;
     }
 
+    /**
+     * Checks if two profiles are the same
+     * @param other other object to check equality with
+     * @return true if the profiles match, false otherwise
+     */
+    @Override
+    public boolean equals(Object other){
+        if(!(other instanceof Profile)){
+            return false;
+        }
+        Profile otherProfile = (Profile) other;
+        return this.compareTo(otherProfile) == 0;
+    }
+
 }
 

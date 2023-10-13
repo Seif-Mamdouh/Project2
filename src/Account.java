@@ -1,19 +1,21 @@
 /**
  * Public Abstract class for all Account Types
+ *
  * @author Seifeldeen Mohamed
  */
-public abstract class Account implements Comparable <Account> {
+public abstract class Account implements Comparable<Account> {
     protected Profile profileHolder;
     protected double balance;
     protected static final int MONTHS_IN_YEAR = 12;
-    
+
 
     /**
      * Contrustor with default values
+     *
      * @param profileHolder
      * @param balance
      */
-    public Account(Profile profileHolder, double balance){
+    public Account(Profile profileHolder, double balance) {
         this.profileHolder = profileHolder;
         this.balance = balance;
     }
@@ -21,12 +23,14 @@ public abstract class Account implements Comparable <Account> {
 
     /**
      * Abstract Method for Monthly Interests
+     *
      * @return
      */
     public abstract double monthlyInterest();
 
     /**
      * Abstract Method for Monthly fees
+     *
      * @return
      */
     public abstract double monthlyFee();
@@ -39,13 +43,14 @@ public abstract class Account implements Comparable <Account> {
 
     /**
      * Method to get the Profile Holder
+     *
      * @return profileHolder
      */
-    public Profile getProfileType(){
+    public Profile getProfileType() {
         return profileHolder;
     }
 
-    public double getBalance(){
+    public double getBalance() {
         return balance;
     }
 
@@ -68,6 +73,7 @@ public abstract class Account implements Comparable <Account> {
 
     /**
      * Abstract Method to make a deposit for all account types
+     *
      * @param amount
      */
     public void makeDeposit(double amount) {
@@ -78,6 +84,7 @@ public abstract class Account implements Comparable <Account> {
 
     /**
      * Method to make a withdrawal from the account.
+     *
      * @param amount The amount to withdraw.
      */
     public void makeWithdrawal(double amount) {
@@ -86,6 +93,24 @@ public abstract class Account implements Comparable <Account> {
         }
     }
 
+    /**
+     * Checks if two accounts are equal to each other
+     *
+     * @param other other object to check equality to
+     * @return true if the accounts are of the same child class of Account
+     * and their profiles are the same
+     */
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof Account)) {
+            return false;
+        }
+        Account otherAccount = (Account) other;
+        return this.getAccountType().equals(otherAccount.getAccountType()) &&
+               this.getProfileType().equals(otherAccount.getProfileType());
+
+
+    }
 
 
 }
