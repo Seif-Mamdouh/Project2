@@ -4,7 +4,7 @@ public class Profile implements Comparable<Profile> {
     //last name
     private String lname;
     //date of birth
-    private String dob;
+    private Date dob;
 
 
     /**
@@ -13,10 +13,10 @@ public class Profile implements Comparable<Profile> {
      * @param last_name
      * @param dateOfBirth
      */
-    public Profile(String first_name, String last_name, String dateOfBirth) {
+    public Profile(String first_name, String last_name, Date dateOfBirth) {
         this.fname = first_name;
         this.lname = last_name;
-        this.dob = dateOfBirth;
+        dob = dateOfBirth;
     }
 
     public String getFirstName() {
@@ -27,7 +27,7 @@ public class Profile implements Comparable<Profile> {
         return lname;
     }
 
-    public String getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dob;
     }
 
@@ -53,17 +53,5 @@ public class Profile implements Comparable<Profile> {
         return comparingLastName;
     }
 
-    public static void main(String[] args) {
-        // Create instances of Profile
-        Profile profile1 = new Profile("John", "Doe", "1990-01-15");
-        Profile profile2 = new Profile("John", "Doe", "1985-05-20");
-        Profile profile3 = new Profile("Bob", "Johnson", "1985-03-10");
-
-        int result1to2 = profile1.compareTo(profile2);
-        int result1to3 = profile1.compareTo(profile3);
-
-        System.out.println("Comparison result 1 to 2: " + result1to2);
-        System.out.println("Comparison result 1 to 3: " + result1to3);
-    }
 }
 

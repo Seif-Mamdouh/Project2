@@ -5,7 +5,7 @@
  */
 public class CollegeChecking extends Checking{
 
-    private Campus campus;
+//    private Campus campus;
 
     /**
      * Construct college checking account with a profile, initial balance, and campus
@@ -13,9 +13,9 @@ public class CollegeChecking extends Checking{
      * @param balance initial balance
      * @param campus which Rutgers campus the student attends
      */
-    public CollegeChecking(Profile profileHolder, double balance, Campus campus) {
+    public CollegeChecking(Profile profileHolder, double balance) {
         super(profileHolder, balance);
-        this.campus = campus;
+//        this.campus = campus;
     }
 
     /**
@@ -27,4 +27,11 @@ public class CollegeChecking extends Checking{
     public double monthlyFee() {
         return 0;
     }
+
+
+    @Override
+    public String getAccountType() {
+        return "CollegeChecking";
+    }
+
 }
