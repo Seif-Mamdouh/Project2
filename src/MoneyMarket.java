@@ -20,6 +20,16 @@ public class MoneyMarket extends Savings {
     }
 
     /**
+     * Most typically used Money Market constructor, bc has default loyal
+     * @param holder
+     * @param balance
+     */
+    public MoneyMarket(Profile holder, double balance) {
+        super(holder, balance, true);
+        this.withdrawals = 0;
+    }
+
+    /**
      * Method that overrides the method in the savings class
      * Calculate monthly interest based on the annual interest rate
      * @return

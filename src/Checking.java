@@ -53,4 +53,13 @@ public class Checking extends Account {
         return "Checking";
     }
 
+    @Override
+    public boolean equals(Object other){
+        if(!(other instanceof Checking)){
+            return super.equals(other);
+        }
+        Checking otherChecking = (Checking) other;
+        return this.profileHolder.equals(otherChecking.profileHolder);
+    }
+
 }

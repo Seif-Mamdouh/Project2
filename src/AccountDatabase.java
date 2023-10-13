@@ -220,6 +220,20 @@ public class AccountDatabase {
         }
     }
 
+//    /**
+//     * Return a particular account that equals the passed in account
+//     * @param account account to check equality with
+//     * @return account that equals passed in account
+//     */
+//    public Account getAccount(Account account){
+//        for(Account acc : this.accounts){
+//            if(acc.equals(account)){
+//                return acc;
+//            }
+//        }
+//        return null;
+//    }
+
 
     public static void main(String[] args) {
         AccountDatabase accountDatabase = new AccountDatabase();

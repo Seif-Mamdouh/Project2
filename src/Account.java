@@ -108,9 +108,5 @@ public abstract class Account implements Comparable<Account> {
         Account otherAccount = (Account) other;
         return this.getAccountType().equals(otherAccount.getAccountType()) &&
                this.getProfileType().equals(otherAccount.getProfileType());
-
-
     }
-
-
 }

@@ -16,7 +16,7 @@ public class Profile implements Comparable<Profile> {
     public Profile(String first_name, String last_name, Date dateOfBirth) {
         this.fname = first_name;
         this.lname = last_name;
-        dob = dateOfBirth;
+        this.dob = dateOfBirth;
     }
 
     public String getFirstName() {
@@ -33,7 +33,7 @@ public class Profile implements Comparable<Profile> {
 
     @Override
     public String toString(){
-        return "Name: " + fname + "Last Name: " + lname + "Date of birth: " + dob;
+        return String.format("%s %s %s", this.fname, this.lname, this.dob);
     }
 
 

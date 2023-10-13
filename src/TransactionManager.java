@@ -21,6 +21,9 @@ public class TransactionManager {
     private static final String[] VALID_COMMAND_TYPES = {
             "O", "C", "D", "W", "P", "PI", "UB", "Q"
     };
+    private static final int[] CAMPUS_CODES = {
+            0, 1, 2
+    };
 
     /**
      * Creates a transaction manager with an AccountDatabase
@@ -45,15 +48,46 @@ public class TransactionManager {
     }
 
     /**
+     * Print the account info and an additional string
+     */
+    private static void printAccountAnnouncement(
+            Account account,
+            String announcement
+    ) {
+        String acronym = "A";
+        if (account instanceof CollegeChecking) {
+            acronym = "CC";
+        }
+        else if (account instanceof Checking) {
+            acronym = "C";
+        }
+        else if (account instanceof MoneyMarket) {
+            acronym = "MM";
+        }
+        else if (account instanceof Savings) {
+            acronym = "S";
+        }
+        String message = String.format("%s(%s) %s.",
+                                       account.profileHolder.toString(),
+                                       acronym,
+                                       announcement
+        );
+
+        System.out.println(message);
+
+    }
+
+    /**
      * Will print "Not a valid amount"
      */
-    private static void printNotValidAmount(){
+    private static void printNotValidAmount() {
         System.out.println("Not a valid amount.");
     }
+
     /**
      * Will print "Initial deposit cannot be 0 or negative."
      */
-    private static void printInitialDepositCannotBeZeroOrNegative(){
+    private static void printInitialDepositCannotBeZeroOrNegative() {
         System.out.println("Initial deposit cannot be 0 or negative.");
     }
 
@@ -66,7 +100,7 @@ public class TransactionManager {
     private static Double parseMoneyAmount(String moneyAmountString) {
 
         int startingIndex = 0;
-        if(moneyAmountString.charAt(0) == '-'){
+        if (moneyAmountString.charAt(0) == '-') {
             startingIndex = 1;
         }
 
@@ -112,33 +146,46 @@ public class TransactionManager {
         if (accountTypeString.equals("C")) {
             return new Checking(profileHolder, balance);
         }
-        else if (accountTypeString.equals("CC")) {
-            //needs campus
-            return new CollegeChecking(profileHolder, balance);
+        else if (accountTypeString.equals("MM")) {
+            return new MoneyMarket(profileHolder, balance);
         }
 
-        boolean loyalty;
-        if (additionalInfoString == null) {
-            System.out.println("no additional info");
-            return null;
-        }
-        else if (additionalInfoString.equals("1")) {
-            loyalty = true;
-        }
-        else if (additionalInfoString.equals("0")) {
-            loyalty = false;
-        }
-        else {
-            System.out.println("loyalty is either 1 or 0");
-            return null;
-        }
+
 
         if (accountTypeString.equals("S")) {
+            boolean loyalty;
+            if (additionalInfoString == null) {
+                System.out.println("no additional info");
+                return null;
+            }
+            else if (additionalInfoString.equals("1")) {
+                loyalty = true;
+            }
+            else if (additionalInfoString.equals("0")) {
+                loyalty = false;
+            }
+            else {
+                System.out.println("loyalty is either 1 or 0");
+                return null;
+            }
             return new Savings(profileHolder, balance, loyalty);
         }
-        else if (accountTypeString.equals("MM")) {
-            return new MoneyMarket(profileHolder, balance, loyalty);
+
+        else if (accountTypeString.equals("CC")) {
+            int notFound = -1;
+            int campusCode = notFound;
+            for(int curr : TransactionManager.CAMPUS_CODES){
+                if(String.valueOf(curr).equals(additionalInfoString)){
+                    campusCode = curr;
+                }
+            }
+            if(campusCode == notFound){
+                System.out.println("Invalid campus code.");
+                return null;
+            }
+            return new CollegeChecking(profileHolder, balance, campusCode);
         }
+
 
         return null;
     }
@@ -242,7 +289,23 @@ public class TransactionManager {
         }
 
         if (commandType.equals("O")) {
-            this.accountDatabase.open(account);
+
+            if (account.getBalance() <= 0) {
+                TransactionManager.printInitialDepositCannotBeZeroOrNegative();
+            }
+            else if (this.accountDatabase.contains(account)) {
+                TransactionManager.printAccountAnnouncement(
+                        account,
+                        "is already in the database"
+                );
+            }
+            else if(account instanceof MoneyMarket && account.balance < 2000){
+                System.out.println("Minimum of $2000 to open a Money Market account.");
+            }
+            else {
+                TransactionManager.printAccountAnnouncement(account, "opened");
+                this.accountDatabase.open(account);
+            }
             return;
         }
 
@@ -252,6 +315,7 @@ public class TransactionManager {
         }
 
         if (commandType.equals("C")) {
+            TransactionManager.printAccountAnnouncement(account, "closed");
             this.accountDatabase.close(account);
             return;
         }
@@ -275,8 +339,9 @@ public class TransactionManager {
     public void run() {
         System.out.println("Transaction Manager is running.\n");
         Scanner in = new Scanner(System.in);
-
+        int lineNumber = 0;
         while (in.hasNext()) {
+            lineNumber++;
             String userInput = in.nextLine().trim();
             if (userInput.isEmpty()) {
                 continue;
