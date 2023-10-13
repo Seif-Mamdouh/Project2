@@ -17,8 +17,11 @@ public class TransactionManager {
     private static final int DATE_INDEX = 4;
     private static final int MONEY_AMOUNT_INDEX = 5;
     private static final int ADDITIONAL_INFO_INDEX = 6;
-
     private static final int MAX_COMMAND_TOKENS = 7;
+
+    private static final String[] VALID_COMMAND_TYPES = {
+            "O", "C", "D", "W", "P", "PI", "UB", "Q"
+    };
 
     public TransactionManager(AccountDatabase AccountDatabase){
         this.accountDatabase = AccountDatabase;
@@ -94,56 +97,73 @@ public class TransactionManager {
         return Double.parseDouble(moneyAmountString);
     }
 
-    private void handleCommands(String userInput){
-        String[] tokens = userInput.split("\\s+");
-        if(tokens.length > MAX_COMMAND_TOKENS){
-            System.out.print("Too many tokens");
-            return;
-        }
-
-        //String commandType = TransactionManager.parseCommand(tokens[COMMAND_TYPE_INDEX]);
-        String commandType = tokens[COMMAND_TYPE_INDEX];
-
+    public boolean handlePrintCommands(String commandType){
         switch(commandType){
             case "P":
                 this.accountDatabase.printSorted();
-                break;
+                return false;
             case "PI":
                 this.accountDatabase.printFeesAndInterests();
-                break;
+                return false;
             case "UB":
                 this.accountDatabase.printUpdatedBalances();
-                break;
-            case "Q":
-                System.out.println("goodbye");
-                return;
-                break;
+                return false;
         }
-        //parse account type, first name, last name, dob,
+        return true;
+
+    }
+
+    public static boolean validCommand(String commandType){
+        for(String validCommand : TransactionManager.VALID_COMMAND_TYPES){
+            if(validCommand.equals(commandType)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static Account aggregateAndCreateAccount(String[] tokens){
         String accountType = tokens[ACCOUNT_TYPE_INDEX];
         String firstName = tokens[FIRST_NAME_INDEX];
         String lastName = tokens[LAST_NAME_INDEX];
         Date dateOfBirth = Date.parseDate(tokens[DATE_INDEX]);
+
+        Double moneyAmount = TransactionManager.parseMoneyAmount(tokens[MONEY_AMOUNT_INDEX]);
+        if(moneyAmount == null){
+            return null;
+        }
+
         String additionalInfo = null;
         if(tokens.length > ADDITIONAL_INFO_INDEX){
             additionalInfo = tokens[ADDITIONAL_INFO_INDEX];
         }
-        Double moneyAmount = TransactionManager.parseMoneyAmount(tokens[MONEY_AMOUNT_INDEX]);
-        if(moneyAmount == null){
-            return;
-        }
+
         Profile profile = new Profile(firstName, lastName, dateOfBirth);
 
         Account account = openProperAccount(accountType, profile, moneyAmount, additionalInfo);
         if(account == null){
+            return null;
+        }
+        return account;
+    }
+
+    private void handleCommands(String[] tokens){
+        //String commandType = TransactionManager.parseCommand(tokens[COMMAND_TYPE_INDEX]);
+        String commandType = tokens[COMMAND_TYPE_INDEX];
+
+        boolean shouldContinue = handlePrintCommands(commandType);
+        if(!shouldContinue){
             return;
         }
 
-        if(commandType.equals("O")){
+        //parse account type, first name, last name, dob,
 
+        Account account = aggregateAndCreateAccount(tokens);
+
+        if(commandType.equals("O")){
             this.accountDatabase.open(account);
+            return;
         }
-        //parse money amount
 
         switch(commandType){
             case "C":
@@ -160,12 +180,28 @@ public class TransactionManager {
 
     public void run(){
         Scanner in = new Scanner(System.in);
+
         while(in.hasNext()){
             String userInput = in.nextLine().trim();
             if(userInput.isEmpty()){
                 continue;
             }
-            this.handleCommands(userInput);
+
+            String[] tokens = userInput.split("\\s+");
+
+            if(tokens[COMMAND_TYPE_INDEX] == "Q"){
+                break;
+            }
+            else if(!validCommand(tokens[COMMAND_TYPE_INDEX])){
+                System.out.print("Invalid Command Type");
+                continue;
+            }
+            else if(tokens.length > MAX_COMMAND_TOKENS){
+                System.out.print("Too many tokens");
+                continue;
+            }
+
+            this.handleCommands(tokens);
         }
     }
 
