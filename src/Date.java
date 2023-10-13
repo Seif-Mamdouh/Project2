@@ -27,11 +27,12 @@ public class Date implements Comparable<Date> {
      * @param month month of date
      * @param day   day of date
      */
-    public Date(int year, int month, int day) {
+    public Date(int day, int month, int year) {
         this.year = year;
         this.month = month;
         this.day = day;
     }
+
 
     /**
      * Get year in which event will occur

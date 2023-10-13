@@ -54,26 +54,9 @@ public class Savings extends Account {
         return MONTHLY_FEE;
     }
 
-
-
-    public static void main (String[] args){
-
-        Profile profile1 = new Profile("Seif", "Mamdouh", "12/10/2002");
-        Profile profile2 = new Profile("Mikey", "Muzafarov", "1/1/2002");
-
-        Savings loyal = new Savings(profile1, 200, true);
-        Savings nonLoyal = new Savings(profile2, 1000, false);
-
-        double loyalMonthlyInterest = loyal.monthlyInterest();
-        double nonLoyalMonthlyInterest = nonLoyal.monthlyInterest();
-
-        double loyalMonthlyFee = loyal.monthlyFee();
-        double nonLoyalMonthlyFee = nonLoyal.monthlyFee();
-
-        System.out.println("Loyal Interest Rate: " + loyalMonthlyInterest);
-        System.out.println("Non-Loyal Interest Rate: " + nonLoyalMonthlyInterest);
-
-        System.out.println("Loyal Monthly fee: " + loyalMonthlyFee);
-        System.out.println("Non Loyal Monthly fee: " + nonLoyalMonthlyFee);
+    @Override
+    public String getAccountType() {
+        return "Savings";
     }
+
 }
