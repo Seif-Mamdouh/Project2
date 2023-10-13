@@ -24,10 +24,9 @@ public class TransactionManager {
 
     /**
      * Creates a transaction manager with an AccountDatabase
-     * @param AccountDatabase the AccountDatabase to use
      */
-    public TransactionManager(AccountDatabase AccountDatabase) {
-        this.accountDatabase = AccountDatabase;
+    public TransactionManager() {
+        this.accountDatabase = new AccountDatabase();
     }
 
     /**
@@ -65,8 +64,8 @@ public class TransactionManager {
                 }
                 haveSeenDecimal = true;
             }
-            else if (!Character.isLetter(moneyAmountString.charAt(i))) {
-                System.out.print("Non-numeric char detected");
+            else if (!Character.isDigit(moneyAmountString.charAt(i))) {
+                System.out.println("Non-numeric char detected");
                 return null;
             }
         }
@@ -101,14 +100,18 @@ public class TransactionManager {
         }
 
         boolean loyalty;
-        if (additionalInfoString.equals("1")) {
+        if(additionalInfoString == null){
+            System.out.println("no additional info");
+            return null;
+        }
+        else if (additionalInfoString.equals("1")) {
             loyalty = true;
         }
         else if (additionalInfoString.equals("0")) {
             loyalty = false;
         }
         else {
-            System.out.print("loyalty is either 1 or 0");
+            System.out.println("loyalty is either 1 or 0");
             return null;
         }
 
@@ -131,6 +134,10 @@ public class TransactionManager {
      * issue
      */
     private static Account aggregateAndCreateAccount(String[] tokens) {
+        if(tokens.length <= MONEY_AMOUNT_INDEX){
+            System.out.println("Not enough tokens");
+            return null;
+        }
         String accountType = tokens[ACCOUNT_TYPE_INDEX];
         String firstName = tokens[FIRST_NAME_INDEX];
         String lastName = tokens[LAST_NAME_INDEX];
@@ -232,6 +239,7 @@ public class TransactionManager {
      * Run the CLI
      */
     public void run() {
+        System.out.println("Transaction Manager is running.");
         Scanner in = new Scanner(System.in);
 
         while (in.hasNext()) {
@@ -246,16 +254,17 @@ public class TransactionManager {
                 break;
             }
             else if (!validCommand(tokens[COMMAND_TYPE_INDEX])) {
-                System.out.print("Invalid Command Type");
+                System.out.println("Invalid Command Type");
                 continue;
             }
             else if (tokens.length > MAX_COMMAND_TOKENS) {
-                System.out.print("Too many tokens");
+                System.out.println("Too many tokens");
                 continue;
             }
 
             this.handleCommands(tokens);
         }
+        in.close();
     }
 
 }

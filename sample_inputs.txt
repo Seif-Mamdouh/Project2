@@ -1,0 +1,132 @@
+o
+q
+d
+w
+i
+p
+pi
+ub
+a
+A
+c
+b
+B
+P
+PI
+UB
+
+O  C
+O  C    John
+O  C    John Doe
+O  C    John Doe 2/19/1989
+O  C    John Doe 2/19/1989
+
+O  CC   John Doe 2/19/2000 X 0
+O  CC   John Doe 2/19/2000 -100 0
+O  CC   John Doe 2/19/2000 0 0
+
+O  CC   John Doe 2/19/2000 599.99 0
+O  C    John Doe 2/19/2000 599.99
+O  CC   Jane Doe 10/1/2000 999.99 0
+O  CC   Jane Doe 10/1/2000 999.99 0
+
+O  S    Jane Doe 10/1/1995 0 0
+O  S    Jane Doe 10/1/1995 1000 0
+O  S    Jane Doe 10/1/1995 1000 0
+
+O  MM   Jane Doe 10/1/1995 -1000
+O  MM   Jane Doe 10/1/1995 1999
+O  MM   Jane Doe 10/1/1995 2000
+O  MM   Jane Doe 10/1/1995 2000
+
+O  C    April March 1/15/1987 300
+O  S	  April March 1/15/1987 1500 1
+O  C    Jason Brown 3/31/1998 1200
+O  C    Kate Lindsey 8/31/2001 450
+O  CC   Kate Lindsey 8/31/2001 450 3
+O  CC   Kate Lindsey 8/31/2001 450 2
+
+O  MM   Roy Brooks 11/2/2023 2909.10
+O  MM   Roy Brooks 2/29/2011 2909.10
+O  MM   Roy Brooks 3/32/2008 2909.10
+O  MM   Roy Brooks 0/2/2008 2909.10
+O  MM   Roy Brooks 13/3/2008 2909.10
+
+O  MM   Roy Brooks 10/31/2007 2909.10
+O  MM   Roy Brooks 10/1/2007 2909.10
+
+O  CC   Roy Brooks 10/31/1999 2909.10 1
+O  CC   Roy Brooks 10/1/1999 3000 1
+
+O  MM   Roy Brooks 10/31/1979 2909.10
+O  MM   Roy Brooks 10/31/1979 2909.10
+O  MM   April March 1/15/1987 2500
+O  CC   Chris Young 9/20/2006 500 0
+O  CC   chris young 9/20/2006 500 0
+O  CC   Duke Ellington 11/2/2002 900 1
+O  CC   Kate Lindsey 11/2/2002 200 1
+O  S    John Doe 2/19/1990 200 0
+P
+
+C  C
+C  C    April
+C  C    April March
+C  C    April March 11/15/2023
+
+C  C    April March 1/15/1987
+C  C    April March 1/15/1987
+C  CC   Kate Lindsey 8/31/2001
+C  MM   Roy Brooks 10/31/1979
+P
+
+O  C    April March 1/15/1987 1500
+O  MM   Roy Brooks 10/31/1979 2909.10
+
+
+D  CC   Jason Brown 3/31/1999 200
+D  CC   April March 1/15/1987 200
+D  C    Kate Lindsey 8/31/2001 200
+D  CC   Kate Lindsey 8/31/2001 200
+D  C    Kate Lindsey 11/2/2002 200
+D  MM   Roy Brooks 1/31/1979 100.99
+D  MM   Roy Brooks 10/31/1979 100.99
+
+D  S	 April March 1/15/1987 AAA
+D  S	 April March 1/15/1987 0
+D  S	 April March 1/15/1987 -100
+D  S	 April March 1/15/1987 100
+P
+
+W  CC   Kate Lindsey 11/2/2002 100
+W  CC   Duke Ellington 11/2/2002 1000
+W  CC   Duke Ellington 11/2/2002 100
+W  CC   John Doe 2/19/1989 99.99
+W  MM   Roy Brooks 1/31/1979 100.99
+W  MM   Roy Brooks 10/31/1979 100.99
+
+W  S	 April March 1/15/1987 AAA
+W  S	 April March 1/15/1987 0
+W  S	 April March 1/15/1987 -100
+
+W  S	April March 1/15/1987 200
+W  MM   Roy Brooks 10/31/1979 100
+W  MM   Roy Brooks 10/31/1979 100
+W  MM   Roy Brooks 10/31/1979 100
+W  C    April March 1/15/1987 550
+W  MM   Jane Doe 10/1/1995 100
+W  MM Roy Brooks 10/1/2007 500
+W  MM Roy Brooks 10/1/2007 500
+W  MM Roy Brooks 10/1/2007 500
+PI
+
+W  MM Roy Brooks 10/1/2007 500
+D  MM JANE DOE 10/1/1995 100
+PI
+
+O  C    Joe Scanlan 12/24/1960 2200
+O  MM   Joe Scanlan 12/24/1960 3200
+PI
+UB
+
+Q
+This line should not be processed.
