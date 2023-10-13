@@ -45,27 +45,45 @@ public class TransactionManager {
     }
 
     /**
+     * Will print "Not a valid amount"
+     */
+    private static void printNotValidAmount(){
+        System.out.println("Not a valid amount.");
+    }
+    /**
+     * Will print "Initial deposit cannot be 0 or negative."
+     */
+    private static void printInitialDepositCannotBeZeroOrNegative(){
+        System.out.println("Initial deposit cannot be 0 or negative.");
+    }
+
+    /**
      * Parses a string containing a double with at most 2 decimal places
      *
      * @param moneyAmountString the string containing the alleged double
      * @return the Double object or null if it was invalid
      */
     private static Double parseMoneyAmount(String moneyAmountString) {
+
+        int startingIndex = 0;
+        if(moneyAmountString.charAt(0) == '-'){
+            startingIndex = 1;
+        }
+
         boolean haveSeenDecimal = false;
-        for (int i = 0; i < moneyAmountString.length(); i++) {
+        for (int i = startingIndex; i < moneyAmountString.length(); i++) {
             if (moneyAmountString.charAt(i) == '.') {
                 if (haveSeenDecimal) {
-                    System.out.println("Cannot have 2 decimals in one String");
+                    TransactionManager.printNotValidAmount();
                     return null;
                 }
                 else if (moneyAmountString.length() - 1 - i > 2) {
-                    System.out.println(
-                            "Can't have more than 2 numbers after decimal");
+                    TransactionManager.printNotValidAmount();
                 }
                 haveSeenDecimal = true;
             }
             else if (!Character.isDigit(moneyAmountString.charAt(i))) {
-                System.out.println("Non-numeric char detected");
+                TransactionManager.printNotValidAmount();
                 return null;
             }
         }
@@ -100,7 +118,7 @@ public class TransactionManager {
         }
 
         boolean loyalty;
-        if(additionalInfoString == null){
+        if (additionalInfoString == null) {
             System.out.println("no additional info");
             return null;
         }
@@ -134,8 +152,8 @@ public class TransactionManager {
      * issue
      */
     private static Account aggregateAndCreateAccount(String[] tokens) {
-        if(tokens.length <= MONEY_AMOUNT_INDEX){
-            System.out.println("Not enough tokens");
+        if (tokens.length <= MONEY_AMOUNT_INDEX) {
+            System.out.println("Missing data for opening an account.");
             return null;
         }
         String accountType = tokens[ACCOUNT_TYPE_INDEX];
@@ -164,6 +182,21 @@ public class TransactionManager {
     }
 
     /**
+     * Will run the supplied method if the database is not empty, otherwise
+     * will print that the database is empty
+     *
+     * @param method method to execute if database is not empty
+     */
+    private void runMethodIfDatabaseNotEmpty(Runnable method) {
+        if (this.accountDatabase.getNumAccounts() == 0) {
+            System.out.println("Account Database is empty!");
+        }
+        else {
+            method.run();
+        }
+    }
+
+    /**
      * Handles any commands that need to be printed out to console
      *
      * @param commandType The String consisting containing the user's desired
@@ -174,15 +207,16 @@ public class TransactionManager {
      */
     public boolean handlePrintCommands(String commandType) {
         boolean wasHandled = false;
+
         switch (commandType) {
             case "P":
-                this.accountDatabase.printSorted();
+                this.runMethodIfDatabaseNotEmpty(this.accountDatabase::printSorted);
                 return wasHandled;
             case "PI":
-                this.accountDatabase.printFeesAndInterests();
+                this.runMethodIfDatabaseNotEmpty(this.accountDatabase::printFeesAndInterests);
                 return wasHandled;
             case "UB":
-                this.accountDatabase.printUpdatedBalances();
+                this.runMethodIfDatabaseNotEmpty(this.accountDatabase::printUpdatedBalances);
                 return wasHandled;
         }
         return !wasHandled;
@@ -239,7 +273,7 @@ public class TransactionManager {
      * Run the CLI
      */
     public void run() {
-        System.out.println("Transaction Manager is running.");
+        System.out.println("Transaction Manager is running.\n");
         Scanner in = new Scanner(System.in);
 
         while (in.hasNext()) {
@@ -254,7 +288,7 @@ public class TransactionManager {
                 break;
             }
             else if (!validCommand(tokens[COMMAND_TYPE_INDEX])) {
-                System.out.println("Invalid Command Type");
+                System.out.println("Invalid command!");
                 continue;
             }
             else if (tokens.length > MAX_COMMAND_TOKENS) {

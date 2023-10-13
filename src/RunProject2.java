@@ -48,6 +48,7 @@ public class RunProject2 {
                                   line %d\s
                                   %n\s
                                   """, programOutput, expectedOutput, line);
+            break;
             }
             line++;
         }
