@@ -59,4 +59,15 @@ public class Savings extends Account {
         return "Savings";
     }
 
+    @Override
+    public String toString(){
+
+        String loyaltyString = "not loyal";
+        if(this.isLoyal){
+            loyaltyString = "is loyal";
+        }
+        //System.out.println();
+        return String.format("%s::%s::widthdraw: %d", super.toString(), loyaltyString, 0);
+
+    }
 }

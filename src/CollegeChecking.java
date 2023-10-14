@@ -34,4 +34,9 @@ public class CollegeChecking extends Checking{
         return "CollegeChecking";
     }
 
+    @Override
+    public String toString(){
+        return String.format("%s::%s", super.toString(), this.campus);
+    }
+
 }

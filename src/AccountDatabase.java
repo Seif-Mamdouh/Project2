@@ -247,7 +247,7 @@ public class AccountDatabase {
         Account account1 = new Savings(new Profile("Seif", "Mamdouh", date1), 1000.0, true);
         Account account2 = new MoneyMarket(new Profile("Mikey", "Muzafarov", date2), 2000.0, false);
         Account account3 = new Checking(new Profile("Mikey", "Muzafarov", date3), 2000.0);
-        Account account4 = new CollegeChecking(new Profile("Mikey", "Muzafarov", date4), 100.0, Campus.NewBrunswick);
+        Account account4 = new CollegeChecking(new Profile("Mikey", "Muzafarov", date4), 100.0, Campus.NEW_BRUNSWICK);
 
 
 

@@ -9,6 +9,7 @@ public class Profile implements Comparable<Profile> {
 
     /**
      * Default Constructor
+     *
      * @param first_name
      * @param last_name
      * @param dateOfBirth
@@ -23,7 +24,7 @@ public class Profile implements Comparable<Profile> {
         return fname;
     }
 
-    public String getLastName(){
+    public String getLastName() {
         return lname;
     }
 
@@ -32,41 +33,52 @@ public class Profile implements Comparable<Profile> {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return String.format("%s %s %s", this.fname, this.lname, this.dob);
     }
 
 
     /**
      * Method to compare profiles
+     *
      * @param otherProfile the object to be compared.
      * @return
      */
     @Override
     public int compareTo(Profile otherProfile) {
-        int comparingLastName = this.getLastName().compareTo(otherProfile.getLastName());
-        if (comparingLastName != 0){
+        int comparingLastName =
+                String.CASE_INSENSITIVE_ORDER.compare(this.getLastName(),
+                                                      otherProfile.getLastName()
+                );
+
+        if (comparingLastName != 0) {
             return comparingLastName;
         }
 
-        int comparingFirstName = this.getFirstName().compareTo(otherProfile.getFirstName());
-        if (comparingFirstName != 0){
+        int comparingFirstName =
+                String.CASE_INSENSITIVE_ORDER.compare(this.getFirstName(),
+                                                      otherProfile.getFirstName()
+                );
+
+        if (comparingFirstName != 0) {
             return comparingFirstName;
         }
 
-        int comparingDateOfBirth = this.dob.compareTo(otherProfile.getDateOfBirth());
+        int comparingDateOfBirth =
+                this.dob.compareTo(otherProfile.getDateOfBirth());
 
         return comparingDateOfBirth;
     }
 
     /**
      * Checks if two profiles are the same
+     *
      * @param other other object to check equality with
      * @return true if the profiles match, false otherwise
      */
     @Override
-    public boolean equals(Object other){
-        if(!(other instanceof Profile)){
+    public boolean equals(Object other) {
+        if (!(other instanceof Profile)) {
             return false;
         }
         Profile otherProfile = (Profile) other;

@@ -68,7 +68,11 @@ public abstract class Account implements Comparable<Account> {
     @Override
     public int compareTo(Account otherAccount) {
         // Compare Account based on the account type
-        return this.getAccountType().compareTo(otherAccount.getAccountType());
+        int comparedAccountTypes = this.getAccountType().compareTo(otherAccount.getAccountType());
+        if(comparedAccountTypes != 0){
+            return comparedAccountTypes;
+        }
+        return this.profileHolder.compareTo(otherAccount.profileHolder);
     }
 
     /**
@@ -108,5 +112,30 @@ public abstract class Account implements Comparable<Account> {
         Account otherAccount = (Account) other;
         return this.getAccountType().equals(otherAccount.getAccountType()) &&
                this.getProfileType().equals(otherAccount.getProfileType());
+    }
+
+    protected String fullClassName(){
+        String className = this.getClass().getSimpleName();
+
+        int secondCapital = className.length();
+        for(int i = 1; i < className.length(); i++){
+            if(Character.isUpperCase(className.charAt(i))){
+                secondCapital = i;
+                break;
+            }
+        }
+        String fullClassName = className.substring(0, secondCapital);
+        if(secondCapital != className.length()){
+            String secondPart = className.substring(secondCapital, className.length());
+            fullClassName = fullClassName + " " + secondPart;
+        }
+        return fullClassName;
+    }
+
+    @Override
+    public String toString(){
+
+
+        return String.format("%s::%s::Balance $%,.2f", this.fullClassName(), this.profileHolder, this.balance);
     }
 }

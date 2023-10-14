@@ -198,7 +198,9 @@ public class TransactionManager {
                 return null;
             }
             else if (profileHolder.getDateOfBirth().getAge() >= 24) {
-                TransactionManager.printAgeError(profileHolder.getDateOfBirth(), "over 24.");
+                TransactionManager.printAgeError(profileHolder.getDateOfBirth(),
+                                                 "over 24."
+                );
                 return null;
             }
             return new CollegeChecking(profileHolder, balance, campus);
@@ -240,7 +242,7 @@ public class TransactionManager {
         }
         if (dateOfBirthError != null) {
             TransactionManager.printAgeError(dateOfBirth, dateOfBirthError);
-            return  null;
+            return null;
         }
 
         Double moneyAmount =
@@ -269,13 +271,17 @@ public class TransactionManager {
      *
      * @param method method to execute if database is not empty
      */
-    private void runMethodIfDatabaseNotEmpty(Runnable method) {
+    private void runMethodIfDatabaseNotEmpty(
+            Runnable method, String listMessage
+    ) {
         if (this.accountDatabase.getNumAccounts() == 0) {
             System.out.println("Account Database is empty!");
+            return;
         }
-        else {
-            method.run();
-        }
+        System.out.println("\n" + listMessage);
+        method.run();
+        System.out.println("*end of list.\n");
+
     }
 
     /**
@@ -292,13 +298,22 @@ public class TransactionManager {
 
         switch (commandType) {
             case "P":
-                this.runMethodIfDatabaseNotEmpty(this.accountDatabase::printSorted);
+                this.runMethodIfDatabaseNotEmpty(
+                        this.accountDatabase::printSorted,
+                        "*Accounts sorted by account type and profile."
+                );
                 return wasHandled;
             case "PI":
-                this.runMethodIfDatabaseNotEmpty(this.accountDatabase::printFeesAndInterests);
+                this.runMethodIfDatabaseNotEmpty(
+                        this.accountDatabase::printFeesAndInterests,
+                        "*list of accounts with fee and monthly interest"
+                );
                 return wasHandled;
             case "UB":
-                this.runMethodIfDatabaseNotEmpty(this.accountDatabase::printUpdatedBalances);
+                this.runMethodIfDatabaseNotEmpty(
+                        this.accountDatabase::printUpdatedBalances,
+                        "*list of accounts with fees and interests applied."
+                );
                 return wasHandled;
         }
         return !wasHandled;
