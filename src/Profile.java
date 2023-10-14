@@ -37,6 +37,26 @@ public class Profile implements Comparable<Profile> {
         return String.format("%s %s %s", this.fname, this.lname, this.dob);
     }
 
+    public String errorStringIfDoesNotmeetCreationCriteria(){
+        String dateOfBirthError = null;
+        if (!this.dob.isValid()) {
+            dateOfBirthError = "not a valid calendar date!";
+        }
+        else if (this.dob.isFutureDate()) {
+            dateOfBirthError = "cannot be today or a future day.";
+
+        }
+        else if (this.dob.getAge() < 16) {
+            dateOfBirthError = "under 16.";
+        }
+
+        if (dateOfBirthError != null) {
+            return this.ageErrorString(dateOfBirthError);
+        }
+
+        return null;
+    }
+
 
     /**
      * Method to compare profiles
@@ -83,6 +103,19 @@ public class Profile implements Comparable<Profile> {
         }
         Profile otherProfile = (Profile) other;
         return this.compareTo(otherProfile) == 0;
+    }
+
+    /**
+     * Print the age info and an additional string talking about why it isn't
+     * allowed
+     */
+    public String ageErrorString(String ageErrorMessage) {
+
+        return String.format("DOB invalid: %s %s",
+                             this.getDateOfBirth().toString(),
+                             ageErrorMessage
+        );
+
     }
 
 }

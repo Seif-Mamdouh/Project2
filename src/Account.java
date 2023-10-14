@@ -114,6 +114,13 @@ public abstract class Account implements Comparable<Account> {
                this.getProfileType().equals(otherAccount.getProfileType());
     }
 
+    public String errorStringIfDoesNotmeetCreationCriteria(){
+        if(this.balance <= 0){
+            return "Initial deposit cannot be 0 or negative.";
+        }
+        return null;
+    }
+
     protected String fullClassName(){
         String className = this.getClass().getSimpleName();
 
@@ -134,8 +141,6 @@ public abstract class Account implements Comparable<Account> {
 
     @Override
     public String toString(){
-
-
         return String.format("%s::%s::Balance $%,.2f", this.fullClassName(), this.profileHolder, this.balance);
     }
 }

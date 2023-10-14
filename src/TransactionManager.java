@@ -76,21 +76,6 @@ public class TransactionManager {
 
     }
 
-    /**
-     * Print the age info and an additional string talking about why it isn't
-     * allowed
-     */
-    private static void printAgeError(
-            Date dateOfBirth, String ageErrorMessage
-    ) {
-
-        System.out.println(String.format("DOB invalid: %s %s",
-                                         dateOfBirth,
-                                         ageErrorMessage
-        ));
-
-    }
-
 
     /**
      * Will print "Not a valid amount"
@@ -234,13 +219,6 @@ public class TransactionManager {
                     campus = curr;
                 }
             }
-
-            if (profileHolder.getDateOfBirth().getAge() >= 24) {
-                TransactionManager.printAgeError(profileHolder.getDateOfBirth(),
-                                                 "over 24."
-                );
-                return null;
-            }
             return new CollegeChecking(profileHolder, balance, campus);
         }
 
@@ -262,20 +240,10 @@ public class TransactionManager {
         String lastName = tokens[LAST_NAME_INDEX];
         Date dateOfBirth = Date.parseDate(tokens[DATE_INDEX]);
 
-        String dateOfBirthError = null;
-
-        if (!dateOfBirth.isValid()) {
-            dateOfBirthError = "not a valid calendar date!";
-        }
-        else if (dateOfBirth.isFutureDate()) {
-            dateOfBirthError = "cannot be today or a future day.";
-
-        }
-        else if (dateOfBirth.getAge() < 16) {
-            dateOfBirthError = "under 16.";
-        }
-        if (dateOfBirthError != null) {
-            TransactionManager.printAgeError(dateOfBirth, dateOfBirthError);
+        Profile profile = new Profile(firstName, lastName, dateOfBirth);
+        String criteriaErrorString = profile.errorStringIfDoesNotmeetCreationCriteria();
+        if(criteriaErrorString != null){
+            System.out.println(criteriaErrorString);
             return null;
         }
 
@@ -294,7 +262,7 @@ public class TransactionManager {
             additionalInfo = tokens[ADDITIONAL_INFO_INDEX];
         }
 
-        Profile profile = new Profile(firstName, lastName, dateOfBirth);
+
 
         return openProperAccount(accountType,
                                  profile,
@@ -394,23 +362,15 @@ public class TransactionManager {
             return;
         }
         else if (commandType.equals("O")) {
-
-            if (account.getBalance() <= 0) {
-                TransactionManager.printInitialDepositCannotBeZeroOrNegative();
-            }
-            else if (account instanceof CollegeChecking &&
-                     ((CollegeChecking) account).getCampus() == null) {
-                System.out.println("Invalid campus code.");
+            String criteriaErrorString = account.errorStringIfDoesNotmeetCreationCriteria();
+            if(criteriaErrorString != null){
+                System.out.println(criteriaErrorString);
             }
             else if (this.checkForExistence(account)) {
                 TransactionManager.printAccountAnnouncement(account,
                                                             "is already in " +
                                                             "the database"
                 );
-            }
-            else if (account instanceof MoneyMarket && account.balance < 2000) {
-                System.out.println(
-                        "Minimum of $2000 to open a Money Market account.");
             }
             else {
                 TransactionManager.printAccountAnnouncement(account, "opened");

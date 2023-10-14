@@ -110,6 +110,21 @@ public class MoneyMarket extends Savings {
 
     }
 
+    @Override
+    public String errorStringIfDoesNotmeetCreationCriteria() {
+        String prior = super.errorStringIfDoesNotmeetCreationCriteria();
+        if (prior != null) {
+            return prior;
+        }
+        else if (balance < MIN_AMOUNT) {
+            return String.format(
+                    "Minimum of $%d to open a Money Market account.",
+                    (int) MIN_AMOUNT
+            );
+        }
+        return null;
+    }
+
     /**
      * Override string to return Money Market::Savings as name
      *
@@ -125,7 +140,11 @@ public class MoneyMarket extends Savings {
 
     @Override
     public String toString() {
-        return String.format("%s::withdrawal: %d", super.toString(), this.withdrawals);
+        return String.format(
+                "%s::withdrawal: %d",
+                super.toString(),
+                this.withdrawals
+        );
 
     }
 }

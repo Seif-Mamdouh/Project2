@@ -7,6 +7,8 @@ public class CollegeChecking extends Checking {
 
     private Campus campus;
 
+    private static final int INELIGIBLE_AGE = 24;
+
     /**
      * Construct college checking account with a profile, initial balance,
      * and campus
@@ -16,9 +18,7 @@ public class CollegeChecking extends Checking {
      * @param campus        which Rutgers campus the student attends
      */
     public CollegeChecking(
-            Profile profileHolder,
-            double balance,
-            Campus campus
+            Profile profileHolder, double balance, Campus campus
     ) {
         super(profileHolder, balance);
         this.campus = campus;
@@ -47,6 +47,22 @@ public class CollegeChecking extends Checking {
     @Override
     public String getAccountType() {
         return "CollegeChecking";
+    }
+
+    @Override
+    public String errorStringIfDoesNotmeetCreationCriteria() {
+        String prior = super.errorStringIfDoesNotmeetCreationCriteria();
+        if (prior != null) {
+            return prior;
+        }
+        else if (this.getProfileType().getDateOfBirth().getAge() >= INELIGIBLE_AGE) {
+            return this.profileHolder.ageErrorString(
+                    "over " + String.valueOf(INELIGIBLE_AGE)) + ".";
+        }
+        else if (this.campus ==null){
+            return "Invalid campus code.";
+        }
+        return null;
     }
 
     @Override

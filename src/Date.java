@@ -33,7 +33,6 @@ public class Date implements Comparable<Date> {
         this.day = day;
     }
 
-
     /**
      * Get year in which event will occur
      *
