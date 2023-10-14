@@ -1,3 +1,4 @@
+import java.rmi.UnexpectedException;
 import java.util.Scanner;
 
 /**
@@ -165,6 +166,24 @@ public class TransactionManager {
         return Double.parseDouble(moneyAmountString);
     }
 
+    private static Boolean parseLoyalty(String loyaltyToken) {
+        Boolean loyalty = null;
+
+        if (loyaltyToken == null) {
+            loyalty = null;
+        }
+        else if (loyaltyToken.equals("1")) {
+            loyalty = true;
+        }
+        else if (loyaltyToken.equals("0")) {
+            loyalty = false;
+        }
+        else {
+            System.out.println("loyalty is either 1 or 0");
+        }
+        return loyalty;
+    }
+
     /**
      * Opens the proper child class of Account according to given parameters
      *
@@ -193,20 +212,12 @@ public class TransactionManager {
 
 
         if (accountTypeString.equals("S")) {
-            boolean loyalty;
-            if (additionalInfoString == null) {
-                System.out.println("no additional info");
-                return null;
-            }
-            else if (additionalInfoString.equals("1")) {
-                loyalty = true;
-            }
-            else if (additionalInfoString.equals("0")) {
+            Boolean loyalty =
+                    TransactionManager.parseLoyalty(additionalInfoString);
+            if (loyalty == null) {
+                //useful if we are creating this account just to find others,
+                // not to actually open it
                 loyalty = false;
-            }
-            else {
-                System.out.println("loyalty is either 1 or 0");
-                return null;
             }
             return new Savings(profileHolder, balance, loyalty);
         }
@@ -241,8 +252,9 @@ public class TransactionManager {
         Date dateOfBirth = Date.parseDate(tokens[DATE_INDEX]);
 
         Profile profile = new Profile(firstName, lastName, dateOfBirth);
-        String criteriaErrorString = profile.errorStringIfDoesNotmeetCreationCriteria();
-        if(criteriaErrorString != null){
+        String criteriaErrorString =
+                profile.errorStringIfDoesNotmeetCreationCriteria();
+        if (criteriaErrorString != null) {
             System.out.println(criteriaErrorString);
             return null;
         }
@@ -261,7 +273,6 @@ public class TransactionManager {
         if (tokens.length > ADDITIONAL_INFO_INDEX) {
             additionalInfo = tokens[ADDITIONAL_INFO_INDEX];
         }
-
 
 
         return openProperAccount(accountType,
@@ -289,6 +300,33 @@ public class TransactionManager {
         System.out.println("*end of list.\n");
 
     }
+
+    //    private void depositOrWithdraw(
+//            Runnable method, double sum, String listMessage
+//    ) {
+//        if(sum <= 0){
+//            System.out.println("Deposit - amount cannot be 0 or negative.");
+//        }
+//        System.out.println("\n" + listMessage);
+//        method.run();
+//
+//
+//    }
+    private static boolean depositOrWithdrawErrorCheck(
+            double amount,
+            String nameOfAction
+    ) {
+        if (amount <= 0) {
+            System.out.printf(
+                    "%s - amount cannot be 0 or negative.\n",
+                    nameOfAction
+            );
+            return true;
+        }
+        return false;
+
+    }
+
 
     /**
      * Handles any commands that need to be printed out to console
@@ -326,14 +364,17 @@ public class TransactionManager {
 
     }
 
-    private boolean checkForExistence(Account account){
+    private boolean checkForExistence(Account account) {
         boolean normalContains = this.accountDatabase.contains(account);
-        if(normalContains || !(account instanceof Checking)){
+        if (normalContains || !(account instanceof Checking)) {
             return normalContains;
         }
 
-        Account opposite = new CollegeChecking(account.profileHolder, 0, Campus.NEW_BRUNSWICK);
-        if(account instanceof CollegeChecking){
+        Account opposite = new CollegeChecking(account.profileHolder,
+                                               0,
+                                               Campus.NEW_BRUNSWICK
+        );
+        if (account instanceof CollegeChecking) {
             opposite = new Checking(account.profileHolder, 0);
         }
         return this.accountDatabase.contains(opposite);
@@ -362,8 +403,9 @@ public class TransactionManager {
             return;
         }
         else if (commandType.equals("O")) {
-            String criteriaErrorString = account.errorStringIfDoesNotmeetCreationCriteria();
-            if(criteriaErrorString != null){
+            String criteriaErrorString =
+                    account.errorStringIfDoesNotmeetCreationCriteria();
+            if (criteriaErrorString != null) {
                 System.out.println(criteriaErrorString);
             }
             else if (this.checkForExistence(account)) {
@@ -395,15 +437,50 @@ public class TransactionManager {
 
 
         double balanceForDepositAndWithdraw = account.getBalance();
+        String nameOfAction;
 
         if (commandType.equals("D")) {
+            nameOfAction = "Deposit";
+            if (TransactionManager.depositOrWithdrawErrorCheck(
+                    balanceForDepositAndWithdraw,
+                    nameOfAction
+            )) {
+                return;
+            }
             this.accountDatabase.deposit(account, balanceForDepositAndWithdraw);
         }
         else if (commandType.equals("W")) {
-            this.accountDatabase.withdraw(account,
-                                          balanceForDepositAndWithdraw
-            );
+            nameOfAction = "Withdraw";
+            if (TransactionManager.depositOrWithdrawErrorCheck(
+                    balanceForDepositAndWithdraw,
+                    nameOfAction
+            )) {
+                return;
+            }
+            else if (!this.accountDatabase.withdraw(
+                    account,
+                    balanceForDepositAndWithdraw
+            )) {
+                //System.out.printf("%s Withdraw - insufficient fund.\n",
+                // account.getProfileType());
+                TransactionManager.printAccountAnnouncement(
+                        account,
+                        "Withdraw - insufficient fund"
+                );
+                return;
+            }
+
         }
+        else {
+            System.out.println("THIS LINE OF CODE SHOULD NEVER BE EXECUTED");
+            return;
+            //throw new UnexpectedException("THIS LINE OF CODE SHOULD NEVER
+            // BE EXECUTED");
+        }
+
+        String announcement =
+                String.format("%s - balance updated", nameOfAction);
+        TransactionManager.printAccountAnnouncement(account, announcement);
 
     }
 
