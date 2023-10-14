@@ -51,8 +51,7 @@ public class TransactionManager {
      * Print the account info and an additional string
      */
     private static void printAccountAnnouncement(
-            Account account,
-            String announcement
+            Account account, String announcement
     ) {
         String acronym = "A";
         if (account instanceof CollegeChecking) {
@@ -76,6 +75,22 @@ public class TransactionManager {
         System.out.println(message);
 
     }
+
+    /**
+     * Print the age info and an additional string talking about why it isn't
+     * allowed
+     */
+    private static void printAgeError(
+            Date dateOfBirth, String ageErrorMessage
+    ) {
+
+        System.out.println(String.format("DOB invalid: %s %s",
+                                         dateOfBirth,
+                                         ageErrorMessage
+        ));
+
+    }
+
 
     /**
      * Will print "Not a valid amount"
@@ -151,7 +166,6 @@ public class TransactionManager {
         }
 
 
-
         if (accountTypeString.equals("S")) {
             boolean loyalty;
             if (additionalInfoString == null) {
@@ -172,18 +186,22 @@ public class TransactionManager {
         }
 
         else if (accountTypeString.equals("CC")) {
-            int notFound = -1;
-            int campusCode = notFound;
-            for(int curr : TransactionManager.CAMPUS_CODES){
-                if(String.valueOf(curr).equals(additionalInfoString)){
-                    campusCode = curr;
+            Campus campus = null;
+            for (Campus curr : Campus.values()) {
+                if (String.valueOf(curr.CAMPUS_CODE)
+                          .equals(additionalInfoString)) {
+                    campus = curr;
                 }
             }
-            if(campusCode == notFound){
+            if (campus == null) {
                 System.out.println("Invalid campus code.");
                 return null;
             }
-            return new CollegeChecking(profileHolder, balance, campusCode);
+            else if (profileHolder.getDateOfBirth().getAge() >= 24) {
+                TransactionManager.printAgeError(profileHolder.getDateOfBirth(), "over 24.");
+                return null;
+            }
+            return new CollegeChecking(profileHolder, balance, campus);
         }
 
 
@@ -207,6 +225,23 @@ public class TransactionManager {
         String firstName = tokens[FIRST_NAME_INDEX];
         String lastName = tokens[LAST_NAME_INDEX];
         Date dateOfBirth = Date.parseDate(tokens[DATE_INDEX]);
+
+        String dateOfBirthError = null;
+
+        if (!dateOfBirth.isValid()) {
+            dateOfBirthError = "not a valid calendar date!";
+        }
+        else if (dateOfBirth.isFutureDate()) {
+            dateOfBirthError = "cannot be today or a future day.";
+
+        }
+        else if (dateOfBirth.getAge() < 16) {
+            dateOfBirthError = "under 16.";
+        }
+        if (dateOfBirthError != null) {
+            TransactionManager.printAgeError(dateOfBirth, dateOfBirthError);
+            return  null;
+        }
 
         Double moneyAmount =
                 TransactionManager.parseMoneyAmount(tokens[MONEY_AMOUNT_INDEX]);
@@ -294,13 +329,14 @@ public class TransactionManager {
                 TransactionManager.printInitialDepositCannotBeZeroOrNegative();
             }
             else if (this.accountDatabase.contains(account)) {
-                TransactionManager.printAccountAnnouncement(
-                        account,
-                        "is already in the database"
+                TransactionManager.printAccountAnnouncement(account,
+                                                            "is already in " +
+                                                            "the database"
                 );
             }
-            else if(account instanceof MoneyMarket && account.balance < 2000){
-                System.out.println("Minimum of $2000 to open a Money Market account.");
+            else if (account instanceof MoneyMarket && account.balance < 2000) {
+                System.out.println(
+                        "Minimum of $2000 to open a Money Market account.");
             }
             else {
                 TransactionManager.printAccountAnnouncement(account, "opened");

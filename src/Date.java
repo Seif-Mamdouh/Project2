@@ -107,7 +107,8 @@ public class Date implements Comparable<Date> {
      * @return true if the date is valid, false otherwise
      */
     public boolean isValid() {
-        if (this.month < min_month || this.month > MONTHS_IN_YEAR || this.year < min_year) {
+        if (this.month < min_month || this.month > MONTHS_IN_YEAR ||
+            this.year < min_year) {
             return false;
         }
 
@@ -137,6 +138,22 @@ public class Date implements Comparable<Date> {
         return monthsDifference >= mostMonthDifferenceBeforeReturningTrue;
     }
 
+    /**
+     * Gets age of person if they were born on this date
+     *
+     * @return age of person in years
+     */
+    public int getAge() {
+        Calendar todayDate = Calendar.getInstance();
+        Calendar birthDate = Calendar.getInstance();
+        birthDate.set(year, month - 1, day); //Calendar month is 0-indexed
+
+        // Calculate the difference in months
+        long monthsDifference = this.getYearDifference(birthDate, todayDate);
+        return (int) monthsDifference;
+
+    }
+
 
     /**
      * Check if the date is a future date (not equal to or before the current
@@ -162,7 +179,7 @@ public class Date implements Comparable<Date> {
         // Check if the year is a leap year (divisible by 4, not divisible by
         // 100, or divisible by 400)
         return (year % QUADRENNIAL == 0 && year % CENTENNIAL != 0) ||
-                (year % QUATERCENTENNIAL == 0);
+               (year % QUATERCENTENNIAL == 0);
     }
 
     /**
@@ -181,6 +198,33 @@ public class Date implements Comparable<Date> {
         return (endYear - startYear) * MONTHS_IN_YEAR + (endMonth - startMonth);
     }
 
+    /**
+     * Returns difference in years from two dates
+     *
+     * @param givenDate start date
+     * @param endDate   end date
+     * @return difference in years rounded down to smallest year (how age works)
+     */
+    private long getYearDifference(Calendar givenDate, Calendar endDate) {
+        int startYear = givenDate.get(Calendar.YEAR);
+        int startMonth = givenDate.get(Calendar.MONTH);
+        int startDay = givenDate.get(Calendar.DATE);
+
+        int endYear = endDate.get(Calendar.YEAR);
+        int endMonth = endDate.get(Calendar.MONTH);
+        int endDay = endDate.get(Calendar.DATE);
+
+
+        long yearDifference = endYear - startYear;
+        if (endMonth < startMonth) {
+            yearDifference--;
+        }
+        else if (endMonth == startMonth && endDay < startDay) {
+            yearDifference--;
+        }
+
+        return yearDifference;
+    }
 
 
     /**
@@ -202,6 +246,21 @@ public class Date implements Comparable<Date> {
         }
 
         return Integer.compare(this.day, otherDate.getDay());
+    }
+
+    /**
+     * Compare two dates' equality
+     *
+     * @param other other date to compare to this one
+     * @return true if year, month, and day are same, false otherwise
+     */
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof Date)) {
+            return false;
+        }
+        Date otherDate = (Date) other;
+        return this.compareTo(otherDate) == 0;
     }
 
 
@@ -232,7 +291,7 @@ public class Date implements Comparable<Date> {
         Date date8 = new Date(-2023, 12, 2);
 
         // Test the isValid method
-        assert  date1.isValid();
+        assert date1.isValid();
         assert date2.isValid();
         assert date3.isValid();
         assert date4.isValid();

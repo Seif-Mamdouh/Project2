@@ -13,7 +13,7 @@ public class CollegeChecking extends Checking{
      * @param balance initial balance
      * @param campus which Rutgers campus the student attends
      */
-    public CollegeChecking(Profile profileHolder, double balance, int campus) {
+    public CollegeChecking(Profile profileHolder, double balance, Campus campus) {
         super(profileHolder, balance);
         this.campus = campus;
     }

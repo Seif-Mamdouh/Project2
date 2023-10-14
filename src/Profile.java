@@ -45,12 +45,18 @@ public class Profile implements Comparable<Profile> {
     @Override
     public int compareTo(Profile otherProfile) {
         int comparingLastName = this.getLastName().compareTo(otherProfile.getLastName());
-
-        if (comparingLastName == 0){
-            return this.getFirstName().compareTo(otherProfile.getFirstName());
+        if (comparingLastName != 0){
+            return comparingLastName;
         }
 
-        return comparingLastName;
+        int comparingFirstName = this.getFirstName().compareTo(otherProfile.getFirstName());
+        if (comparingFirstName != 0){
+            return comparingFirstName;
+        }
+
+        int comparingDateOfBirth = this.dob.compareTo(otherProfile.getDateOfBirth());
+
+        return comparingDateOfBirth;
     }
 
     /**
