@@ -107,6 +107,47 @@ public class TransactionManager {
     }
 
     /**
+     * Prints error if number of tokens do not match desired command
+     *
+     * @param tokens array of space delimited user inputs
+     * @return true if there was an error, or false otherwise
+     */
+    private static boolean checkLengthAndPrintError(
+            String[] tokens
+    ) {
+        String commandToken = tokens[COMMAND_TYPE_INDEX];
+
+        String baseError = "Missing data for %s an account.\n";
+        String reason = null;
+
+        if (commandToken.equals("C")) {
+            if (tokens.length <= DATE_INDEX) {
+                reason = "closing";
+            }
+            else {
+                return false;
+            }
+        }
+        else if (tokens.length > MONEY_AMOUNT_INDEX) {
+            return false;
+        }
+        else if (commandToken.equals("O")) {
+            reason = "opening";
+        }
+        else if (commandToken.equals("D")) {
+            reason = "deposit";
+        }
+        else if (commandToken.equals("W")) {
+            reason = "withdraw";
+        }
+        else {
+            System.out.printf("Unrecognized Command: '%s' \n", commandToken);
+        }
+        System.out.printf(baseError, reason);
+        return true;
+    }
+
+    /**
      * Parses a string containing a double with at most 2 decimal places
      *
      * @param moneyAmountString the string containing the alleged double
@@ -193,11 +234,8 @@ public class TransactionManager {
                     campus = curr;
                 }
             }
-            if (campus == null) {
-                System.out.println("Invalid campus code.");
-                return null;
-            }
-            else if (profileHolder.getDateOfBirth().getAge() >= 24) {
+
+            if (profileHolder.getDateOfBirth().getAge() >= 24) {
                 TransactionManager.printAgeError(profileHolder.getDateOfBirth(),
                                                  "over 24."
                 );
@@ -219,10 +257,6 @@ public class TransactionManager {
      * issue
      */
     private static Account aggregateAndCreateAccount(String[] tokens) {
-        if (tokens.length <= MONEY_AMOUNT_INDEX) {
-            System.out.println("Missing data for opening an account.");
-            return null;
-        }
         String accountType = tokens[ACCOUNT_TYPE_INDEX];
         String firstName = tokens[FIRST_NAME_INDEX];
         String lastName = tokens[LAST_NAME_INDEX];
@@ -245,8 +279,12 @@ public class TransactionManager {
             return null;
         }
 
-        Double moneyAmount =
-                TransactionManager.parseMoneyAmount(tokens[MONEY_AMOUNT_INDEX]);
+        Double moneyAmount = 0.0;
+        if (tokens.length > MONEY_AMOUNT_INDEX) {
+            moneyAmount =
+                    TransactionManager.parseMoneyAmount(tokens[MONEY_AMOUNT_INDEX]);
+        }
+
         if (moneyAmount == null) {
             return null;
         }
@@ -320,6 +358,20 @@ public class TransactionManager {
 
     }
 
+    private boolean checkForExistence(Account account){
+        boolean normalContains = this.accountDatabase.contains(account);
+        if(normalContains || !(account instanceof Checking)){
+            return normalContains;
+        }
+
+        Account opposite = new CollegeChecking(account.profileHolder, 0, Campus.NEW_BRUNSWICK);
+        if(account instanceof CollegeChecking){
+            opposite = new Checking(account.profileHolder, 0);
+        }
+        return this.accountDatabase.contains(opposite);
+
+    }
+
     /**
      * Handles the user's commands
      *
@@ -333,17 +385,24 @@ public class TransactionManager {
             return;
         }
 
+        else if (checkLengthAndPrintError(tokens)) {
+            return;
+        }
+
         Account account = aggregateAndCreateAccount(tokens);
         if (account == null) {
             return;
         }
-
-        if (commandType.equals("O")) {
+        else if (commandType.equals("O")) {
 
             if (account.getBalance() <= 0) {
                 TransactionManager.printInitialDepositCannotBeZeroOrNegative();
             }
-            else if (this.accountDatabase.contains(account)) {
+            else if (account instanceof CollegeChecking &&
+                     ((CollegeChecking) account).getCampus() == null) {
+                System.out.println("Invalid campus code.");
+            }
+            else if (this.checkForExistence(account)) {
                 TransactionManager.printAccountAnnouncement(account,
                                                             "is already in " +
                                                             "the database"
@@ -359,17 +418,21 @@ public class TransactionManager {
             }
             return;
         }
-
-        if (!this.accountDatabase.contains(account)) {
-            System.out.println("Such account does not exist");
+        else if (!this.accountDatabase.contains(account)) {
+            TransactionManager.printAccountAnnouncement(account,
+                                                        "is not in the database"
+            );
             return;
         }
 
-        if (commandType.equals("C")) {
-            TransactionManager.printAccountAnnouncement(account, "closed");
+        else if (commandType.equals("C")) {
+            TransactionManager.printAccountAnnouncement(account,
+                                                        "has been closed"
+            );
             this.accountDatabase.close(account);
             return;
         }
+
 
         double balanceForDepositAndWithdraw = account.getBalance();
 

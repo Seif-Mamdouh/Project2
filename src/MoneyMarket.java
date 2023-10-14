@@ -10,6 +10,7 @@ public class MoneyMarket extends Savings {
 
     /**
      * default constructor for MoneyMarket class
+     *
      * @param holder
      * @param balance
      * @param isLoyal
@@ -21,6 +22,7 @@ public class MoneyMarket extends Savings {
 
     /**
      * Most typically used Money Market constructor, bc has default loyal
+     *
      * @param holder
      * @param balance
      */
@@ -32,6 +34,7 @@ public class MoneyMarket extends Savings {
     /**
      * Method that overrides the method in the savings class
      * Calculate monthly interest based on the annual interest rate
+     *
      * @return
      */
     @Override
@@ -41,6 +44,7 @@ public class MoneyMarket extends Savings {
 
     /**
      * Method to check if the balance is $2000 or more for monthly fees
+     *
      * @return
      */
     @Override
@@ -61,6 +65,7 @@ public class MoneyMarket extends Savings {
 
     /**
      * method to make a withDrawl
+     *
      * @param amount
      */
     @Override
@@ -68,9 +73,9 @@ public class MoneyMarket extends Savings {
         super.makeWithdrawal(amount);
         withdrawals++;
         if (withdrawals > MAX_AMOUNT_OF_WITHDRAWLS) {
-                balance -= WITHDRAWL_FEE;
-            }
+            balance -= WITHDRAWL_FEE;
         }
+    }
 
 
     @Override
@@ -80,14 +85,17 @@ public class MoneyMarket extends Savings {
 
     public static void main(String[] args) {
 
-        Date dat3 = new Date(12, 12,2002);
+        Date dat3 = new Date(12, 12, 2002);
         // Create a Money Market account with a balance of $3000
-        MoneyMarket mmAccount = new MoneyMarket(new Profile("Seif", "Mamdouh", dat3), 200.0, false);
+        MoneyMarket mmAccount =
+                new MoneyMarket(new Profile("Seif", "Mamdouh", dat3),
+                                200.0,
+                                false
+                );
 
         // Perform withdrawals
         mmAccount.makeWithdrawal(100); // 1st withdrawal
         mmAccount.makeWithdrawal(50); // 2nd withdrawal
-
 
 
         // Check and update loyal status based on balance
@@ -102,8 +110,22 @@ public class MoneyMarket extends Savings {
 
     }
 
-//    @Override
-//    protected static String fullClassName(){
-//        return String.format("%s::%s", super.fullClassName(), .getSimpleName());
-//    }
+    /**
+     * Override string to return Money Market::Savings as name
+     *
+     * @return proper string representation of a money market account
+     */
+    @Override
+    protected String fullClassName() {
+        return String.format("%s::%s",
+                             super.fullClassName(),
+                             Savings.class.getSimpleName()
+        );
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s::withdrawal: %d", super.toString(), this.withdrawals);
+
+    }
 }

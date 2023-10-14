@@ -3,19 +3,34 @@
  *
  * @author Michael Muzafarov
  */
-public class CollegeChecking extends Checking{
+public class CollegeChecking extends Checking {
 
     private Campus campus;
 
     /**
-     * Construct college checking account with a profile, initial balance, and campus
+     * Construct college checking account with a profile, initial balance,
+     * and campus
+     *
      * @param profileHolder owner of account
-     * @param balance initial balance
-     * @param campus which Rutgers campus the student attends
+     * @param balance       initial balance
+     * @param campus        which Rutgers campus the student attends
      */
-    public CollegeChecking(Profile profileHolder, double balance, Campus campus) {
+    public CollegeChecking(
+            Profile profileHolder,
+            double balance,
+            Campus campus
+    ) {
         super(profileHolder, balance);
         this.campus = campus;
+    }
+
+    /**
+     * get campus associated with this college checking account
+     *
+     * @return campus
+     */
+    public Campus getCampus() {
+        return campus;
     }
 
     /**
@@ -35,7 +50,7 @@ public class CollegeChecking extends Checking{
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return String.format("%s::%s", super.toString(), this.campus);
     }
 
