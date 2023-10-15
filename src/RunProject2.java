@@ -59,6 +59,7 @@ public class RunProject2 {
         }
         programOutputScanner.close();
         expectedOutputScanner.close();
+        System.out.println("Those are all the incongruities");
     }
 
     /**

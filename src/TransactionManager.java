@@ -516,6 +516,7 @@ public class TransactionManager {
 
             this.handleCommands(tokens);
         }
+        System.out.println("Transaction Manager is terminated.");
         in.close();
     }
 

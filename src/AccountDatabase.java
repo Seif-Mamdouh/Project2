@@ -162,19 +162,14 @@ public class AccountDatabase {
 
     /**
      * Sorts an array of Account objects using the bubble sort algorithm.
-     *
-     * @param toSort     The array to be sorted.
-     * @param numToSort  The number of elements to sort; only elements in the range
-     *                   [0, numToSort - 1] will be sorted, while any elements after
-     *                   numToSort will remain unchanged.
      */
-    private static void bubbleSort(Account[] toSort, int numToSort) {
-        for (int i = 0; i < numToSort; i++) {
-            for (int j = i; j < numToSort; j++) {
-                if (toSort[j].compareTo(toSort[i]) < 0) {
-                    Account temp = toSort[i];
-                    toSort[i] = toSort[j];
-                    toSort[j] = temp;
+    private void bubbleSort() {
+        for (int i = 0; i < this.numAcct; i++) {
+            for (int j = i; j < this.numAcct; j++) {
+                if (this.accounts[j].compareTo(this.accounts[i]) < 0) {
+                    Account temp = this.accounts[i];
+                    this.accounts[i] = this.accounts[j];
+                    this.accounts[j] = temp;
                 }
             }
         }
@@ -186,7 +181,7 @@ public class AccountDatabase {
      */
     public void printSorted() {
         // Use bubbleSort to sort the accounts array
-        bubbleSort(accounts, numAcct);
+        this.bubbleSort();
 
         // Print the sorted accounts
         for (int i = 0; i < numAcct; i++) {
@@ -212,6 +207,7 @@ public class AccountDatabase {
      * Method to calculate interests and fees
      */
     public void printFeesAndInterests() {
+        this.bubbleSort();
         for (int i = 0; i < numAcct; i++) {
             Account account = this.accounts[i];
 
@@ -244,12 +240,9 @@ public class AccountDatabase {
             double monthlyFee = account.monthlyFee();
 
             double updatedBalance = account.getBalance() + monthlyInterest - monthlyFee;
-            account.setBalance(updatedBalance);
-
-            // Print updated balance and other account details
-            System.out.println("Account: " + account.getAccountType());
-            System.out.println("Updated Balance: $" + account.getBalance());
+            account.updateBalance(updatedBalance);
         }
+        this.printSorted();
     }
 
 //    /**

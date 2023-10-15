@@ -101,6 +101,11 @@ public class MoneyMarket extends Savings {
         }
     }
 
+    @Override
+    public void updateBalance(double newBalance) {
+        super.updateBalance(newBalance);
+        this.withdrawals = 0;
+    }
 
     @Override
     public String getAccountType() {

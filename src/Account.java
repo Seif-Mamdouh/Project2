@@ -55,7 +55,7 @@ public abstract class Account implements Comparable<Account> {
         return balance;
     }
 
-    public void setBalance(double newBalance) {
+    public void updateBalance(double newBalance) {
         this.balance = newBalance;
     }
 
