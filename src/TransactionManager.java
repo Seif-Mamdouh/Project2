@@ -83,6 +83,16 @@ public class TransactionManager {
     }
 
     /**
+     * Will let user know that not enough data was supplied for their chosen
+     * command
+     *
+     * @param reason what the user was trying to do
+     */
+    public static void printMissingData(String reason) {
+        System.out.printf("Missing data for %s an account.\n", reason);
+    }
+
+    /**
      * Prints error if number of tokens do not match desired command
      *
      * @param tokens array of space delimited user inputs
@@ -93,7 +103,6 @@ public class TransactionManager {
     ) {
         String commandToken = tokens[COMMAND_TYPE_INDEX];
 
-        String baseError = "Missing data for %s an account.\n";
         String reason = null;
 
         if (commandToken.equals("C")) {
@@ -119,7 +128,7 @@ public class TransactionManager {
         else {
             System.out.printf("Unrecognized Command: '%s' \n", commandToken);
         }
-        System.out.printf(baseError, reason);
+        TransactionManager.printMissingData(reason);
         return true;
     }
 
@@ -360,18 +369,29 @@ public class TransactionManager {
     /**
      * Handle a user's request to open an account
      *
-     * @param account account to open
+     * @param optionalLoyaltyInfo String containing the user specified
+     *                            loyalty for
+     *                            opening a savings account, null if they did
+     *                            not supply this
+     * @param account             account to open
      */
-    private void handleOpenCommand(Account account) {
+    private void handleOpenCommand(
+            Account account, String optionalLoyaltyInfo
+    ) {
         String criteriaErrorString =
                 account.errorStringIfDoesNotMeetCreationCriteria();
         if (criteriaErrorString != null) {
             System.out.println(criteriaErrorString);
         }
         else if (this.accountDatabase.open(account)) {
-            TransactionManager.printAccountAnnouncement(account, "opened");
-            this.accountDatabase.open(account);
-
+            if (account.getClass().equals(Savings.class) &&
+                TransactionManager.parseLoyalty(optionalLoyaltyInfo) == null) {
+                TransactionManager.printMissingData("opening");
+            }
+            else {
+                TransactionManager.printAccountAnnouncement(account, "opened");
+                this.accountDatabase.open(account);
+            }
         }
         else {
             TransactionManager.printAccountAnnouncement(account,
@@ -440,12 +460,18 @@ public class TransactionManager {
     /**
      * Take care of user commands that require them to input an account
      *
-     * @param commandType String representing the user's command
-     * @param account     the account that the user entered
+     * @param commandType         String representing the user's command
+     * @param account             the account that the user entered
+     * @param optionalLoyaltyInfo String containing the user specified
+     *                            loyalty for
+     *                            opening a savings account, null if they did
+     *                            not supply this
      */
-    private void handleAccountCommands(String commandType, Account account) {
+    private void handleAccountCommands(
+            String commandType, Account account, String optionalLoyaltyInfo
+    ) {
         if (commandType.equals("O")) {
-            this.handleOpenCommand(account);
+            this.handleOpenCommand(account, optionalLoyaltyInfo);
             return;
         }
         else if (!this.accountDatabase.contains(account)) {
@@ -507,7 +533,14 @@ public class TransactionManager {
             return;
         }
 
-        this.handleAccountCommands(commandType, account);
+        String potentialLoyaltyString = null;
+        if (tokens.length > ADDITIONAL_INFO_INDEX) {
+            potentialLoyaltyString = tokens[ADDITIONAL_INFO_INDEX];
+        }
+        this.handleAccountCommands(commandType,
+                                   account,
+                                   potentialLoyaltyString
+        );
     }
 
     /**
