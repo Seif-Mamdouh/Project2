@@ -2,10 +2,13 @@ public class MoneyMarket extends Savings {
     private int withdrawals;
 
     // Constants for interest rate and fee
-    private static final double ANNUAL_INTEREST_RATE = 0.0475;
+    private static final double ANNUAL_INTEREST_RATE = 0.045;
+    private static final double ANNUAL_LOYALTY_INTEREST_RATE = 0.0475;
     private static final double MAX_AMOUNT_OF_WITHDRAWLS = 3;
     private static final double WITHDRAWL_FEE = 10;
     protected static final double MIN_AMOUNT = 2000.0;
+    private static final double NO_FEE = 0;
+    private static final double MONTHLY_FEE = 25;
 
 
     /**
@@ -39,7 +42,12 @@ public class MoneyMarket extends Savings {
      */
     @Override
     public double monthlyInterest() {
-        return balance * ANNUAL_INTEREST_RATE / Account.MONTHS_IN_YEAR;
+        double interestRate =
+                this.isLoyal ?
+                ANNUAL_LOYALTY_INTEREST_RATE :
+                ANNUAL_INTEREST_RATE;
+
+        return balance * interestRate / Account.MONTHS_IN_YEAR;
     }
 
     /**
@@ -49,10 +57,15 @@ public class MoneyMarket extends Savings {
      */
     @Override
     public double monthlyFee() {
-        if (balance >= MIN_AMOUNT) {
-            return NO_FEE;
+        double fee = NO_FEE;
+        if (balance < MIN_AMOUNT) {
+            fee += MONTHLY_FEE;
         }
-        return MONTHLY_FEE;
+
+        if(this.withdrawals > MAX_AMOUNT_OF_WITHDRAWLS){
+            fee += WITHDRAWL_FEE;
+        }
+        return fee;
     }
 
     /**
@@ -72,8 +85,19 @@ public class MoneyMarket extends Savings {
     public void makeWithdrawal(double amount) {
         super.makeWithdrawal(amount);
         withdrawals++;
-        if (withdrawals > MAX_AMOUNT_OF_WITHDRAWLS) {
-            balance -= WITHDRAWL_FEE;
+        if(this.balance < MIN_AMOUNT){
+            this.isLoyal = false;
+        }
+//        if (withdrawals > MAX_AMOUNT_OF_WITHDRAWLS) {
+//            balance -= WITHDRAWL_FEE;
+//        }
+    }
+
+    @Override
+    public void makeDeposit(double amount) {
+        super.makeDeposit(amount);
+        if(this.balance >= MIN_AMOUNT){
+            this.isLoyal = true;
         }
     }
 

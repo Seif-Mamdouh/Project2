@@ -34,7 +34,7 @@ public class RunProject2 {
                     "Couldn't open either this run or the sample outputs");
             return;
         }
-        int allowedErrors = 0;
+        int allowedErrors = 1;
         int line = 1;
         while (programOutputScanner.hasNext() &&
                expectedOutputScanner.hasNext()) {

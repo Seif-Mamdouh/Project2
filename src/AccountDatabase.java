@@ -1,3 +1,7 @@
+
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 public class AccountDatabase {
     private Account [] accounts; //list of various types of accounts private int numAcct; //number of accounts in the array
     private int numAcct; //number of Accounts in the Array
@@ -6,6 +10,12 @@ public class AccountDatabase {
     private final static int DEFAULT_CONSTRUCTOR_VAL = 0;
     private final static int NOT_FOUND = -1;
     private static final int EQUAL_IN_COMPARABLE = 0;
+    public static final DecimalFormat DECIMAL_FORMAT;
+    static{
+        DECIMAL_FORMAT = new DecimalFormat("0.00");
+        DECIMAL_FORMAT.setRoundingMode(java.math.RoundingMode.DOWN);
+    }
+
 
     public int getNumAccounts(){
         return numAcct;
@@ -184,19 +194,41 @@ public class AccountDatabase {
         }
     }
 
+    private static String round(double amount){
+        double shiftedUp2Decimals = amount * 100;
+        double digitAtSecondDecimal = shiftedUp2Decimals % 10;
+        DecimalFormat fomatter = new DecimalFormat("0.00");
+        if(digitAtSecondDecimal > 5){
+            fomatter.setRoundingMode(RoundingMode.UP);
+        }
+        else{
+            fomatter.setRoundingMode(RoundingMode.DOWN);
+        }
+        return fomatter.format(amount);
+
+    }
 
     /**
      * Method to calculate interests and fees
      */
-    public void printFeesAndInterests(){
+    public void printFeesAndInterests() {
         for (int i = 0; i < numAcct; i++) {
-            Account account = accounts[i];
-            double monthlyInterest = account.monthlyInterest();
-            double monthlyFee = account.monthlyFee();
+            Account account = this.accounts[i];
 
-            System.out.println("Account: " + account.toString());
-            System.out.println("Monthly Interest: $" + monthlyInterest);
-            System.out.println("Monthly Fee: $" + monthlyFee);
+            String toPrint = String.format(
+                    //"%s::fee $%s::monthly interest $%s",
+                    "%s::fee $%,.2f::monthly interest $%,.2f",
+                    account,
+                    //AccountDatabase.DECIMAL_FORMAT.format(account.monthlyFee()),
+                    //AccountDatabase.DECIMAL_FORMAT.format(account.monthlyInterest())
+                    account.monthlyFee(),
+                    account.monthlyInterest()
+                    //AccountDatabase.round(account.monthlyFee()),
+                    //AccountDatabase.round(account.monthlyInterest())
+
+            );
+            System.out.println(toPrint);
+
         }
 
     }

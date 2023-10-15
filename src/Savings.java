@@ -6,7 +6,7 @@
 public class Savings extends Account {
     protected boolean isLoyal;
     // Constants for interest rate and fee
-    private static final double DEFAULT_INTEREST_RATE = 0.02;// 2% interest rate
+    private static final double DEFAULT_INTEREST_RATE = 0.04;
     private static final double LOYALTY_INTEREST_RATE = 0.0425;
     // 4.25% interest rate for loyal customers
     private static final double MINIMUM_BALANCE_FOR_NO_FEE = 500.00;
@@ -53,7 +53,7 @@ public class Savings extends Account {
      */
     @Override
     public double monthlyFee() {
-        if (balance <= MINIMUM_BALANCE_FOR_NO_FEE) {
+        if (balance >= MINIMUM_BALANCE_FOR_NO_FEE) {
             return NO_FEE;
         }
         return MONTHLY_FEE;

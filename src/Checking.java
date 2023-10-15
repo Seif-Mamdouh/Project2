@@ -6,7 +6,7 @@
 public class Checking extends Account {
 
     private static final double MONTHLY_FEE = 12;
-    protected static final double ANNUAL_INTEREST_RATE = 1;
+    protected static final double ANNUAL_INTEREST_RATE = 0.01;
 
     private static double MIN_BALANCE_TO_AVOID_MONTHLY_FEE = 1000;
 

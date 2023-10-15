@@ -1,3 +1,5 @@
+import java.text.DecimalFormat;
+
 /**
  * Public Abstract class for all Account Types
  *
@@ -7,7 +9,6 @@ public abstract class Account implements Comparable<Account> {
     protected Profile profileHolder;
     protected double balance;
     protected static final int MONTHS_IN_YEAR = 12;
-
 
     /**
      * Contrustor with default values

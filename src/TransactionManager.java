@@ -67,6 +67,8 @@ public class TransactionManager {
         else if (account instanceof Savings) {
             acronym = "S";
         }
+
+        account.getAccountType();
         String message = String.format("%s(%s) %s.",
                                        account.profileHolder.toString(),
                                        acronym,
