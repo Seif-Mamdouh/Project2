@@ -1,7 +1,6 @@
-import java.text.DecimalFormat;
 
 /**
- * Public Abstract class for all Account Types
+ * Public Abstract class for all Account Types.
  *
  * @author Seifeldeen Mohamed
  */
@@ -11,10 +10,10 @@ public abstract class Account implements Comparable<Account> {
     protected static final int MONTHS_IN_YEAR = 12;
 
     /**
-     * Contrustor with default values
+     * Constructor with default values
      *
-     * @param profileHolder
-     * @param balance
+     * @param profileHolder holder of account
+     * @param balance starting balance of account
      */
     public Account(Profile profileHolder, double balance) {
         this.profileHolder = profileHolder;
@@ -25,14 +24,14 @@ public abstract class Account implements Comparable<Account> {
     /**
      * Abstract Method for Monthly Interests
      *
-     * @return
+     * @return monthly interest
      */
     public abstract double monthlyInterest();
 
     /**
      * Abstract Method for Monthly fees
      *
-     * @return
+     * @return monthly fees for the account
      */
     public abstract double monthlyFee();
 
@@ -64,7 +63,7 @@ public abstract class Account implements Comparable<Account> {
      * Abstract Method to compare Accounts
      *
      * @param otherAccount the object to be compared.
-     * @return
+     * @return an integer as per compareTo standards
      */
     @Override
     public int compareTo(Account otherAccount) {
@@ -79,7 +78,7 @@ public abstract class Account implements Comparable<Account> {
     /**
      * Abstract Method to make a deposit for all account types
      *
-     * @param amount
+     * @param amount the amount of money to deposit
      */
     public void makeDeposit(double amount) {
         if (amount > 0) {
@@ -115,6 +114,12 @@ public abstract class Account implements Comparable<Account> {
                this.getProfileType().equals(otherAccount.getProfileType());
     }
 
+    /**
+     * Get the proper error to tell user if this account does not fit proper
+     * account opening criteria
+     * @return string with error message or null if account opening
+     * criteria are passed
+     */
     public String errorStringIfDoesNotmeetCreationCriteria(){
         if(this.balance <= 0){
             return "Initial deposit cannot be 0 or negative.";
@@ -122,6 +127,11 @@ public abstract class Account implements Comparable<Account> {
         return null;
     }
 
+    /**
+     * Get the uncamel-cased name of the class
+     *
+     * @return the account's name without camel case
+     */
     protected String fullClassName(){
         String className = this.getClass().getSimpleName();
 
@@ -140,6 +150,11 @@ public abstract class Account implements Comparable<Account> {
         return fullClassName;
     }
 
+    /**
+     * Return properly formatted string to represent class
+     *
+     * @return string representation of class
+     */
     @Override
     public String toString(){
         return String.format("%s::%s::Balance $%,.2f", this.fullClassName(), this.profileHolder, this.balance);

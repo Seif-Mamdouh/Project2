@@ -14,11 +14,11 @@ public class Savings extends Account {
     protected static final double NO_FEE = 0.0;
 
     /**
-     * Contrustor with default values
+     * Construct savings account
      *
-     * @param profileHolder
-     * @param balance
-     * @param isLoyal
+     * @param profileHolder owner of account's profile
+     * @param balance starting balance of account
+     * @param isLoyal loyalty status of account
      */
     public Savings(Profile profileHolder, double balance, boolean isLoyal) {
         super(profileHolder, balance);
@@ -26,9 +26,9 @@ public class Savings extends Account {
     }
 
     /**
-     * boolean Function to check if the customer isLoyal or not
+     * Getter for loyalty
      *
-     * @return
+     * @return true if loyal, false if not loyal
      */
     public boolean isLoyal() {
         return isLoyal;
@@ -37,7 +37,7 @@ public class Savings extends Account {
     /**
      * method to calculate the monthly interest
      *
-     * @return
+     * @return the monthly interest
      */
     @Override
     public double monthlyInterest() {
@@ -49,7 +49,10 @@ public class Savings extends Account {
     }
 
     /**
-     * @return
+     * Calculate the monthly fee, no fee if above minimum threshold,
+     * and standard fee otherwise
+     *
+     * @return monthly fee
      */
     @Override
     public double monthlyFee() {
@@ -59,11 +62,21 @@ public class Savings extends Account {
         return MONTHLY_FEE;
     }
 
+    /**
+     * Return the account type as a string
+     *
+     * @return account type as string
+     */
     @Override
     public String getAccountType() {
         return "Savings";
     }
 
+    /**
+     * Return string representation of Savings
+     *
+     * @return string representation
+     */
     @Override
     public String toString() {
 

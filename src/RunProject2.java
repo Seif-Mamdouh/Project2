@@ -18,7 +18,7 @@ public class RunProject2 {
 
     /**
      * will compare program output to sample output and print differences to
-     * console
+     * console, used for testing only
      */
     private static void compareFiles() {
         Scanner programOutputScanner;

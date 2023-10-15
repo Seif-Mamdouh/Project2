@@ -49,22 +49,33 @@ public class CollegeChecking extends Checking {
         return "CollegeChecking";
     }
 
+    /**
+     * Get the appropriate error message to display to user if this account
+     * does not fit opening criteria
+     *
+     * @return the error message or null if the account can be opened
+     */
     @Override
     public String errorStringIfDoesNotmeetCreationCriteria() {
         String prior = super.errorStringIfDoesNotmeetCreationCriteria();
         if (prior != null) {
             return prior;
         }
-        else if (this.getProfileType().getDateOfBirth().getAge() >= INELIGIBLE_AGE) {
+        else if (this.getProfileType().getDateOfBirth().getAge() >=
+                 INELIGIBLE_AGE) {
             return this.profileHolder.ageErrorString(
                     "over " + String.valueOf(INELIGIBLE_AGE)) + ".";
         }
-        else if (this.campus ==null){
+        else if (this.campus == null) {
             return "Invalid campus code.";
         }
         return null;
     }
 
+    /**
+     * String format of the college checking
+     * @return formatted string
+     */
     @Override
     public String toString() {
         return String.format("%s::%s", super.toString(), this.campus);

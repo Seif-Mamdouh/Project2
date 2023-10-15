@@ -1,7 +1,8 @@
-
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-
+/**
+ * Contains an array of accounts and performs the operations the user desires.
+ *
+ * @author Seifeldeen Mohamed
+ */
 public class AccountDatabase {
     private Account [] accounts; //list of various types of accounts private int numAcct; //number of accounts in the array
     private int numAcct; //number of Accounts in the Array
@@ -10,13 +11,13 @@ public class AccountDatabase {
     private final static int DEFAULT_CONSTRUCTOR_VAL = 0;
     private final static int NOT_FOUND = -1;
     private static final int EQUAL_IN_COMPARABLE = 0;
-    public static final DecimalFormat DECIMAL_FORMAT;
-    static{
-        DECIMAL_FORMAT = new DecimalFormat("0.00");
-        DECIMAL_FORMAT.setRoundingMode(java.math.RoundingMode.DOWN);
-    }
 
 
+    /**
+     * Get the number of accounts currently held in Account Database
+     *
+     * @return number of accounts in Account Database
+     */
     public int getNumAccounts(){
         return numAcct;
     }
@@ -30,9 +31,11 @@ public class AccountDatabase {
     }
 
     /**
-     * Method = to find a account in a array
+     * Method to find an account in an array
+     *
      * @param account
-     * @return NOT_FOUND if not found the array;
+     * @return NOT_FOUND if not found the array,
+     * index of the account otherwise
      */
     private int find(Account account) {
         for(int i = 0; i < numAcct; i++){
@@ -58,9 +61,10 @@ public class AccountDatabase {
     }
 
     /**
-     * Method to check if the the account
-     * @param account
-     * @return
+     * Method to check if the account
+     *
+     * @param account account to check existence of
+     * @return false if not found in array, true if it was found
      */
     public boolean contains(Account account){
         int accountToSearch = find(account);
@@ -69,8 +73,9 @@ public class AccountDatabase {
 
     /**
      * A method to add a new Account in the Array.
-     * @param account
-     * @return true if succesfully added to the array
+     *
+     * @param account account to open
+     * @return true if successfully added to the array
      */
     public boolean open (Account account){
         if(this.accounts.length == numAcct){
@@ -84,9 +89,10 @@ public class AccountDatabase {
     }
 
     /**
-     * Remove a account from the Array
-     * @param account
-     * @return
+     * Remove an account from the Array
+     *
+     * @param account account to remove
+     * @return true if successful and false otherwise
      */
     public boolean close(Account account) {
         if (!this.contains(account)) {
@@ -105,8 +111,8 @@ public class AccountDatabase {
     }
 
     /**
-     * Method to deposit money into a account
-     * @param account
+     * Method to deposit money into an account
+     * @param account the account to deposit to
      */
     public void deposit(Account account, double depositAmount){
         int accountToSearch = find(account);
@@ -119,8 +125,9 @@ public class AccountDatabase {
     }
 
     /**
-     * Method to make a withdrawl
-     * @param account
+     * Method to make a withdrawal
+     *
+     * @param account account to withdraw from
      * @return false if insufficient fund
      */
     public boolean withdraw(Account account, double withdrawalAmount) {
@@ -189,22 +196,8 @@ public class AccountDatabase {
         }
     }
 
-    private static String round(double amount){
-        double shiftedUp2Decimals = amount * 100;
-        double digitAtSecondDecimal = shiftedUp2Decimals % 10;
-        DecimalFormat fomatter = new DecimalFormat("0.00");
-        if(digitAtSecondDecimal > 5){
-            fomatter.setRoundingMode(RoundingMode.UP);
-        }
-        else{
-            fomatter.setRoundingMode(RoundingMode.DOWN);
-        }
-        return fomatter.format(amount);
-
-    }
-
     /**
-     * Method to calculate interests and fees
+     * Method to calculate interests and fees and display them
      */
     public void printFeesAndInterests() {
         this.bubbleSort();
@@ -230,7 +223,7 @@ public class AccountDatabase {
     }
 
     /**
-     * Method to Apply interest/fees
+     * Method to Apply interest/fees to all accounts
      */
     public void printUpdatedBalances(){
         for (int i = 0; i < numAcct; i++) {
@@ -245,21 +238,10 @@ public class AccountDatabase {
         this.printSorted();
     }
 
-//    /**
-//     * Return a particular account that equals the passed in account
-//     * @param account account to check equality with
-//     * @return account that equals passed in account
-//     */
-//    public Account getAccount(Account account){
-//        for(Account acc : this.accounts){
-//            if(acc.equals(account)){
-//                return acc;
-//            }
-//        }
-//        return null;
-//    }
-
-
+    /**
+     * Test code for AccountDatabase
+     * @param args does not take command line arguments
+     */
     public static void main(String[] args) {
         AccountDatabase accountDatabase = new AccountDatabase();
 

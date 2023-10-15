@@ -48,18 +48,15 @@ public class Checking extends Account {
     }
 
 
+    /**
+     * Returns the account type as a string
+     * @return the account type as a string
+     */
     @Override
     public String getAccountType() {
         return "Checking";
     }
 
-//    @Override
-//    public boolean equals(Object other){
-//        if(!(other instanceof Checking)){
-//            return super.equals(other);
-//        }
-//        Checking otherChecking = (Checking) other;
-//        return this.profileHolder.equals(otherChecking.profileHolder);
-//    }
+
 
 }

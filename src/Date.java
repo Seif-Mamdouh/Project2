@@ -202,7 +202,8 @@ public class Date implements Comparable<Date> {
      *
      * @param givenDate start date
      * @param endDate   end date
-     * @return difference in years rounded down to smallest year (how age works)
+     * @return difference in years rounded down to the smallest year
+     * (how age works)
      */
     private long getYearDifference(Calendar givenDate, Calendar endDate) {
         int startYear = givenDate.get(Calendar.YEAR);

@@ -1,3 +1,8 @@
+/**
+ * Representation of a money market bank account.
+ *
+ * @author Seifeldeen Mohamed
+ */
 public class MoneyMarket extends Savings {
     private int withdrawals;
 
@@ -12,11 +17,12 @@ public class MoneyMarket extends Savings {
 
 
     /**
-     * default constructor for MoneyMarket class
+     * Construct money market with the account holder, starting balance,
+     * and loyalty status
      *
-     * @param holder
-     * @param balance
-     * @param isLoyal
+     * @param holder account owner's profile
+     * @param balance starting balance
+     * @param isLoyal loyalty status
      */
     public MoneyMarket(Profile holder, double balance, boolean isLoyal) {
         super(holder, balance, isLoyal);
@@ -26,8 +32,8 @@ public class MoneyMarket extends Savings {
     /**
      * Most typically used Money Market constructor, bc has default loyal
      *
-     * @param holder
-     * @param balance
+     * @param holder owner of account
+     * @param balance starting balance
      */
     public MoneyMarket(Profile holder, double balance) {
         super(holder, balance, true);
@@ -38,7 +44,7 @@ public class MoneyMarket extends Savings {
      * Method that overrides the method in the savings class
      * Calculate monthly interest based on the annual interest rate
      *
-     * @return
+     * @return monthly interest
      */
     @Override
     public double monthlyInterest() {
@@ -53,7 +59,7 @@ public class MoneyMarket extends Savings {
     /**
      * Method to check if the balance is $2000 or more for monthly fees
      *
-     * @return
+     * @return monthly fee to be charged
      */
     @Override
     public double monthlyFee() {
@@ -79,7 +85,7 @@ public class MoneyMarket extends Savings {
     /**
      * method to make a withDrawl
      *
-     * @param amount
+     * @param amount amount to withdraw
      */
     @Override
     public void makeWithdrawal(double amount) {
@@ -88,11 +94,13 @@ public class MoneyMarket extends Savings {
         if(this.balance < MIN_AMOUNT){
             this.isLoyal = false;
         }
-//        if (withdrawals > MAX_AMOUNT_OF_WITHDRAWLS) {
-//            balance -= WITHDRAWL_FEE;
-//        }
     }
 
+    /**
+     * Deposit to account
+     *
+     * @param amount the amount of money to deposit
+     */
     @Override
     public void makeDeposit(double amount) {
         super.makeDeposit(amount);
@@ -101,17 +109,31 @@ public class MoneyMarket extends Savings {
         }
     }
 
+    /**
+     * Change the balance and reset the withdrawals
+     * @param newBalance new balance of the account
+     */
     @Override
     public void updateBalance(double newBalance) {
         super.updateBalance(newBalance);
         this.withdrawals = 0;
     }
 
+    /**
+     * Return the account type as a string
+     *
+     * @return account type string
+     */
     @Override
     public String getAccountType() {
         return "MoneyMarket";
     }
 
+    /**
+     * Some test cases for money market
+     *
+     * @param args does not take command line args
+     */
     public static void main(String[] args) {
 
         Date dat3 = new Date(12, 12, 2002);

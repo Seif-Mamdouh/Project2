@@ -1,4 +1,3 @@
-import java.rmi.UnexpectedException;
 import java.util.Scanner;
 
 /**
@@ -68,7 +67,6 @@ public class TransactionManager {
             acronym = "S";
         }
 
-        account.getAccountType();
         String message = String.format("%s(%s) %s.",
                                        account.profileHolder.toString(),
                                        acronym,
@@ -85,13 +83,6 @@ public class TransactionManager {
      */
     private static void printNotValidAmount() {
         System.out.println("Not a valid amount.");
-    }
-
-    /**
-     * Will print "Initial deposit cannot be 0 or negative."
-     */
-    private static void printInitialDepositCannotBeZeroOrNegative() {
-        System.out.println("Initial deposit cannot be 0 or negative.");
     }
 
     /**
@@ -168,6 +159,14 @@ public class TransactionManager {
         return Double.parseDouble(moneyAmountString);
     }
 
+    /**
+     * Looks for customer loyalty in provided string
+     *
+     * @param loyaltyToken string that is supposed to contain the loyalty
+     *                     passed by user
+     * @return Boolean with true if customer is loyal, false if they are not,
+     * and null if unable to parse it
+     */
     private static Boolean parseLoyalty(String loyaltyToken) {
         Boolean loyalty = null;
 
@@ -255,7 +254,7 @@ public class TransactionManager {
 
         Profile profile = new Profile(firstName, lastName, dateOfBirth);
         String criteriaErrorString =
-                profile.errorStringIfDoesNotmeetCreationCriteria();
+                profile.errorStringIfDoesNotMeetCreationCriteria();
         if (criteriaErrorString != null) {
             System.out.println(criteriaErrorString);
             return null;
@@ -303,25 +302,21 @@ public class TransactionManager {
 
     }
 
-    //    private void depositOrWithdraw(
-//            Runnable method, double sum, String listMessage
-//    ) {
-//        if(sum <= 0){
-//            System.out.println("Deposit - amount cannot be 0 or negative.");
-//        }
-//        System.out.println("\n" + listMessage);
-//        method.run();
-//
-//
-//    }
+    /**
+     * Checks if the amount given is not zero or negative
+     *
+     * @param amount       amount to check
+     * @param nameOfAction used to print the error message to user to inform
+     *                     them of what they tried to do
+     * @return true if the amount was less than or equal to zero, and false
+     * otherwise. If true is returned, the error was already printed.
+     */
     private static boolean depositOrWithdrawErrorCheck(
-            double amount,
-            String nameOfAction
+            double amount, String nameOfAction
     ) {
         if (amount <= 0) {
-            System.out.printf(
-                    "%s - amount cannot be 0 or negative.\n",
-                    nameOfAction
+            System.out.printf("%s - amount cannot be 0 or negative.\n",
+                              nameOfAction
             );
             return true;
         }
@@ -366,6 +361,15 @@ public class TransactionManager {
 
     }
 
+    /**
+     * Will check if an account already exists to make sure that the user
+     * will be able to open one. This method also makes sure that the profile
+     * holder also does not have a checking while trying to open a college
+     * checking or vice versa
+     *
+     * @param account account to try to find an existing copy of.
+     * @return true if account exists, false otherwise
+     */
     private boolean checkForExistence(Account account) {
         boolean normalContains = this.accountDatabase.contains(account);
         if (normalContains || !(account instanceof Checking)) {
@@ -443,9 +447,8 @@ public class TransactionManager {
 
         if (commandType.equals("D")) {
             nameOfAction = "Deposit";
-            if (TransactionManager.depositOrWithdrawErrorCheck(
-                    balanceForDepositAndWithdraw,
-                    nameOfAction
+            if (TransactionManager.depositOrWithdrawErrorCheck(balanceForDepositAndWithdraw,
+                                                               nameOfAction
             )) {
                 return;
             }
@@ -453,21 +456,17 @@ public class TransactionManager {
         }
         else if (commandType.equals("W")) {
             nameOfAction = "Withdraw";
-            if (TransactionManager.depositOrWithdrawErrorCheck(
-                    balanceForDepositAndWithdraw,
-                    nameOfAction
+            if (TransactionManager.depositOrWithdrawErrorCheck(balanceForDepositAndWithdraw,
+                                                               nameOfAction
             )) {
                 return;
             }
-            else if (!this.accountDatabase.withdraw(
-                    account,
-                    balanceForDepositAndWithdraw
+            else if (!this.accountDatabase.withdraw(account,
+                                                    balanceForDepositAndWithdraw
             )) {
-                //System.out.printf("%s Withdraw - insufficient fund.\n",
-                // account.getProfileType());
-                TransactionManager.printAccountAnnouncement(
-                        account,
-                        "Withdraw - insufficient fund"
+                TransactionManager.printAccountAnnouncement(account,
+                                                            "Withdraw - " +
+                                                            "insufficient fund"
                 );
                 return;
             }
@@ -476,18 +475,15 @@ public class TransactionManager {
         else {
             System.out.println("THIS LINE OF CODE SHOULD NEVER BE EXECUTED");
             return;
-            //throw new UnexpectedException("THIS LINE OF CODE SHOULD NEVER
-            // BE EXECUTED");
         }
 
         String announcement =
                 String.format("%s - balance updated", nameOfAction);
         TransactionManager.printAccountAnnouncement(account, announcement);
-
     }
 
     /**
-     * Run the CLI
+     * Run the CLI and respond to user commands
      */
     public void run() {
         System.out.println("Transaction Manager is running.\n");
