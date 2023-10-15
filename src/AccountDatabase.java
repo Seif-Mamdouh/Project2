@@ -70,12 +70,44 @@ public class AccountDatabase {
     }
 
     /**
+     * Will check if an account already exists to make sure that the user
+     * will be able to open one. This method also makes sure that the profile
+     * holder also does not have a checking while trying to open a college
+     * checking or vice versa
+     *
+     * @param account account to try to find an existing copy of.
+     * @return true if account exists, false otherwise
+     */
+    private boolean preventedFromBeingAdded(Account account) {
+        boolean normalContains = this.contains(account);
+        if (normalContains || !(account instanceof Checking)) {
+            return normalContains;
+        }
+
+        Account opposite = new CollegeChecking(account.profileHolder,
+                                               0,
+                                               Campus.NEW_BRUNSWICK
+        );
+        if (account instanceof CollegeChecking) {
+            opposite = new Checking(account.profileHolder, 0);
+        }
+        return this.contains(opposite);
+
+    }
+
+    /**
      * A method to add a new Account in the Array.
      *
      * @param account account to open
-     * @return true if successfully added to the array
+     * @return true if successfully added to the array,
+     * false if it was prevented from being added by
+     * something that already exists in array
      */
     public boolean open (Account account){
+        if(this.preventedFromBeingAdded(account)){
+            return false;
+        }
+
         if(this.accounts.length == numAcct){
             this.grow();
         }

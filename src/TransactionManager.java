@@ -355,33 +355,6 @@ public class TransactionManager {
                 return wasHandled;
         }
         return !wasHandled;
-
-    }
-
-    /**
-     * Will check if an account already exists to make sure that the user
-     * will be able to open one. This method also makes sure that the profile
-     * holder also does not have a checking while trying to open a college
-     * checking or vice versa
-     *
-     * @param account account to try to find an existing copy of.
-     * @return true if account exists, false otherwise
-     */
-    private boolean checkForExistence(Account account) {
-        boolean normalContains = this.accountDatabase.contains(account);
-        if (normalContains || !(account instanceof Checking)) {
-            return normalContains;
-        }
-
-        Account opposite = new CollegeChecking(account.profileHolder,
-                                               0,
-                                               Campus.NEW_BRUNSWICK
-        );
-        if (account instanceof CollegeChecking) {
-            opposite = new Checking(account.profileHolder, 0);
-        }
-        return this.accountDatabase.contains(opposite);
-
     }
 
     /**
@@ -396,7 +369,6 @@ public class TransactionManager {
         if (!shouldContinue) {
             return;
         }
-
         else if (checkLengthAndPrintError(tokens)) {
             return;
         }
@@ -411,15 +383,16 @@ public class TransactionManager {
             if (criteriaErrorString != null) {
                 System.out.println(criteriaErrorString);
             }
-            else if (this.checkForExistence(account)) {
+            else if (this.accountDatabase.open(account)) {
+                TransactionManager.printAccountAnnouncement(account, "opened");
+                this.accountDatabase.open(account);
+
+            }
+            else {
                 TransactionManager.printAccountAnnouncement(account,
                                                             "is already in " +
                                                             "the database"
                 );
-            }
-            else {
-                TransactionManager.printAccountAnnouncement(account, "opened");
-                this.accountDatabase.open(account);
             }
             return;
         }
