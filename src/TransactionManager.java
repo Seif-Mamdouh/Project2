@@ -167,7 +167,7 @@ public class TransactionManager {
     private static Boolean parseLoyalty(String loyaltyToken) {
         Boolean loyalty = null;
 
-        if(loyaltyToken == null){
+        if (loyaltyToken == null) {
             loyalty = null;
         }
         else if (loyaltyToken.equals("1")) {
@@ -308,7 +308,7 @@ public class TransactionManager {
      * @return true if the amount was less than or equal to zero, and false
      * otherwise. If true is returned, the error was already printed.
      */
-    private static boolean depositOrWithdrawErrorCheck(
+    private static boolean hasBadWithdrawOrDepositArgument(
             double amount, String nameOfAction
     ) {
         if (amount <= 0) {
@@ -358,6 +358,135 @@ public class TransactionManager {
     }
 
     /**
+     * Handle a user's request to open an account
+     *
+     * @param account account to open
+     */
+    private void handleOpenCommand(Account account) {
+        String criteriaErrorString =
+                account.errorStringIfDoesNotMeetCreationCriteria();
+        if (criteriaErrorString != null) {
+            System.out.println(criteriaErrorString);
+        }
+        else if (this.accountDatabase.open(account)) {
+            TransactionManager.printAccountAnnouncement(account, "opened");
+            this.accountDatabase.open(account);
+
+        }
+        else {
+            TransactionManager.printAccountAnnouncement(account,
+                                                        "is already in " +
+                                                        "the database"
+            );
+        }
+    }
+
+    /**
+     * Close an account
+     *
+     * @param account account to close
+     */
+    private void handleCloseCommand(Account account) {
+        TransactionManager.printAccountAnnouncement(account, "has been closed");
+        this.accountDatabase.close(account);
+    }
+
+    /**
+     * Handle a deposit
+     *
+     * @param account account to deposit to
+     * @param amount  amount to deposit
+     * @return "Deposit" if successful, null otherwise
+     */
+    private String handleDepositCommand(Account account, double amount) {
+        String nameOfAction = "Deposit";
+        if (!TransactionManager.hasBadWithdrawOrDepositArgument(amount,
+                                                                nameOfAction
+        )) {
+            this.accountDatabase.deposit(account, amount);
+            return nameOfAction;
+        }
+        return null;
+
+    }
+
+    /**
+     * Handle a withdrawal
+     *
+     * @param account account to withdraw from
+     * @param amount  amount to withdraw
+     * @return "Withdraw" if successful, null otherwise
+     */
+    private String handleWithdrawCommand(Account account, double amount) {
+        String nameOfAction = "Withdraw";
+        if (TransactionManager.hasBadWithdrawOrDepositArgument(amount,
+                                                               nameOfAction
+        )) {
+            return null;
+        }
+        else if (!this.accountDatabase.withdraw(account, amount)) {
+            TransactionManager.printAccountAnnouncement(account,
+                                                        nameOfAction + " - " +
+                                                        "insufficient fund"
+            );
+            return null;
+        }
+
+        return nameOfAction;
+
+    }
+
+
+    /**
+     * Take care of user commands that require them to input an account
+     *
+     * @param commandType String representing the user's command
+     * @param account     the account that the user entered
+     */
+    private void handleAccountCommands(String commandType, Account account) {
+        if (commandType.equals("O")) {
+            this.handleOpenCommand(account);
+            return;
+        }
+        else if (!this.accountDatabase.contains(account)) {
+            TransactionManager.printAccountAnnouncement(account,
+                                                        "is not in the database"
+            );
+            return;
+        }
+        else if (commandType.equals("C")) {
+            this.handleCloseCommand(account);
+            return;
+        }
+
+        double balanceForDepositAndWithdraw = account.getBalance();
+        String nameOfAction = null;
+
+        if (commandType.equals("D")) {
+            nameOfAction = this.handleDepositCommand(account,
+                                                     balanceForDepositAndWithdraw
+            );
+        }
+        else if (commandType.equals("W")) {
+            nameOfAction = this.handleWithdrawCommand(account,
+                                                      balanceForDepositAndWithdraw
+            );
+        }
+        else {
+            System.out.println("THIS LINE OF CODE SHOULD NEVER BE EXECUTED");
+            return;
+        }
+
+        if (nameOfAction == null) {
+            return;
+        }
+
+        String announcement =
+                String.format("%s - balance updated", nameOfAction);
+        TransactionManager.printAccountAnnouncement(account, announcement);
+    }
+
+    /**
      * Handles the user's commands
      *
      * @param tokens the words the user entered delimited by spaces
@@ -377,79 +506,8 @@ public class TransactionManager {
         if (account == null) {
             return;
         }
-        else if (commandType.equals("O")) {
-            String criteriaErrorString =
-                    account.errorStringIfDoesNotMeetCreationCriteria();
-            if (criteriaErrorString != null) {
-                System.out.println(criteriaErrorString);
-            }
-            else if (this.accountDatabase.open(account)) {
-                TransactionManager.printAccountAnnouncement(account, "opened");
-                this.accountDatabase.open(account);
 
-            }
-            else {
-                TransactionManager.printAccountAnnouncement(account,
-                                                            "is already in " +
-                                                            "the database"
-                );
-            }
-            return;
-        }
-        else if (!this.accountDatabase.contains(account)) {
-            TransactionManager.printAccountAnnouncement(account,
-                                                        "is not in the database"
-            );
-            return;
-        }
-
-        else if (commandType.equals("C")) {
-            TransactionManager.printAccountAnnouncement(account,
-                                                        "has been closed"
-            );
-            this.accountDatabase.close(account);
-            return;
-        }
-
-
-        double balanceForDepositAndWithdraw = account.getBalance();
-        String nameOfAction;
-
-        if (commandType.equals("D")) {
-            nameOfAction = "Deposit";
-            if (TransactionManager.depositOrWithdrawErrorCheck(balanceForDepositAndWithdraw,
-                                                               nameOfAction
-            )) {
-                return;
-            }
-            this.accountDatabase.deposit(account, balanceForDepositAndWithdraw);
-        }
-        else if (commandType.equals("W")) {
-            nameOfAction = "Withdraw";
-            if (TransactionManager.depositOrWithdrawErrorCheck(balanceForDepositAndWithdraw,
-                                                               nameOfAction
-            )) {
-                return;
-            }
-            else if (!this.accountDatabase.withdraw(account,
-                                                    balanceForDepositAndWithdraw
-            )) {
-                TransactionManager.printAccountAnnouncement(account,
-                                                            "Withdraw - " +
-                                                            "insufficient fund"
-                );
-                return;
-            }
-
-        }
-        else {
-            System.out.println("THIS LINE OF CODE SHOULD NEVER BE EXECUTED");
-            return;
-        }
-
-        String announcement =
-                String.format("%s - balance updated", nameOfAction);
-        TransactionManager.printAccountAnnouncement(account, announcement);
+        this.handleAccountCommands(commandType, account);
     }
 
     /**
