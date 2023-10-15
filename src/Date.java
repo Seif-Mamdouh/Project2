@@ -10,15 +10,15 @@ import java.util.Calendar;
 public class Date implements Comparable<Date> {
     public static final int QUADRENNIAL = 4;
     public static final int CENTENNIAL = 100;
-    public static final int QUATERCENTENNIAL = 400;
+    public static final int QUADRICENTENNIAL = 400;
     public static final int MONTHS_IN_YEAR = 12;
-    public static final int DAYS_IN_FEBUARY_IN_LEAP_YEAR = 29;
-    public static final int FEBUARY_MONTH_NUMBER = 2;
+    public static final int DAYS_IN_FEBRUARY_IN_LEAP_YEAR = 29;
+    public static final int FEBRUARY_MONTH_NUMBER = 2;
 
 
-    private int year; //the year componenent in date
-    private int month; //the month componenent in date
-    private int day; //the day componenent in date
+    private final int year; //the year component in date
+    private final int month; //the month component in date
+    private final int day; //the day component in date
 
     /**
      * Default Constructor that sets year month date
@@ -97,8 +97,8 @@ public class Date implements Comparable<Date> {
             {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
 
-    private static int min_month = 1;
-    private static int min_year = 1900;
+    private final static int min_month = 1;
+    private final static int min_year = 1900;
 
     /**
      * Check if the date is in a valid format (mm/dd/yyyy).
@@ -113,28 +113,11 @@ public class Date implements Comparable<Date> {
 
         int daysInTheCurrentMonth = dayInMonthConstant[this.month];
 
-        if (isLeapYear(year) && this.month == FEBUARY_MONTH_NUMBER) {
-            daysInTheCurrentMonth = DAYS_IN_FEBUARY_IN_LEAP_YEAR;
+        if (isLeapYear(year) && this.month == FEBRUARY_MONTH_NUMBER) {
+            daysInTheCurrentMonth = DAYS_IN_FEBRUARY_IN_LEAP_YEAR;
         }
 
         return this.day >= 1 && this.day <= daysInTheCurrentMonth;
-    }
-
-    /**
-     * Check if the date is more than 6 months away from the current date.
-     *
-     * @return true if the date is more than 6 months away, false otherwise
-     */
-    public boolean isMoreThanSixMonthsAway() {
-        Calendar todayDate = Calendar.getInstance();
-        Calendar targetDate = Calendar.getInstance();
-        targetDate.set(year, month - 1, day); //Calendar month is 0-indexed
-
-        // Calculate the difference in months
-        long monthsDifference = this.getMonthDifference(todayDate, targetDate);
-
-        int mostMonthDifferenceBeforeReturningTrue = 6;
-        return monthsDifference >= mostMonthDifferenceBeforeReturningTrue;
     }
 
     /**
@@ -178,23 +161,7 @@ public class Date implements Comparable<Date> {
         // Check if the year is a leap year (divisible by 4, not divisible by
         // 100, or divisible by 400)
         return (year % QUADRENNIAL == 0 && year % CENTENNIAL != 0) ||
-               (year % QUATERCENTENNIAL == 0);
-    }
-
-    /**
-     * Check how many months apart two dates are
-     *
-     * @param givenDate first date
-     * @param endDate   second date
-     * @return how many months the second date is ahead of the first date
-     */
-    private long getMonthDifference(Calendar givenDate, Calendar endDate) {
-        int startYear = givenDate.get(Calendar.YEAR);
-        int startMonth = givenDate.get(Calendar.MONTH);
-        int endYear = endDate.get(Calendar.YEAR);
-        int endMonth = endDate.get(Calendar.MONTH);
-
-        return (endYear - startYear) * MONTHS_IN_YEAR + (endMonth - startMonth);
+               (year % QUADRICENTENNIAL == 0);
     }
 
     /**
@@ -256,10 +223,9 @@ public class Date implements Comparable<Date> {
      */
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof Date)) {
+        if (!(other instanceof Date otherDate)) {
             return false;
         }
-        Date otherDate = (Date) other;
         return this.compareTo(otherDate) == 0;
     }
 
@@ -300,4 +266,4 @@ public class Date implements Comparable<Date> {
         assert date7.isValid();
         assert date8.isValid();
     }
-};
+}

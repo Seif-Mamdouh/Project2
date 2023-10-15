@@ -106,10 +106,9 @@ public abstract class Account implements Comparable<Account> {
      */
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof Account)) {
+        if (!(other instanceof Account otherAccount)) {
             return false;
         }
-        Account otherAccount = (Account) other;
         return this.getAccountType().equals(otherAccount.getAccountType()) &&
                this.getProfileType().equals(otherAccount.getProfileType());
     }
@@ -120,7 +119,7 @@ public abstract class Account implements Comparable<Account> {
      * @return string with error message or null if account opening
      * criteria are passed
      */
-    public String errorStringIfDoesNotmeetCreationCriteria(){
+    public String errorStringIfDoesNotMeetCreationCriteria(){
         if(this.balance <= 0){
             return "Initial deposit cannot be 0 or negative.";
         }
@@ -128,7 +127,7 @@ public abstract class Account implements Comparable<Account> {
     }
 
     /**
-     * Get the uncamel-cased name of the class
+     * Get the non-camel-cased name of the class
      *
      * @return the account's name without camel case
      */
@@ -144,7 +143,7 @@ public abstract class Account implements Comparable<Account> {
         }
         String fullClassName = className.substring(0, secondCapital);
         if(secondCapital != className.length()){
-            String secondPart = className.substring(secondCapital, className.length());
+            String secondPart = className.substring(secondCapital);
             fullClassName = fullClassName + " " + secondPart;
         }
         return fullClassName;

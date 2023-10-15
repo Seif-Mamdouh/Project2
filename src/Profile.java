@@ -5,11 +5,11 @@
  */
 public class Profile implements Comparable<Profile> {
     //first name
-    private String fname;
+    private final String fname;
     //last name
-    private String lname;
+    private final  String lname;
     //date of birth
-    private Date dob;
+    private final Date dob;
 
 
     /**
@@ -93,7 +93,7 @@ public class Profile implements Comparable<Profile> {
      * Method to compare profiles
      *
      * @param otherProfile the object to be compared.
-     * @return
+     * @return the int describing the two profile's relation as per compareTo
      */
     @Override
     public int compareTo(Profile otherProfile) {
@@ -129,10 +129,9 @@ public class Profile implements Comparable<Profile> {
      */
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof Profile)) {
+        if (!(other instanceof Profile otherProfile)) {
             return false;
         }
-        Profile otherProfile = (Profile) other;
         return this.compareTo(otherProfile) == 0;
     }
 

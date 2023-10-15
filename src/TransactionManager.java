@@ -21,9 +21,6 @@ public class TransactionManager {
     private static final String[] VALID_COMMAND_TYPES = {
             "O", "C", "D", "W", "P", "PI", "UB", "Q"
     };
-    private static final int[] CAMPUS_CODES = {
-            0, 1, 2
-    };
 
     /**
      * Creates a transaction manager with an AccountDatabase
@@ -170,7 +167,7 @@ public class TransactionManager {
     private static Boolean parseLoyalty(String loyaltyToken) {
         Boolean loyalty = null;
 
-        if (loyaltyToken == null) {
+        if(loyaltyToken == null){
             loyalty = null;
         }
         else if (loyaltyToken.equals("1")) {
@@ -410,7 +407,7 @@ public class TransactionManager {
         }
         else if (commandType.equals("O")) {
             String criteriaErrorString =
-                    account.errorStringIfDoesNotmeetCreationCriteria();
+                    account.errorStringIfDoesNotMeetCreationCriteria();
             if (criteriaErrorString != null) {
                 System.out.println(criteriaErrorString);
             }
@@ -488,9 +485,8 @@ public class TransactionManager {
     public void run() {
         System.out.println("Transaction Manager is running.\n");
         Scanner in = new Scanner(System.in);
-        int lineNumber = 0;
+
         while (in.hasNext()) {
-            lineNumber++;
             String userInput = in.nextLine().trim();
             if (userInput.isEmpty()) {
                 continue;

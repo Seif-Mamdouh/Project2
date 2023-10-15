@@ -9,8 +9,9 @@ public class MoneyMarket extends Savings {
     // Constants for interest rate and fee
     private static final double ANNUAL_INTEREST_RATE = 0.045;
     private static final double ANNUAL_LOYALTY_INTEREST_RATE = 0.0475;
-    private static final double MAX_AMOUNT_OF_WITHDRAWLS = 3;
-    private static final double WITHDRAWL_FEE = 10;
+    private static final double MAX_AMOUNT_OF_WITHDRAWALS = 3;
+    //withdrawal
+    private static final double WITHDRAWAL_FEE = 10;
     protected static final double MIN_AMOUNT = 2000.0;
     private static final double NO_FEE = 0;
     private static final double MONTHLY_FEE = 25;
@@ -68,8 +69,8 @@ public class MoneyMarket extends Savings {
             fee += MONTHLY_FEE;
         }
 
-        if(this.withdrawals > MAX_AMOUNT_OF_WITHDRAWLS){
-            fee += WITHDRAWL_FEE;
+        if(this.withdrawals > MAX_AMOUNT_OF_WITHDRAWALS){
+            fee += WITHDRAWAL_FEE;
         }
         return fee;
     }
@@ -162,8 +163,8 @@ public class MoneyMarket extends Savings {
     }
 
     @Override
-    public String errorStringIfDoesNotmeetCreationCriteria() {
-        String prior = super.errorStringIfDoesNotmeetCreationCriteria();
+    public String errorStringIfDoesNotMeetCreationCriteria() {
+        String prior = super.errorStringIfDoesNotMeetCreationCriteria();
         if (prior != null) {
             return prior;
         }

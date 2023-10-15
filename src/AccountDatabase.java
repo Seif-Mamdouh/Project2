@@ -10,8 +10,6 @@ public class AccountDatabase {
     private final static int INITIAL_CAPACITY = 4;
     private final static int DEFAULT_CONSTRUCTOR_VAL = 0;
     private final static int NOT_FOUND = -1;
-    private static final int EQUAL_IN_COMPARABLE = 0;
-
 
     /**
      * Get the number of accounts currently held in Account Database
@@ -33,7 +31,7 @@ public class AccountDatabase {
     /**
      * Method to find an account in an array
      *
-     * @param account
+     * @param account account to find
      * @return NOT_FOUND if not found the array,
      * index of the account otherwise
      */

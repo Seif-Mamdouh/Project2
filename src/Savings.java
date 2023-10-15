@@ -26,15 +26,6 @@ public class Savings extends Account {
     }
 
     /**
-     * Getter for loyalty
-     *
-     * @return true if loyal, false if not loyal
-     */
-    public boolean isLoyal() {
-        return isLoyal;
-    }
-
-    /**
      * method to calculate the monthly interest
      *
      * @return the monthly interest
