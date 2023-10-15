@@ -1,0 +1,246 @@
+Transaction Manager is running.
+
+Invalid command!
+Invalid command!
+Invalid command!
+Invalid command!
+Invalid command!
+Invalid command!
+Invalid command!
+Invalid command!
+Invalid command!
+Invalid command!
+Invalid command!
+Invalid command!
+Invalid command!
+Account Database is empty!
+Account Database is empty!
+Account Database is empty!
+Missing data for opening an account.
+Missing data for opening an account.
+Missing data for opening an account.
+Missing data for opening an account.
+Missing data for opening an account.
+Not a valid amount.
+Initial deposit cannot be 0 or negative.
+Initial deposit cannot be 0 or negative.
+John Doe 2/19/2000(CC) opened.
+John Doe 2/19/2000(C) is already in the database.
+Jane Doe 10/1/2000(CC) opened.
+Jane Doe 10/1/2000(CC) is already in the database.
+Initial deposit cannot be 0 or negative.
+Jane Doe 10/1/1995(S) opened.
+Jane Doe 10/1/1995(S) is already in the database.
+Initial deposit cannot be 0 or negative.
+Minimum of $2000 to open a Money Market account.
+Jane Doe 10/1/1995(MM) opened.
+Jane Doe 10/1/1995(MM) is already in the database.
+April March 1/15/1987(C) opened.
+April March 1/15/1987(S) opened.
+Jason Brown 3/31/1998(C) opened.
+Kate Lindsey 8/31/2001(C) opened.
+Invalid campus code.
+Kate Lindsey 8/31/2001(CC) is already in the database.
+DOB invalid: 11/2/2023 cannot be today or a future day.
+DOB invalid: 2/29/2011 not a valid calendar date!
+DOB invalid: 3/32/2008 not a valid calendar date!
+DOB invalid: 0/2/2008 not a valid calendar date!
+DOB invalid: 13/3/2008 not a valid calendar date!
+DOB invalid: 10/31/2007 under 16.
+Roy Brooks 10/1/2007(MM) opened.
+Roy Brooks 10/31/1999(CC) opened.
+DOB invalid: 10/1/1999 over 24.
+Roy Brooks 10/31/1979(MM) opened.
+Roy Brooks 10/31/1979(MM) is already in the database.
+April March 1/15/1987(MM) opened.
+Chris Young 9/20/2006(CC) opened.
+chris young 9/20/2006(CC) is already in the database.
+Duke Ellington 11/2/2002(CC) opened.
+Kate Lindsey 11/2/2002(CC) opened.
+John Doe 2/19/1990(S) opened.
+
+*Accounts sorted by account type and profile.
+Checking::Jason Brown 3/31/1998::Balance $1,200.00
+Checking::Kate Lindsey 8/31/2001::Balance $450.00
+Checking::April March 1/15/1987::Balance $300.00
+College Checking::Roy Brooks 10/31/1999::Balance $2,909.10::NEWARK
+College Checking::Jane Doe 10/1/2000::Balance $999.99::NEW_BRUNSWICK
+College Checking::John Doe 2/19/2000::Balance $599.99::NEW_BRUNSWICK
+College Checking::Duke Ellington 11/2/2002::Balance $900.00::NEWARK
+College Checking::Kate Lindsey 11/2/2002::Balance $200.00::NEWARK
+College Checking::Chris Young 9/20/2006::Balance $500.00::NEW_BRUNSWICK
+Money Market::Savings::Roy Brooks 10/31/1979::Balance $2,909.10::is loyal::withdrawal: 0
+Money Market::Savings::Roy Brooks 10/1/2007::Balance $2,909.10::is loyal::withdrawal: 0
+Money Market::Savings::Jane Doe 10/1/1995::Balance $2,000.00::is loyal::withdrawal: 0
+Money Market::Savings::April March 1/15/1987::Balance $2,500.00::is loyal::withdrawal: 0
+Savings::Jane Doe 10/1/1995::Balance $1,000.00
+Savings::John Doe 2/19/1990::Balance $200.00
+Savings::April March 1/15/1987::Balance $1,500.00::is loyal
+*end of list.
+
+Missing data for closing an account.
+Missing data for closing an account.
+Missing data for closing an account.
+DOB invalid: 11/15/2023 cannot be today or a future day.
+April March 1/15/1987(C) has been closed.
+April March 1/15/1987(C) is not in the database.
+Kate Lindsey 8/31/2001(CC) is not in the database.
+Roy Brooks 10/31/1979(MM) has been closed.
+
+*Accounts sorted by account type and profile.
+Checking::Jason Brown 3/31/1998::Balance $1,200.00
+Checking::Kate Lindsey 8/31/2001::Balance $450.00
+College Checking::Roy Brooks 10/31/1999::Balance $2,909.10::NEWARK
+College Checking::Jane Doe 10/1/2000::Balance $999.99::NEW_BRUNSWICK
+College Checking::John Doe 2/19/2000::Balance $599.99::NEW_BRUNSWICK
+College Checking::Duke Ellington 11/2/2002::Balance $900.00::NEWARK
+College Checking::Kate Lindsey 11/2/2002::Balance $200.00::NEWARK
+College Checking::Chris Young 9/20/2006::Balance $500.00::NEW_BRUNSWICK
+Money Market::Savings::Roy Brooks 10/1/2007::Balance $2,909.10::is loyal::withdrawal: 0
+Money Market::Savings::Jane Doe 10/1/1995::Balance $2,000.00::is loyal::withdrawal: 0
+Money Market::Savings::April March 1/15/1987::Balance $2,500.00::is loyal::withdrawal: 0
+Savings::Jane Doe 10/1/1995::Balance $1,000.00
+Savings::John Doe 2/19/1990::Balance $200.00
+Savings::April March 1/15/1987::Balance $1,500.00::is loyal
+*end of list.
+
+April March 1/15/1987(C) opened.
+Roy Brooks 10/31/1979(MM) opened.
+Jason Brown 3/31/1999(CC) is not in the database.
+April March 1/15/1987(CC) is not in the database.
+Kate Lindsey 8/31/2001(C) Deposit - balance updated.
+Kate Lindsey 8/31/2001(CC) is not in the database.
+Kate Lindsey 11/2/2002(C) is not in the database.
+Roy Brooks 1/31/1979(MM) is not in the database.
+Roy Brooks 10/31/1979(MM) Deposit - balance updated.
+Not a valid amount.
+Deposit - amount cannot be 0 or negative.
+Deposit - amount cannot be 0 or negative.
+April March 1/15/1987(S) Deposit - balance updated.
+
+*Accounts sorted by account type and profile.
+Checking::Jason Brown 3/31/1998::Balance $1,200.00
+Checking::Kate Lindsey 8/31/2001::Balance $650.00
+Checking::April March 1/15/1987::Balance $1,500.00
+College Checking::Roy Brooks 10/31/1999::Balance $2,909.10::NEWARK
+College Checking::Jane Doe 10/1/2000::Balance $999.99::NEW_BRUNSWICK
+College Checking::John Doe 2/19/2000::Balance $599.99::NEW_BRUNSWICK
+College Checking::Duke Ellington 11/2/2002::Balance $900.00::NEWARK
+College Checking::Kate Lindsey 11/2/2002::Balance $200.00::NEWARK
+College Checking::Chris Young 9/20/2006::Balance $500.00::NEW_BRUNSWICK
+Money Market::Savings::Roy Brooks 10/31/1979::Balance $3,010.09::is loyal::withdrawal: 0
+Money Market::Savings::Roy Brooks 10/1/2007::Balance $2,909.10::is loyal::withdrawal: 0
+Money Market::Savings::Jane Doe 10/1/1995::Balance $2,000.00::is loyal::withdrawal: 0
+Money Market::Savings::April March 1/15/1987::Balance $2,500.00::is loyal::withdrawal: 0
+Savings::Jane Doe 10/1/1995::Balance $1,000.00
+Savings::John Doe 2/19/1990::Balance $200.00
+Savings::April March 1/15/1987::Balance $1,600.00::is loyal
+*end of list.
+
+Kate Lindsey 11/2/2002(CC) Withdraw - balance updated.
+Duke Ellington 11/2/2002(CC) Withdraw - insufficient fund.
+Duke Ellington 11/2/2002(CC) Withdraw - balance updated.
+John Doe 2/19/1989(CC) is not in the database.
+Roy Brooks 1/31/1979(MM) is not in the database.
+Roy Brooks 10/31/1979(MM) Withdraw - balance updated.
+Not a valid amount.
+Withdraw - amount cannot be 0 or negative.
+Withdraw - amount cannot be 0 or negative.
+April March 1/15/1987(S) Withdraw - balance updated.
+Roy Brooks 10/31/1979(MM) Withdraw - balance updated.
+Roy Brooks 10/31/1979(MM) Withdraw - balance updated.
+Roy Brooks 10/31/1979(MM) Withdraw - balance updated.
+April March 1/15/1987(C) Withdraw - balance updated.
+Jane Doe 10/1/1995(MM) Withdraw - balance updated.
+Roy Brooks 10/1/2007(MM) Withdraw - balance updated.
+Roy Brooks 10/1/2007(MM) Withdraw - balance updated.
+Roy Brooks 10/1/2007(MM) Withdraw - balance updated.
+
+*list of accounts with fee and monthly interest
+Checking::Jason Brown 3/31/1998::Balance $1,200.00::fee $0.00::monthly interest $1.00
+Checking::Kate Lindsey 8/31/2001::Balance $650.00::fee $12.00::monthly interest $0.54
+Checking::April March 1/15/1987::Balance $950.00::fee $12.00::monthly interest $0.79
+College Checking::Roy Brooks 10/31/1999::Balance $2,909.10::NEWARK::fee $0.00::monthly interest $2.42
+College Checking::Jane Doe 10/1/2000::Balance $999.99::NEW_BRUNSWICK::fee $0.00::monthly interest $0.83
+College Checking::John Doe 2/19/2000::Balance $599.99::NEW_BRUNSWICK::fee $0.00::monthly interest $0.50
+College Checking::Duke Ellington 11/2/2002::Balance $800.00::NEWARK::fee $0.00::monthly interest $0.67
+College Checking::Kate Lindsey 11/2/2002::Balance $100.00::NEWARK::fee $0.00::monthly interest $0.08
+College Checking::Chris Young 9/20/2006::Balance $500.00::NEW_BRUNSWICK::fee $0.00::monthly interest $0.42
+Money Market::Savings::Roy Brooks 10/31/1979::Balance $2,609.10::is loyal::withdrawal: 4::fee $10.00::monthly interest $10.33
+Money Market::Savings::Roy Brooks 10/1/2007::Balance $1,409.10::withdrawal: 3::fee $25.00::monthly interest $5.28
+Money Market::Savings::Jane Doe 10/1/1995::Balance $1,900.00::withdrawal: 1::fee $25.00::monthly interest $7.12
+Money Market::Savings::April March 1/15/1987::Balance $2,500.00::is loyal::withdrawal: 0::fee $0.00::monthly interest $9.90
+Savings::Jane Doe 10/1/1995::Balance $1,000.00::fee $0.00::monthly interest $3.33
+Savings::John Doe 2/19/1990::Balance $200.00::fee $25.00::monthly interest $0.67
+Savings::April March 1/15/1987::Balance $1,400.00::is loyal::fee $0.00::monthly interest $4.96
+*end of list.
+
+Roy Brooks 10/1/2007(MM) Withdraw - balance updated.
+JANE DOE 10/1/1995(MM) Deposit - balance updated.
+
+*list of accounts with fee and monthly interest
+Checking::Jason Brown 3/31/1998::Balance $1,200.00::fee $0.00::monthly interest $1.00
+Checking::Kate Lindsey 8/31/2001::Balance $650.00::fee $12.00::monthly interest $0.54
+Checking::April March 1/15/1987::Balance $950.00::fee $12.00::monthly interest $0.79
+College Checking::Roy Brooks 10/31/1999::Balance $2,909.10::NEWARK::fee $0.00::monthly interest $2.42
+College Checking::Jane Doe 10/1/2000::Balance $999.99::NEW_BRUNSWICK::fee $0.00::monthly interest $0.83
+College Checking::John Doe 2/19/2000::Balance $599.99::NEW_BRUNSWICK::fee $0.00::monthly interest $0.50
+College Checking::Duke Ellington 11/2/2002::Balance $800.00::NEWARK::fee $0.00::monthly interest $0.67
+College Checking::Kate Lindsey 11/2/2002::Balance $100.00::NEWARK::fee $0.00::monthly interest $0.08
+College Checking::Chris Young 9/20/2006::Balance $500.00::NEW_BRUNSWICK::fee $0.00::monthly interest $0.42
+Money Market::Savings::Roy Brooks 10/31/1979::Balance $2,609.10::is loyal::withdrawal: 4::fee $10.00::monthly interest $10.33
+Money Market::Savings::Roy Brooks 10/1/2007::Balance $909.10::withdrawal: 4::fee $35.00::monthly interest $3.41
+Money Market::Savings::Jane Doe 10/1/1995::Balance $2,000.00::is loyal::withdrawal: 1::fee $0.00::monthly interest $7.92
+Money Market::Savings::April March 1/15/1987::Balance $2,500.00::is loyal::withdrawal: 0::fee $0.00::monthly interest $9.90
+Savings::Jane Doe 10/1/1995::Balance $1,000.00::fee $0.00::monthly interest $3.33
+Savings::John Doe 2/19/1990::Balance $200.00::fee $25.00::monthly interest $0.67
+Savings::April March 1/15/1987::Balance $1,400.00::is loyal::fee $0.00::monthly interest $4.96
+*end of list.
+
+Joe Scanlan 12/24/1960(C) opened.
+Joe Scanlan 12/24/1960(MM) opened.
+
+*list of accounts with fee and monthly interest
+Checking::Jason Brown 3/31/1998::Balance $1,200.00::fee $0.00::monthly interest $1.00
+Checking::Kate Lindsey 8/31/2001::Balance $650.00::fee $12.00::monthly interest $0.54
+Checking::April March 1/15/1987::Balance $950.00::fee $12.00::monthly interest $0.79
+Checking::Joe Scanlan 12/24/1960::Balance $2,200.00::fee $0.00::monthly interest $1.83
+College Checking::Roy Brooks 10/31/1999::Balance $2,909.10::NEWARK::fee $0.00::monthly interest $2.42
+College Checking::Jane Doe 10/1/2000::Balance $999.99::NEW_BRUNSWICK::fee $0.00::monthly interest $0.83
+College Checking::John Doe 2/19/2000::Balance $599.99::NEW_BRUNSWICK::fee $0.00::monthly interest $0.50
+College Checking::Duke Ellington 11/2/2002::Balance $800.00::NEWARK::fee $0.00::monthly interest $0.67
+College Checking::Kate Lindsey 11/2/2002::Balance $100.00::NEWARK::fee $0.00::monthly interest $0.08
+College Checking::Chris Young 9/20/2006::Balance $500.00::NEW_BRUNSWICK::fee $0.00::monthly interest $0.42
+Money Market::Savings::Roy Brooks 10/31/1979::Balance $2,609.10::is loyal::withdrawal: 4::fee $10.00::monthly interest $10.33
+Money Market::Savings::Roy Brooks 10/1/2007::Balance $909.10::withdrawal: 4::fee $35.00::monthly interest $3.41
+Money Market::Savings::Jane Doe 10/1/1995::Balance $2,000.00::is loyal::withdrawal: 1::fee $0.00::monthly interest $7.92
+Money Market::Savings::April March 1/15/1987::Balance $2,500.00::is loyal::withdrawal: 0::fee $0.00::monthly interest $9.90
+Money Market::Savings::Joe Scanlan 12/24/1960::Balance $3,200.00::is loyal::withdrawal: 0::fee $0.00::monthly interest $12.67
+Savings::Jane Doe 10/1/1995::Balance $1,000.00::fee $0.00::monthly interest $3.33
+Savings::John Doe 2/19/1990::Balance $200.00::fee $25.00::monthly interest $0.67
+Savings::April March 1/15/1987::Balance $1,400.00::is loyal::fee $0.00::monthly interest $4.96
+*end of list.
+
+
+*list of accounts with fees and interests applied.
+Checking::Jason Brown 3/31/1998::Balance $1,201.00
+Checking::Kate Lindsey 8/31/2001::Balance $638.54
+Checking::April March 1/15/1987::Balance $938.79
+Checking::Joe Scanlan 12/24/1960::Balance $2,201.83
+College Checking::Roy Brooks 10/31/1999::Balance $2,911.52::NEWARK
+College Checking::Jane Doe 10/1/2000::Balance $1,000.82::NEW_BRUNSWICK
+College Checking::John Doe 2/19/2000::Balance $600.49::NEW_BRUNSWICK
+College Checking::Duke Ellington 11/2/2002::Balance $800.67::NEWARK
+College Checking::Kate Lindsey 11/2/2002::Balance $100.08::NEWARK
+College Checking::Chris Young 9/20/2006::Balance $500.42::NEW_BRUNSWICK
+Money Market::Savings::Roy Brooks 10/31/1979::Balance $2,609.43::is loyal::withdrawal: 0
+Money Market::Savings::Roy Brooks 10/1/2007::Balance $877.51::withdrawal: 0
+Money Market::Savings::Jane Doe 10/1/1995::Balance $2,007.92::is loyal::withdrawal: 0
+Money Market::Savings::April March 1/15/1987::Balance $2,509.90::is loyal::withdrawal: 0
+Money Market::Savings::Joe Scanlan 12/24/1960::Balance $3,212.67::is loyal::withdrawal: 0
+Savings::Jane Doe 10/1/1995::Balance $1,003.33
+Savings::John Doe 2/19/1990::Balance $175.67
+Savings::April March 1/15/1987::Balance $1,404.96::is loyal
+*end of list.
+
+Transaction Manager is terminated.

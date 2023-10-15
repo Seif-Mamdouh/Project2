@@ -6,9 +6,9 @@
 public class Checking extends Account {
 
     private static final double MONTHLY_FEE = 12;
-    protected static final double ANNUAL_INTEREST_RATE = 1;
+    protected static final double ANNUAL_INTEREST_RATE = 0.01;
 
-    private static double MIN_BALANCE_TO_AVOID_MONTHLY_FEE = 1000;
+    private static final double MIN_BALANCE_TO_AVOID_MONTHLY_FEE = 1000;
 
     /**
      * Create checking account using a profile and starting balance
@@ -21,7 +21,7 @@ public class Checking extends Account {
     }
 
     /**
-     * Calculate monthly intested account will accrue
+     * Calculate monthly interest the account will accrue
      *
      * @return monthly interest that will be accrued by the account
      */
@@ -48,9 +48,15 @@ public class Checking extends Account {
     }
 
 
+    /**
+     * Returns the account type as a string
+     * @return the account type as a string
+     */
     @Override
     public String getAccountType() {
         return "Checking";
     }
+
+
 
 }

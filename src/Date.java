@@ -10,15 +10,15 @@ import java.util.Calendar;
 public class Date implements Comparable<Date> {
     public static final int QUADRENNIAL = 4;
     public static final int CENTENNIAL = 100;
-    public static final int QUATERCENTENNIAL = 400;
+    public static final int QUADRICENTENNIAL = 400;
     public static final int MONTHS_IN_YEAR = 12;
-    public static final int DAYS_IN_FEBUARY_IN_LEAP_YEAR = 29;
-    public static final int FEBUARY_MONTH_NUMBER = 2;
+    public static final int DAYS_IN_FEBRUARY_IN_LEAP_YEAR = 29;
+    public static final int FEBRUARY_MONTH_NUMBER = 2;
 
 
-    private int year; //the year componenent in date
-    private int month; //the month componenent in date
-    private int day; //the day componenent in date
+    private final int year; //the year component in date
+    private final int month; //the month component in date
+    private final int day; //the day component in date
 
     /**
      * Default Constructor that sets year month date
@@ -32,7 +32,6 @@ public class Date implements Comparable<Date> {
         this.month = month;
         this.day = day;
     }
-
 
     /**
      * Get year in which event will occur
@@ -90,7 +89,7 @@ public class Date implements Comparable<Date> {
                     "Invalid date format: " + dateStr);
         }
 
-        return new Date(year, month, day);
+        return new Date(day, month, year);
     }
 
 
@@ -98,8 +97,8 @@ public class Date implements Comparable<Date> {
             {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
 
-    private static int min_month = 1;
-    private static int min_year = 1900;
+    private final static int min_month = 1;
+    private final static int min_year = 1900;
 
     /**
      * Check if the date is in a valid format (mm/dd/yyyy).
@@ -107,34 +106,34 @@ public class Date implements Comparable<Date> {
      * @return true if the date is valid, false otherwise
      */
     public boolean isValid() {
-        if (this.month < min_month || this.month > MONTHS_IN_YEAR || this.year < min_year) {
+        if (this.month < min_month || this.month > MONTHS_IN_YEAR ||
+            this.year < min_year) {
             return false;
         }
 
         int daysInTheCurrentMonth = dayInMonthConstant[this.month];
 
-        if (isLeapYear(year) && this.month == FEBUARY_MONTH_NUMBER) {
-            daysInTheCurrentMonth = DAYS_IN_FEBUARY_IN_LEAP_YEAR;
+        if (isLeapYear(year) && this.month == FEBRUARY_MONTH_NUMBER) {
+            daysInTheCurrentMonth = DAYS_IN_FEBRUARY_IN_LEAP_YEAR;
         }
 
         return this.day >= 1 && this.day <= daysInTheCurrentMonth;
     }
 
     /**
-     * Check if the date is more than 6 months away from the current date.
+     * Gets age of person if they were born on this date
      *
-     * @return true if the date is more than 6 months away, false otherwise
+     * @return age of person in years
      */
-    public boolean isMoreThanSixMonthsAway() {
+    public int getAge() {
         Calendar todayDate = Calendar.getInstance();
-        Calendar targetDate = Calendar.getInstance();
-        targetDate.set(year, month - 1, day); //Calendar month is 0-indexed
+        Calendar birthDate = Calendar.getInstance();
+        birthDate.set(year, month - 1, day); //Calendar month is 0-indexed
 
         // Calculate the difference in months
-        long monthsDifference = this.getMonthDifference(todayDate, targetDate);
+        long monthsDifference = this.getYearDifference(birthDate, todayDate);
+        return (int) monthsDifference;
 
-        int mostMonthDifferenceBeforeReturningTrue = 6;
-        return monthsDifference >= mostMonthDifferenceBeforeReturningTrue;
     }
 
 
@@ -162,25 +161,37 @@ public class Date implements Comparable<Date> {
         // Check if the year is a leap year (divisible by 4, not divisible by
         // 100, or divisible by 400)
         return (year % QUADRENNIAL == 0 && year % CENTENNIAL != 0) ||
-                (year % QUATERCENTENNIAL == 0);
+               (year % QUADRICENTENNIAL == 0);
     }
 
     /**
-     * Check how many months apart two dates are
+     * Returns difference in years from two dates
      *
-     * @param givenDate first date
-     * @param endDate   second date
-     * @return how many months the second date is ahead of the first date
+     * @param givenDate start date
+     * @param endDate   end date
+     * @return difference in years rounded down to the smallest year
+     * (how age works)
      */
-    private long getMonthDifference(Calendar givenDate, Calendar endDate) {
+    private long getYearDifference(Calendar givenDate, Calendar endDate) {
         int startYear = givenDate.get(Calendar.YEAR);
         int startMonth = givenDate.get(Calendar.MONTH);
+        int startDay = givenDate.get(Calendar.DATE);
+
         int endYear = endDate.get(Calendar.YEAR);
         int endMonth = endDate.get(Calendar.MONTH);
+        int endDay = endDate.get(Calendar.DATE);
 
-        return (endYear - startYear) * MONTHS_IN_YEAR + (endMonth - startMonth);
+
+        long yearDifference = endYear - startYear;
+        if (endMonth < startMonth) {
+            yearDifference--;
+        }
+        else if (endMonth == startMonth && endDay < startDay) {
+            yearDifference--;
+        }
+
+        return yearDifference;
     }
-
 
 
     /**
@@ -202,6 +213,20 @@ public class Date implements Comparable<Date> {
         }
 
         return Integer.compare(this.day, otherDate.getDay());
+    }
+
+    /**
+     * Compare two dates' equality
+     *
+     * @param other other date to compare to this one
+     * @return true if year, month, and day are same, false otherwise
+     */
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof Date otherDate)) {
+            return false;
+        }
+        return this.compareTo(otherDate) == 0;
     }
 
 
@@ -232,7 +257,7 @@ public class Date implements Comparable<Date> {
         Date date8 = new Date(-2023, 12, 2);
 
         // Test the isValid method
-        assert  date1.isValid();
+        assert date1.isValid();
         assert date2.isValid();
         assert date3.isValid();
         assert date4.isValid();
@@ -241,4 +266,4 @@ public class Date implements Comparable<Date> {
         assert date7.isValid();
         assert date8.isValid();
     }
-};
+}
