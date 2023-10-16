@@ -1,6 +1,7 @@
+package rubank;
 
 /**
- * Public Abstract class for all Account Types.
+ * Public Abstract class for all rubank.Account Types.
  *
  * @author Seifeldeen Mohamed
  */
@@ -44,7 +45,7 @@ public abstract class Account implements Comparable<Account> {
 
 
     /**
-     * Method to get the Profile Holder
+     * Method to get the rubank.Profile Holder
      *
      * @return profileHolder
      */
@@ -69,7 +70,7 @@ public abstract class Account implements Comparable<Account> {
      */
     @Override
     public int compareTo(Account otherAccount) {
-        // Compare Account based on the account type
+        // Compare rubank.Account based on the account type
         int comparedAccountTypes = this.getAccountType().compareTo(otherAccount.getAccountType());
         if(comparedAccountTypes != 0){
             return comparedAccountTypes;
@@ -103,7 +104,7 @@ public abstract class Account implements Comparable<Account> {
      * Checks if two accounts are equal to each other
      *
      * @param other other object to check equality to
-     * @return true if the accounts are of the same child class of Account
+     * @return true if the accounts are of the same child class of rubank.Account
      * and their profiles are the same
      */
     @Override

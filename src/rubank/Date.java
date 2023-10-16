@@ -1,3 +1,5 @@
+package rubank;
+
 import java.util.Calendar;
 
 
@@ -61,11 +63,11 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     * Parse a date string in the format "month/day/year" and return a Date
+     * Parse a date string in the format "month/day/year" and return a rubank.Date
      * object.
      *
      * @param dateStr the date string to parse
-     * @return a Date object representing the parsed date
+     * @return a rubank.Date object representing the parsed date
      * @throws IllegalArgumentException if the input is not in a valid format
      */
     public static Date parseDate(String dateStr) {
@@ -246,7 +248,7 @@ public class Date implements Comparable<Date> {
      * @param args not used
      */
     public static void main(String[] args) {
-        // Test cases for your Date class
+        // Test cases for your rubank.Date class
         Date date1 = new Date(800, 9, 12);
         Date date2 = new Date(2023, 9, 11);
         Date date3 = new Date(2024, 4, 29);

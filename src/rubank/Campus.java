@@ -1,3 +1,5 @@
+package rubank;
+
 /**
  * A class that represents Rutgers Campuses.
  *

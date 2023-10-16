@@ -1,5 +1,7 @@
+package rubank;
+
 /**
- * Savings Class extending Account Class
+ * rubank.Savings Class extending rubank.Account Class
  *
  * @author Seifeldeen Mohamed
  */
@@ -60,11 +62,11 @@ public class Savings extends Account {
      */
     @Override
     public String getAccountType() {
-        return "Savings";
+        return "rubank.Savings";
     }
 
     /**
-     * Return string representation of Savings
+     * Return string representation of rubank.Savings
      *
      * @return string representation
      */

@@ -1,3 +1,5 @@
+package rubank;
+
 /**
  * Represents a checking account
  *
@@ -54,7 +56,7 @@ public class Checking extends Account {
      */
     @Override
     public String getAccountType() {
-        return "Checking";
+        return "rubank.Checking";
     }
 
 

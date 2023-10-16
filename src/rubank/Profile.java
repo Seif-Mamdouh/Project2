@@ -1,5 +1,7 @@
+package rubank;
+
 /**
- * Profile represents a person, used to identify account holder.
+ * rubank.Profile represents a person, used to identify account holder.
  *
  * @author Seifeldeen Mohamed
  */

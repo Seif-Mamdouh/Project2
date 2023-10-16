@@ -1,3 +1,5 @@
+package rubank;
+
 /**
  * Contains an array of accounts and performs the operations the user desires.
  *
@@ -12,16 +14,16 @@ public class AccountDatabase {
     private final static int NOT_FOUND = -1;
 
     /**
-     * Get the number of accounts currently held in Account Database
+     * Get the number of accounts currently held in rubank.Account Database
      *
-     * @return number of accounts in Account Database
+     * @return number of accounts in rubank.Account Database
      */
     public int getNumAccounts(){
         return numAcct;
     }
 
     /**
-     * Default Constructor for AccountDatabase
+     * Default Constructor for rubank.AccountDatabase
      */
     public AccountDatabase(){
         this.accounts = new Account[INITIAL_CAPACITY];
@@ -96,7 +98,7 @@ public class AccountDatabase {
     }
 
     /**
-     * A method to add a new Account in the Array.
+     * A method to add a new rubank.Account in the Array.
      *
      * @param account account to open
      * @return true if successfully added to the array,
@@ -201,7 +203,7 @@ public class AccountDatabase {
     }
 
     /**
-     * Sorts an array of Account objects using the bubble sort algorithm.
+     * Sorts an array of rubank.Account objects using the bubble sort algorithm.
      */
     private void bubbleSort() {
         for (int i = 0; i < this.numAcct; i++) {
@@ -217,7 +219,7 @@ public class AccountDatabase {
 
 
     /**
-     * Method to print and sort by Account Type and Profile;
+     * Method to print and sort by rubank.Account Type and rubank.Profile;
      */
     public void printSorted() {
         // Use bubbleSort to sort the accounts array
@@ -241,12 +243,12 @@ public class AccountDatabase {
                     //"%s::fee $%s::monthly interest $%s",
                     "%s::fee $%,.2f::monthly interest $%,.2f",
                     account,
-                    //AccountDatabase.DECIMAL_FORMAT.format(account.monthlyFee()),
-                    //AccountDatabase.DECIMAL_FORMAT.format(account.monthlyInterest())
+                    //rubank.AccountDatabase.DECIMAL_FORMAT.format(account.monthlyFee()),
+                    //rubank.AccountDatabase.DECIMAL_FORMAT.format(account.monthlyInterest())
                     account.monthlyFee(),
                     account.monthlyInterest()
-                    //AccountDatabase.round(account.monthlyFee()),
-                    //AccountDatabase.round(account.monthlyInterest())
+                    //rubank.AccountDatabase.round(account.monthlyFee()),
+                    //rubank.AccountDatabase.round(account.monthlyInterest())
 
             );
             System.out.println(toPrint);
@@ -272,7 +274,7 @@ public class AccountDatabase {
     }
 
     /**
-     * Test code for AccountDatabase
+     * Test code for rubank.AccountDatabase
      * @param args does not take command line arguments
      */
     public static void main(String[] args) {
@@ -301,15 +303,15 @@ public class AccountDatabase {
         System.out.println("The number of amount of Accounts in the Database is: " + accountDatabase.getNumAccounts());
 
             //Check if accounts were added
-        System.out.println("Added Account 1: "  + accountDatabase.contains(account1));
+        System.out.println("Added rubank.Account 1: "  + accountDatabase.contains(account1));
 
-        System.out.println("Added Account 2 : " + accountDatabase.contains(account2));
-        System.out.println("Added Account 3 : " + accountDatabase.contains(account3));
+        System.out.println("Added rubank.Account 2 : " + accountDatabase.contains(account2));
+        System.out.println("Added rubank.Account 3 : " + accountDatabase.contains(account3));
 
         // Test deposit
         double depositAmount = 500.0;
         accountDatabase.deposit(account1, depositAmount);
-        System.out.println("Savings account balance after deposit: " + account1.balance);
+        System.out.println("rubank.Savings account balance after deposit: " + account1.balance);
 
         // Test withdrawal
         double withdrawalAmount = 1000.0;

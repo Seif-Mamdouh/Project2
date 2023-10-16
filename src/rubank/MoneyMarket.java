@@ -1,3 +1,5 @@
+package rubank;
+
 /**
  * Representation of a money market bank account.
  *
@@ -127,7 +129,7 @@ public class MoneyMarket extends Savings {
      */
     @Override
     public String getAccountType() {
-        return "MoneyMarket";
+        return "rubank.MoneyMarket";
     }
 
     /**
@@ -178,7 +180,7 @@ public class MoneyMarket extends Savings {
     }
 
     /**
-     * Override string to return Money Market::Savings as name
+     * Override string to return Money Market::rubank.Savings as name
      *
      * @return proper string representation of a money market account
      */

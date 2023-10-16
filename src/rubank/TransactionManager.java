@@ -1,3 +1,5 @@
+package rubank;
+
 import java.util.Scanner;
 
 /**
@@ -23,7 +25,7 @@ public class TransactionManager {
     };
 
     /**
-     * Creates a transaction manager with an AccountDatabase
+     * Creates a transaction manager with an rubank.AccountDatabase
      */
     public TransactionManager() {
         this.accountDatabase = new AccountDatabase();
@@ -195,7 +197,7 @@ public class TransactionManager {
     }
 
     /**
-     * Opens the proper child class of Account according to given parameters
+     * Opens the proper child class of rubank.Account according to given parameters
      *
      * @param accountTypeString    string which contains the user's
      *                             specification of account type
@@ -204,7 +206,7 @@ public class TransactionManager {
      * @param additionalInfoString contains an int either specifying the
      *                             customer's loyalty, their campus, or null
      *                             if the info was not provided
-     * @return the created Account or null if the user's input was invalid
+     * @return the created rubank.Account or null if the user's input was invalid
      */
     private static Account openProperAccount(
             String accountTypeString,
@@ -248,7 +250,7 @@ public class TransactionManager {
     }
 
     /**
-     * Checks user input and attempts to create an Account from the data
+     * Checks user input and attempts to create an rubank.Account from the data
      * provided
      *
      * @param tokens tokens the words the user entered delimited by spaces
