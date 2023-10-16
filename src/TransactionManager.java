@@ -46,6 +46,9 @@ public class TransactionManager {
 
     /**
      * Print the account info and an additional string
+     *
+     * @param account the account to announce
+     * @param announcement the announcement to make
      */
     private static void printAccountAnnouncement(
             Account account, String announcement
@@ -294,6 +297,7 @@ public class TransactionManager {
      * will print that the database is empty
      *
      * @param method method to execute if database is not empty
+     * @param listMessage message to indicate what the user requested
      */
     private void runMethodIfDatabaseNotEmpty(
             Runnable method, String listMessage

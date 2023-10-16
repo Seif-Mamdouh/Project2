@@ -142,7 +142,9 @@ public class AccountDatabase {
 
     /**
      * Method to deposit money into an account
+     *
      * @param account the account to deposit to
+     * @param depositAmount amount to deposit
      */
     public void deposit(Account account, double depositAmount){
         int accountToSearch = find(account);
@@ -158,6 +160,7 @@ public class AccountDatabase {
      * Method to make a withdrawal
      *
      * @param account account to withdraw from
+     * @param withdrawalAmount amount to withdraw from account
      * @return false if insufficient fund
      */
     public boolean withdraw(Account account, double withdrawalAmount) {

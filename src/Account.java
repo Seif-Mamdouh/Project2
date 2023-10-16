@@ -37,6 +37,8 @@ public abstract class Account implements Comparable<Account> {
 
     /**
      * Abstract Method to getAccountType
+     *
+     * @return the type of account
      */
     public abstract String getAccountType();
 

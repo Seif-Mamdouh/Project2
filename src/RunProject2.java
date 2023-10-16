@@ -11,7 +11,7 @@ import java.util.Scanner;
  */
 public class RunProject2 {
 
-    private static final boolean TEST_MODE = true;
+    private static final boolean TEST_MODE = false;
     private static final String OUTPUT_OF_THIS_RUN = "this_run_output.txt";
     private static final String SAMPLE_OUTPUT = "sample_outputs.txt";
     private static final String INPUT_OF_THIS_RUN = "sample_inputs.txt";

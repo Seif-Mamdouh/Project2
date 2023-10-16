@@ -138,6 +138,9 @@ public class Profile implements Comparable<Profile> {
     /**
      * Print the age info and an additional string talking about why it isn't
      * allowed
+     *
+     * @param ageErrorMessage the error to print about the age
+     * @return error string
      */
     public String ageErrorString(String ageErrorMessage) {
 
