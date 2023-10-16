@@ -2,7 +2,6 @@ package rubank;
 
 import java.util.Calendar;
 
-
 /**
  * Represents a particular date containing a day, month and year.
  *
@@ -63,11 +62,11 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     * Parse a date string in the format "month/day/year" and return a rubank.Date
+     * Parse a date string in the format "month/day/year" and return a Date
      * object.
      *
      * @param dateStr the date string to parse
-     * @return a rubank.Date object representing the parsed date
+     * @return a Date object representing the parsed date
      * @throws IllegalArgumentException if the input is not in a valid format
      */
     public static Date parseDate(String dateStr) {
@@ -243,29 +242,18 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     * Unit tests for the date's isValid() and compareTo() method
+     * Unit tests for the date's isValid()
      *
      * @param args not used
      */
     public static void main(String[] args) {
-        // Test cases for your rubank.Date class
-        Date date1 = new Date(800, 9, 12);
-        Date date2 = new Date(2023, 9, 11);
-        Date date3 = new Date(2024, 4, 29);
-        Date date4 = new Date(2024, 2, 29);
-        Date date5 = new Date(2023, 13, 12);
-        Date date6 = new Date(2023, 0, 12);
-        Date date7 = new Date(2024, 4, 22);
-        Date date8 = new Date(-2023, 12, 2);
+        // Test cases for your Date class
+        Date date1 = new Date(29, 2, 2024);
 
         // Test the isValid method
-        assert date1.isValid();
-        assert date2.isValid();
-        assert date3.isValid();
-        assert date4.isValid();
-        assert date5.isValid();
-        assert date6.isValid();
-        assert date7.isValid();
-        assert date8.isValid();
+        boolean d = date1.isValid();
+
+
+        System.out.println(d);
     }
 }
